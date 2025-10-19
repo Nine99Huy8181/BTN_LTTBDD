@@ -35,12 +35,12 @@ public class CartItemController {
     }
 
     @GetMapping("/cart-items/{id}")
-    public ResponseEntity<CartItem> getCartItemById(@PathVariable String id) {
+    public ResponseEntity<CartItem> getCartItemById(@PathVariable Long id) {
         return ResponseEntity.ok(cartItemService.getCartItemById(id));
     }
 
     @GetMapping("/cart-items/cart/{cartId}")
-    public ResponseEntity<List<CartItem>> getCartItemsByCartId(@PathVariable String cartId) {
+    public ResponseEntity<List<CartItem>> getCartItemsByCartId(@PathVariable Long cartId) {
         return ResponseEntity.ok(cartItemService.getCartItemsByCartId(cartId));
     }
 
@@ -50,7 +50,7 @@ public class CartItemController {
     }
 
     @PutMapping("/cart-items/{id}")
-    public ResponseEntity<CartItem> updateCartItem(@PathVariable String id, @RequestBody CartItem itemDetails) {
+    public ResponseEntity<CartItem> updateCartItem(@PathVariable Long id, @RequestBody CartItem itemDetails) {
         return ResponseEntity.ok(cartItemService.updateCartItem(id, itemDetails));
     }
 }

@@ -31,7 +31,8 @@ public class Wishlist {
 
     @Id
     @Column(name = "WishlistID")
-    private String wishlistID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long wishlistID;
 
     @OneToOne
     @JoinColumn(name = "CustomerID", nullable = false)

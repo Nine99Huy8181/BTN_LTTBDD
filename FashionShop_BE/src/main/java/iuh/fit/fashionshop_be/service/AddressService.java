@@ -28,11 +28,11 @@ public class AddressService {
         return addressRepository.findAll();
     }
 
-    public Address getAddressById(String id) {
+    public Address getAddressById(Long id) {
         return addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Address not found"));
     }
 
-    public List<Address> getAddressesByCustomerId(String customerID) {
+    public List<Address> getAddressesByCustomerId(Long customerID) {
         return addressRepository.findByCustomerCustomerID(customerID);
     }
 
@@ -40,7 +40,7 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public Address updateAddress(String id, Address addressDetails) {
+    public Address updateAddress(Long id, Address addressDetails) {
         Address address = getAddressById(id);
         address.setCustomer(addressDetails.getCustomer());
         address.setRecipientName(addressDetails.getRecipientName());
@@ -54,7 +54,7 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public void deleteAddress(String id) {
+    public void deleteAddress(Long id) {
         addressRepository.deleteById(id);
     }
 }

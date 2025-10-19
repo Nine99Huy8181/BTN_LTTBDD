@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductVariantRepository extends JpaRepository<ProductVariant, String> {
-    List<ProductVariant> findByProductProductID(String productID);
+public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long> {
+    List<ProductVariant> findByProductProductID(Long productID);
     List<ProductVariant> findBySku(String sku);
 }

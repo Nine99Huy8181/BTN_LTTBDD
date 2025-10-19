@@ -28,12 +28,12 @@ public class ReviewResponseController {
     }
 
     @GetMapping("/review-responses/{id}")
-    public ResponseEntity<ReviewResponse> getResponseById(@PathVariable String id) {
+    public ResponseEntity<ReviewResponse> getResponseById(@PathVariable Long id) {
         return ResponseEntity.ok(responseService.getResponseById(id));
     }
 
     @GetMapping("/review-responses/review/{reviewId}")
-    public ResponseEntity<ReviewResponse> getResponseByReviewId(@PathVariable String reviewId) {
+    public ResponseEntity<ReviewResponse> getResponseByReviewId(@PathVariable Long reviewId) {
         return ResponseEntity.ok(responseService.getResponseByReviewId(reviewId));
     }
 
@@ -43,7 +43,7 @@ public class ReviewResponseController {
     }
 
     @PutMapping("/review-responses/{id}")
-    public ResponseEntity<ReviewResponse> updateResponse(@PathVariable String id, @RequestBody ReviewResponse responseDetails) {
+    public ResponseEntity<ReviewResponse> updateResponse(@PathVariable Long id, @RequestBody ReviewResponse responseDetails) {
         return ResponseEntity.ok(responseService.updateResponse(id, responseDetails));
     }
 }

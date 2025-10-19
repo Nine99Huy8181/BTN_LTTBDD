@@ -30,13 +30,11 @@ public class Category {
 
     @Id
     @Column(name = "CategoryID")
-    private String categoryID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long categoryID;
 
     @Column(name = "Name")
     private String name;
-
-    @Column(name = "ParentCategoryID")
-    private String parentCategoryID;
 
     @Column(name = "Description")
     private String description;
@@ -44,7 +42,6 @@ public class Category {
     @Column(name = "Image")
     private String image;
 
-    // Self-reference
     @ManyToOne
     @JoinColumn(name = "ParentCategoryID", insertable = false, updatable = false)
     @JsonIgnore

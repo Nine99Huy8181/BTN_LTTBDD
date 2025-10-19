@@ -22,11 +22,11 @@ import org.springframework.stereotype.Service;
 public class InventoryService {
     private final InventoryRepository inventoryRepository;
 
-    public Inventory getInventoryById(String id) {
+    public Inventory getInventoryById(Long id) {
         return inventoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Inventory not found"));
     }
 
-    public Inventory getInventoryByVariantId(String variantID) {
+    public Inventory getInventoryByVariantId(Long variantID) {
         return inventoryRepository.findByVariantVariantID(variantID);
     }
 
@@ -34,7 +34,7 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
-    public Inventory updateInventory(String id, Inventory inventoryDetails) {
+    public Inventory updateInventory(Long id, Inventory inventoryDetails) {
         Inventory inventory = getInventoryById(id);
         inventory.setVariant(inventoryDetails.getVariant());
         inventory.setQuantity(inventoryDetails.getQuantity());
@@ -43,7 +43,7 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
-    public void deleteInventory(String id) {
+    public void deleteInventory(Long id) {
         inventoryRepository.deleteById(id);
     }
 }

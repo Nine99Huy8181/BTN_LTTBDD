@@ -28,11 +28,11 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order getOrderById(String id) {
+    public Order getOrderById(Long id) {
         return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
-    public List<Order> getOrdersByCustomerId(String customerID) {
+    public List<Order> getOrdersByCustomerId(Long customerID) {
         return orderRepository.findByCustomerCustomerID(customerID);
     }
 
@@ -49,23 +49,22 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Order updateOrder(String id, Order orderDetails) {
+    public Order updateOrder(Long id, Order orderDetails) {
         Order order = getOrderById(id);
         order.setCustomer(orderDetails.getCustomer());
         order.setOrderDate(orderDetails.getOrderDate());
         order.setTotalAmount(orderDetails.getTotalAmount());
         order.setPaymentMethod(orderDetails.getPaymentMethod());
         order.setPaymentStatus(orderDetails.getPaymentStatus());
-        order.setTransactionID(orderDetails.getTransactionID());
         order.setPaymentDate(orderDetails.getPaymentDate());
         order.setOrderStatus(orderDetails.getOrderStatus());
-        order.setAddressID(orderDetails.getAddressID());
+        order.setShippingAddress(orderDetails.getShippingAddress());
         order.setShippingFee(orderDetails.getShippingFee());
         order.setNotes(orderDetails.getNotes());
         return orderRepository.save(order);
     }
 
-    public void deleteOrder(String id) {
+    public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }
 }

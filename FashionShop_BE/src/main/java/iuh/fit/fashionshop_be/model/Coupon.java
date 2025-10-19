@@ -29,7 +29,8 @@ public class Coupon {
 
     @Id
     @Column(name = "CouponID")
-    private String couponID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long couponID;
 
     @Column(name = "Code", unique = true)
     private String code;

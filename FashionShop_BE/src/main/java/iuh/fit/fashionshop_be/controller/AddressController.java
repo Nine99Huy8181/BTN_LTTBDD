@@ -35,12 +35,12 @@ public class AddressController {
     }
 
     @GetMapping("/addresses/{id}")
-    public ResponseEntity<Address> getAddressById(@PathVariable String id) {
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
         return ResponseEntity.ok(addressService.getAddressById(id));
     }
 
     @GetMapping("/addresses/customer/{customerId}")
-    public ResponseEntity<List<Address>> getAddressesByCustomerId(@PathVariable String customerId) {
+    public ResponseEntity<List<Address>> getAddressesByCustomerId(@PathVariable Long customerId) {
         return ResponseEntity.ok(addressService.getAddressesByCustomerId(customerId));
     }
 
@@ -50,7 +50,7 @@ public class AddressController {
     }
 
     @PutMapping("/addresses/{id}")
-    public ResponseEntity<Address> updateAddress(@PathVariable String id, @RequestBody Address addressDetails) {
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address addressDetails) {
         return ResponseEntity.ok(addressService.updateAddress(id, addressDetails));
     }
 }

@@ -35,12 +35,12 @@ public class OrderItemController {
     }
 
     @GetMapping("/order-items/{id}")
-    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable String id) {
+    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long id) {
         return ResponseEntity.ok(orderItemService.getOrderItemById(id));
     }
 
     @GetMapping("/order-items/order/{orderId}")
-    public ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(@PathVariable String orderId) {
+    public ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(@PathVariable Long orderId) {
         return ResponseEntity.ok(orderItemService.getOrderItemsByOrderId(orderId));
     }
 
@@ -50,7 +50,7 @@ public class OrderItemController {
     }
 
     @PutMapping("/order-items/{id}")
-    public ResponseEntity<OrderItem> updateOrderItem(@PathVariable String id, @RequestBody OrderItem itemDetails) {
+    public ResponseEntity<OrderItem> updateOrderItem(@PathVariable Long id, @RequestBody OrderItem itemDetails) {
         return ResponseEntity.ok(orderItemService.updateOrderItem(id, itemDetails));
     }
 }

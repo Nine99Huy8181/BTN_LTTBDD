@@ -28,11 +28,11 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer getCustomerById(String id) {
+    public Customer getCustomerById(Long id) {
         return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
-    public List<Customer> getCustomersByAccountId(String accountID) {
+    public List<Customer> getCustomersByAccountId(Long accountID) {
         return customerRepository.findByAccountAccountID(accountID);
     }
 
@@ -40,7 +40,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomer(String id, Customer customerDetails) {
+    public Customer updateCustomer(Long id, Customer customerDetails) {
         Customer customer = getCustomerById(id);
         customer.setAccount(customerDetails.getAccount());
         customer.setFullName(customerDetails.getFullName());
@@ -52,7 +52,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public void deleteCustomer(String id) {
+    public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
 }

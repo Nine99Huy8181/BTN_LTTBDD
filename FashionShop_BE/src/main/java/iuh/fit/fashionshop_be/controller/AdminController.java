@@ -35,12 +35,12 @@ public class AdminController {
     }
 
     @GetMapping("/admins/{id}")
-    public ResponseEntity<Admin> getAdminById(@PathVariable String id) {
+    public ResponseEntity<Admin> getAdminById(@PathVariable Long id) {
         return ResponseEntity.ok(adminService.getAdminById(id));
     }
 
     @GetMapping("/admins/account/{accountId}")
-    public ResponseEntity<List<Admin>> getAdminsByAccountId(@PathVariable String accountId) {
+    public ResponseEntity<List<Admin>> getAdminsByAccountId(@PathVariable Long accountId) {
         return ResponseEntity.ok(adminService.getAdminsByAccountId(accountId));
     }
 
@@ -50,7 +50,7 @@ public class AdminController {
     }
 
     @PutMapping("/admins/{id}")
-    public ResponseEntity<Admin> updateAdmin(@PathVariable String id, @RequestBody Admin adminDetails) {
+    public ResponseEntity<Admin> updateAdmin(@PathVariable Long id, @RequestBody Admin adminDetails) {
         return ResponseEntity.ok(adminService.updateAdmin(id, adminDetails));
     }
 }

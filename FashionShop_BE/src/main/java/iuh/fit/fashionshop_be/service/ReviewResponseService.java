@@ -22,11 +22,11 @@ import org.springframework.stereotype.Service;
 public class ReviewResponseService {
     private final ReviewResponseRepository responseRepository;
 
-    public ReviewResponse getResponseById(String id) {
+    public ReviewResponse getResponseById(Long id) {
         return responseRepository.findById(id).orElseThrow(() -> new RuntimeException("ReviewResponse not found"));
     }
 
-    public ReviewResponse getResponseByReviewId(String reviewID) {
+    public ReviewResponse getResponseByReviewId(Long reviewID) {
         return responseRepository.findByReviewReviewID(reviewID);
     }
 
@@ -34,7 +34,7 @@ public class ReviewResponseService {
         return responseRepository.save(response);
     }
 
-    public ReviewResponse updateResponse(String id, ReviewResponse responseDetails) {
+    public ReviewResponse updateResponse(Long id, ReviewResponse responseDetails) {
         ReviewResponse response = getResponseById(id);
         response.setReview(responseDetails.getReview());
         response.setAdmin(responseDetails.getAdmin());
@@ -44,7 +44,7 @@ public class ReviewResponseService {
         return responseRepository.save(response);
     }
 
-    public void deleteResponse(String id) {
+    public void deleteResponse(Long id) {
         responseRepository.deleteById(id);
     }
 }

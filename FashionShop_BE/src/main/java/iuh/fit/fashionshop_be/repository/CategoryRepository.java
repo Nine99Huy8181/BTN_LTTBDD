@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, String> {
-    List<Category> findByParentCategoryID(String parentCategoryID);
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+    List<Category> findByParentCategoryID(Long parentCategoryID);
     List<Category> findByNameContainingIgnoreCase(String name);
 }

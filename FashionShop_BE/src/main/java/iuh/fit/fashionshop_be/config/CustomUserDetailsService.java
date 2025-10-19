@@ -31,16 +31,26 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("loadUserByUsername called with username: " + email);
-        Account account = accountRepository.findByEmail(email).orElseThrow(() -> {
-            System.out.println("User not found: " + email);
-            return new UsernameNotFoundException("User not found: " + email);
-        });
-//    System.out.println("User found: " + account.getEmail() + ", Role: " + account.getRole() + " P: " + account.getPassword());
+        System.out.println("loadUserByUsername called with email: " + email);
+
+        Account account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> {
+                    System.out.println("User not found: " + email);
+                    return new UsernameNotFoundException("User not found: " + email);
+                });
+
+        System.out.println("User found: " + account.getEmail() + ", Role: " + account.getRole());
+
+        // THÊM "ROLE_" PREFIX - CỰC KỲ QUAN TRỌNG!
+        // Spring Security .hasRole() tự động thêm "ROLE_" prefix khi check
+        // Nên authority phải là "ROLE_SUPER" để match với .hasRole("SUPER")
+        String roleWithPrefix = "ROLE_" + account.getRole();
+        System.out.println("Authority granted: " + roleWithPrefix); // Debug: xem có "ROLE_SUPER" không
+
         return new org.springframework.security.core.userdetails.User(
-                account.getEmail(),
+                account.getEmail(), // "sup"
                 account.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(account.getRole()))
+                Collections.singletonList(new SimpleGrantedAuthority(roleWithPrefix)) // "ROLE_SUPER"
         );
     }
 }

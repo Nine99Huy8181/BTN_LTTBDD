@@ -17,6 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WishlistRepository extends JpaRepository<Wishlist, String> {
-    Wishlist findByCustomerCustomerID(String customerID);
+public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
+    Wishlist findByCustomerCustomerID(Long customerID);
 }

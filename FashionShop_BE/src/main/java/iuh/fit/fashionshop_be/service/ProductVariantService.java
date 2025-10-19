@@ -28,11 +28,11 @@ public class ProductVariantService {
         return variantRepository.findAll();
     }
 
-    public ProductVariant getVariantById(String id) {
+    public ProductVariant getVariantById(Long id) {
         return variantRepository.findById(id).orElseThrow(() -> new RuntimeException("ProductVariant not found"));
     }
 
-    public List<ProductVariant> getVariantsByProductId(String productID) {
+    public List<ProductVariant> getVariantsByProductId(Long productID) {
         return variantRepository.findByProductProductID(productID);
     }
 
@@ -44,7 +44,7 @@ public class ProductVariantService {
         return variantRepository.save(variant);
     }
 
-    public ProductVariant updateVariant(String id, ProductVariant variantDetails) {
+    public ProductVariant updateVariant(Long id, ProductVariant variantDetails) {
         ProductVariant variant = getVariantById(id);
         variant.setProduct(variantDetails.getProduct());
         variant.setSku(variantDetails.getSku());
@@ -56,7 +56,7 @@ public class ProductVariantService {
         return variantRepository.save(variant);
     }
 
-    public void deleteVariant(String id) {
+    public void deleteVariant(Long id) {
         variantRepository.deleteById(id);
     }
 }

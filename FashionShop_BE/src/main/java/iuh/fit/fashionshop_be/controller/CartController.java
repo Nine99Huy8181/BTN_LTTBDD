@@ -28,12 +28,12 @@ public class CartController {
     }
 
     @GetMapping("/carts/{id}")
-    public ResponseEntity<Cart> getCartById(@PathVariable String id) {
+    public ResponseEntity<Cart> getCartById(@PathVariable Long id) {
         return ResponseEntity.ok(cartService.getCartById(id));
     }
 
     @GetMapping("/carts/customer/{customerId}")
-    public ResponseEntity<Cart> getCartByCustomerId(@PathVariable String customerId) {
+    public ResponseEntity<Cart> getCartByCustomerId(@PathVariable Long customerId) {
         return ResponseEntity.ok(cartService.getCartByCustomerId(customerId));
     }
 
@@ -43,7 +43,7 @@ public class CartController {
     }
 
     @PutMapping("/carts/{id}")
-    public ResponseEntity<Cart> updateCart(@PathVariable String id, @RequestBody Cart cartDetails) {
+    public ResponseEntity<Cart> updateCart(@PathVariable Long id, @RequestBody Cart cartDetails) {
         return ResponseEntity.ok(cartService.updateCart(id, cartDetails));
     }
 }

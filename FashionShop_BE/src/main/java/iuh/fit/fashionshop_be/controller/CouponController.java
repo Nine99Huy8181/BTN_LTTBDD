@@ -35,7 +35,7 @@ public class CouponController {
     }
 
     @GetMapping("/coupons/{id}")
-    public ResponseEntity<Coupon> getCouponById(@PathVariable String id) {
+    public ResponseEntity<Coupon> getCouponById(@PathVariable Long id) {
         return ResponseEntity.ok(couponService.getCouponById(id));
     }
 
@@ -50,7 +50,7 @@ public class CouponController {
     }
 
     @PutMapping("/coupons/{id}")
-    public ResponseEntity<Coupon> updateCoupon(@PathVariable String id, @RequestBody Coupon couponDetails) {
+    public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id, @RequestBody Coupon couponDetails) {
         return ResponseEntity.ok(couponService.updateCoupon(id, couponDetails));
     }
 }

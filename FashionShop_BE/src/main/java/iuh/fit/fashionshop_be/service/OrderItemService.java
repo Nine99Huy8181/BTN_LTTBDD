@@ -28,15 +28,15 @@ public class OrderItemService {
         return orderItemRepository.findAll();
     }
 
-    public OrderItem getOrderItemById(String id) {
+    public OrderItem getOrderItemById(Long id) {
         return orderItemRepository.findById(id).orElseThrow(() -> new RuntimeException("OrderItem not found"));
     }
 
-    public List<OrderItem> getOrderItemsByOrderId(String orderID) {
+    public List<OrderItem> getOrderItemsByOrderId(Long orderID) {
         return orderItemRepository.findByOrderOrderID(orderID);
     }
 
-    public List<OrderItem> getOrderItemsByVariantId(String variantID) {
+    public List<OrderItem> getOrderItemsByVariantId(Long variantID) {
         return orderItemRepository.findByVariantVariantID(variantID);
     }
 
@@ -45,7 +45,7 @@ public class OrderItemService {
         return orderItemRepository.save(orderItem);
     }
 
-    public OrderItem updateOrderItem(String id, OrderItem itemDetails) {
+    public OrderItem updateOrderItem(Long id, OrderItem itemDetails) {
         OrderItem item = getOrderItemById(id);
         item.setOrder(itemDetails.getOrder());
         item.setVariant(itemDetails.getVariant());
@@ -55,7 +55,7 @@ public class OrderItemService {
         return orderItemRepository.save(item);
     }
 
-    public void deleteOrderItem(String id) {
+    public void deleteOrderItem(Long id) {
         orderItemRepository.deleteById(id);
     }
 }

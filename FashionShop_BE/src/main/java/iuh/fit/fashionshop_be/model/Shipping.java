@@ -29,7 +29,8 @@ public class Shipping {
 
     @Id
     @Column(name = "ShippingID")
-    private String shippingID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long shippingID;
 
     @OneToOne
     @JoinColumn(name = "OrderID", nullable = false)

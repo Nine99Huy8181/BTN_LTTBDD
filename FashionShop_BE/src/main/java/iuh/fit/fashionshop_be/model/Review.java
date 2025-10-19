@@ -30,7 +30,8 @@ public class Review {
 
     @Id
     @Column(name = "ReviewID")
-    private String reviewID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long reviewID;
 
     @ManyToOne
     @JoinColumn(name = "ProductID", nullable = false)

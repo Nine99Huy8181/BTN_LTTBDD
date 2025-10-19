@@ -19,8 +19,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, String> {
-    List<Review> findByProductProductID(String productID);
-    List<Review> findByCustomerCustomerID(String customerID);
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByProductProductID(Long productID);
+    List<Review> findByCustomerCustomerID(Long customerID);
     List<Review> findByStatus(String status);
 }

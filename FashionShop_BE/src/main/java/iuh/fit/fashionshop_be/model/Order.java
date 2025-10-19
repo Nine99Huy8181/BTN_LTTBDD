@@ -31,7 +31,8 @@ public class Order {
 
     @Id
     @Column(name = "OrderID")
-    private String orderID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderID;
 
     @ManyToOne
     @JoinColumn(name = "CustomerID", nullable = false)
@@ -49,17 +50,11 @@ public class Order {
     @Column(name = "PaymentStatus")
     private String paymentStatus;
 
-    @Column(name = "TransactionID")
-    private String transactionID;
-
     @Column(name = "PaymentDate")
     private LocalDateTime paymentDate;
 
     @Column(name = "OrderStatus")
     private String orderStatus;
-
-    @Column(name = "AddressID")
-    private String addressID;
 
     @Column(name = "ShippingFee")
     private Float shippingFee;

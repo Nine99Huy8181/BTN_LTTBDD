@@ -35,12 +35,12 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/{id}")
-    public ResponseEntity<Review> getReviewById(@PathVariable String id) {
+    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
         return ResponseEntity.ok(reviewService.getReviewById(id));
     }
 
     @GetMapping("/reviews/product/{productId}")
-    public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable String productId) {
+    public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable Long productId) {
         return ResponseEntity.ok(reviewService.getReviewsByProductId(productId));
     }
 
@@ -50,7 +50,7 @@ public class ReviewController {
     }
 
     @PutMapping("/reviews/{id}")
-    public ResponseEntity<Review> updateReview(@PathVariable String id, @RequestBody Review reviewDetails) {
+    public ResponseEntity<Review> updateReview(@PathVariable Long id, @RequestBody Review reviewDetails) {
         return ResponseEntity.ok(reviewService.updateReview(id, reviewDetails));
     }
 }

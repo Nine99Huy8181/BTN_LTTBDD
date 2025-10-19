@@ -15,6 +15,7 @@ package iuh.fit.fashionshop_be.controller;
 import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.service.AccountService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable String id) {
+    public ResponseEntity<Account> getAccountById(@PathVariable Long id) {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
@@ -51,7 +52,7 @@ public class AccountController {
     }
 
     @PutMapping("/accounts/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable String id, @RequestBody Account accountDetails) {
+    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account accountDetails) {
         return ResponseEntity.ok(accountService.updateAccount(id, accountDetails));
     }
 }

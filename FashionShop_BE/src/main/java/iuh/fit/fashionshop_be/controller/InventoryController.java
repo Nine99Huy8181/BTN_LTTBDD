@@ -28,12 +28,12 @@ public class InventoryController {
     }
 
     @GetMapping("/inventories/{id}")
-    public ResponseEntity<Inventory> getInventoryById(@PathVariable String id) {
+    public ResponseEntity<Inventory> getInventoryById(@PathVariable Long id) {
         return ResponseEntity.ok(inventoryService.getInventoryById(id));
     }
 
     @GetMapping("/inventories/variant/{variantId}")
-    public ResponseEntity<Inventory> getInventoryByVariantId(@PathVariable String variantId) {
+    public ResponseEntity<Inventory> getInventoryByVariantId(@PathVariable Long variantId) {
         return ResponseEntity.ok(inventoryService.getInventoryByVariantId(variantId));
     }
 
@@ -43,7 +43,7 @@ public class InventoryController {
     }
 
     @PutMapping("/inventories/{id}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable String id, @RequestBody Inventory inventoryDetails) {
+    public ResponseEntity<Inventory> updateInventory(@PathVariable Long id, @RequestBody Inventory inventoryDetails) {
         return ResponseEntity.ok(inventoryService.updateInventory(id, inventoryDetails));
     }
 }

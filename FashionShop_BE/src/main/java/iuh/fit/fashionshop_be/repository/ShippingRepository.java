@@ -19,7 +19,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Repository
-public interface ShippingRepository extends JpaRepository<Shipping, String> {
-    Shipping findByOrderOrderID(String orderID);
+public interface ShippingRepository extends JpaRepository<Shipping, Long> {
+    Shipping findByOrderOrderID(Long orderID);
     List<Shipping> findByShippingStatus(String shippingStatus);
 }

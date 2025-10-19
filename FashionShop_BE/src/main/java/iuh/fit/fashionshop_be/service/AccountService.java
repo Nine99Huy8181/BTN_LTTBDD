@@ -40,7 +40,7 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Account getAccountById(String id) {
+    public Account getAccountById(Long id) {
         return accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
     }
 
@@ -53,7 +53,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Account updateAccount(String id, Account accountDetails) {
+    public Account updateAccount(Long id, Account accountDetails) {
         Account account = getAccountById(id);
         account.setEmail(accountDetails.getEmail());
         account.setPassword(accountDetails.getPassword());
@@ -63,7 +63,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public void deleteAccount(String id) {
+    public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
 
@@ -134,5 +134,9 @@ public class AccountService {
         boolean matches = account.isPresent() && passwordEncoder.matches(password, account.get().getPassword());
         System.out.println("Authentication for " + email + ": " + matches); // Log kết quả xác thực
         return matches;
+    }
+
+    public Optional<Account> findByEmail(String userName) {
+        return accountRepository.findByEmail(userName);
     }
 }

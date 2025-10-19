@@ -29,7 +29,8 @@ public class Address {
 
     @Id
     @Column(name = "AddressID")
-    private String addressID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long addressID;
 
     @ManyToOne
     @JoinColumn(name = "CustomerID", nullable = false)

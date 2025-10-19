@@ -28,11 +28,11 @@ public class ShippingService {
         return shippingRepository.findAll();
     }
 
-    public Shipping getShippingById(String id) {
+    public Shipping getShippingById(Long id) {
         return shippingRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipping not found"));
     }
 
-    public Shipping getShippingByOrderId(String orderID) {
+    public Shipping getShippingByOrderId(Long orderID) {
         return shippingRepository.findByOrderOrderID(orderID);
     }
 
@@ -44,7 +44,7 @@ public class ShippingService {
         return shippingRepository.save(shipping);
     }
 
-    public Shipping updateShipping(String id, Shipping shippingDetails) {
+    public Shipping updateShipping(Long id, Shipping shippingDetails) {
         Shipping shipping = getShippingById(id);
         shipping.setOrder(shippingDetails.getOrder());
         shipping.setCarrier(shippingDetails.getCarrier());
@@ -55,7 +55,7 @@ public class ShippingService {
         return shippingRepository.save(shipping);
     }
 
-    public void deleteShipping(String id) {
+    public void deleteShipping(Long id) {
         shippingRepository.deleteById(id);
     }
 }

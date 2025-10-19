@@ -30,7 +30,8 @@ public class ProductVariant {
 
     @Id
     @Column(name = "VariantID")
-    private String variantID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long variantID;
 
     @ManyToOne
     @JoinColumn(name = "ProductID", nullable = false)

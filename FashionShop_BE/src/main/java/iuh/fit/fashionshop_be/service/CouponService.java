@@ -28,7 +28,7 @@ public class CouponService {
         return couponRepository.findAll();
     }
 
-    public Coupon getCouponById(String id) {
+    public Coupon getCouponById(Long id) {
         return couponRepository.findById(id).orElseThrow(() -> new RuntimeException("Coupon not found"));
     }
 
@@ -44,7 +44,7 @@ public class CouponService {
         return couponRepository.save(coupon);
     }
 
-    public Coupon updateCoupon(String id, Coupon couponDetails) {
+    public Coupon updateCoupon(Long id, Coupon couponDetails) {
         Coupon coupon = getCouponById(id);
         coupon.setCode(couponDetails.getCode());
         coupon.setDescription(couponDetails.getDescription());
@@ -59,7 +59,7 @@ public class CouponService {
         return couponRepository.save(coupon);
     }
 
-    public void deleteCoupon(String id) {
+    public void deleteCoupon(Long id) {
         couponRepository.deleteById(id);
     }
 }

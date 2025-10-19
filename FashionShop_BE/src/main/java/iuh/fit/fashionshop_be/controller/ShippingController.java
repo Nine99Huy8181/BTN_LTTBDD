@@ -35,12 +35,12 @@ public class ShippingController {
     }
 
     @GetMapping("/shippings/{id}")
-    public ResponseEntity<Shipping> getShippingById(@PathVariable String id) {
+    public ResponseEntity<Shipping> getShippingById(@PathVariable Long id) {
         return ResponseEntity.ok(shippingService.getShippingById(id));
     }
 
     @GetMapping("/shippings/order/{orderId}")
-    public ResponseEntity<Shipping> getShippingByOrderId(@PathVariable String orderId) {
+    public ResponseEntity<Shipping> getShippingByOrderId(@PathVariable Long orderId) {
         return ResponseEntity.ok(shippingService.getShippingByOrderId(orderId));
     }
 
@@ -50,7 +50,7 @@ public class ShippingController {
     }
 
     @PutMapping("/shippings/{id}")
-    public ResponseEntity<Shipping> updateShipping(@PathVariable String id, @RequestBody Shipping shippingDetails) {
+    public ResponseEntity<Shipping> updateShipping(@PathVariable Long id, @RequestBody Shipping shippingDetails) {
         return ResponseEntity.ok(shippingService.updateShipping(id, shippingDetails));
     }
 }

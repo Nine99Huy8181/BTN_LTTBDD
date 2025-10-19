@@ -22,11 +22,11 @@ import org.springframework.stereotype.Service;
 public class CartService {
     private final CartRepository cartRepository;
 
-    public Cart getCartById(String id) {
+    public Cart getCartById(Long id) {
         return cartRepository.findById(id).orElseThrow(() -> new RuntimeException("Cart not found"));
     }
 
-    public Cart getCartByCustomerId(String customerID) {
+    public Cart getCartByCustomerId(Long customerID) {
         return cartRepository.findByCustomerCustomerID(customerID);
     }
 
@@ -34,7 +34,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart updateCart(String id, Cart cartDetails) {
+    public Cart updateCart(Long id, Cart cartDetails) {
         Cart cart = getCartById(id);
         cart.setCustomer(cartDetails.getCustomer());
         cart.setUpdatedDate(cartDetails.getUpdatedDate());
@@ -42,7 +42,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public void deleteCart(String id) {
+    public void deleteCart(Long id) {
         cartRepository.deleteById(id);
     }
 }

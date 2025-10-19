@@ -17,6 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReviewResponseRepository extends JpaRepository<ReviewResponse, String> {
-    ReviewResponse findByReviewReviewID(String reviewID);
+public interface ReviewResponseRepository extends JpaRepository<ReviewResponse, Long> {
+    ReviewResponse findByReviewReviewID(Long reviewID);
 }

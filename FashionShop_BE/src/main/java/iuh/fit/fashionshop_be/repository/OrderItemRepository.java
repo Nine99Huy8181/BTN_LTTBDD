@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderItemRepository extends JpaRepository<OrderItem, String> {
-    List<OrderItem> findByOrderOrderID(String orderID);
-    List<OrderItem> findByVariantVariantID(String variantID);
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
+    List<OrderItem> findByOrderOrderID(Long orderID);
+    List<OrderItem> findByVariantVariantID(Long variantID);
 }

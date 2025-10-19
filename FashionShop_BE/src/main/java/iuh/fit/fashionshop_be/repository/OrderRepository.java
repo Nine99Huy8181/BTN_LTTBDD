@@ -19,8 +19,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, String> {
-    List<Order> findByCustomerCustomerID(String customerID);
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findByCustomerCustomerID(Long customerID);
     List<Order> findByOrderStatus(String orderStatus);
     List<Order> findByPaymentStatus(String paymentStatus);
 }

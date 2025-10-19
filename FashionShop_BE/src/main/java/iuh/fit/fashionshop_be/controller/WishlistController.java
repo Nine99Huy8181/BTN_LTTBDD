@@ -28,12 +28,12 @@ public class WishlistController {
     }
 
     @GetMapping("/wishlists/{id}")
-    public ResponseEntity<Wishlist> getWishlistById(@PathVariable String id) {
+    public ResponseEntity<Wishlist> getWishlistById(@PathVariable Long id) {
         return ResponseEntity.ok(wishlistService.getWishlistById(id));
     }
 
     @GetMapping("/wishlists/customer/{customerId}")
-    public ResponseEntity<Wishlist> getWishlistByCustomerId(@PathVariable String customerId) {
+    public ResponseEntity<Wishlist> getWishlistByCustomerId(@PathVariable Long customerId) {
         return ResponseEntity.ok(wishlistService.getWishlistByCustomerId(customerId));
     }
 
@@ -43,7 +43,7 @@ public class WishlistController {
     }
 
     @PutMapping("/wishlists/{id}")
-    public ResponseEntity<Wishlist> updateWishlist(@PathVariable String id, @RequestBody Wishlist wishlistDetails) {
+    public ResponseEntity<Wishlist> updateWishlist(@PathVariable Long id, @RequestBody Wishlist wishlistDetails) {
         return ResponseEntity.ok(wishlistService.updateWishlist(id, wishlistDetails));
     }
 }

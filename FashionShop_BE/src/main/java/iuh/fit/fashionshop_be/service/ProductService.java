@@ -28,11 +28,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(String id) {
+    public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
-    public List<Product> getProductsByCategoryId(String categoryID) {
+    public List<Product> getProductsByCategoryId(Long categoryID) {
         return productRepository.findByCategoryCategoryID(categoryID);
     }
 
@@ -48,11 +48,11 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product updateProduct(String id, Product productDetails) {
+    public Product updateProduct(Long id, Product productDetails) {
         Product product = getProductById(id);
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());
-        product.setCategoryID(productDetails.getCategoryID());
+        product.setCategory(productDetails.getCategory());
         product.setBrand(productDetails.getBrand());
         product.setBasePrice(productDetails.getBasePrice());
         product.setDiscountPrice(productDetails.getDiscountPrice());
@@ -65,7 +65,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteProduct(String id) {
+    public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
 }

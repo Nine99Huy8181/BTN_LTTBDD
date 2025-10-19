@@ -31,7 +31,8 @@ public class Customer {
 
     @Id
     @Column(name = "CustomerID")
-    private String customerID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long customerID;
 
     @OneToOne
     @JoinColumn(name = "AccountID", nullable = false)

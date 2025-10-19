@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WishlistItemRepository extends JpaRepository<WishlistItem, String> {
-    List<WishlistItem> findByWishlistWishlistID(String wishlistID);
-    List<WishlistItem> findByProductProductID(String productID);
+public interface WishlistItemRepository extends JpaRepository<WishlistItem, Long> {
+    List<WishlistItem> findByWishlistWishlistID(Long wishlistID);
+    List<WishlistItem> findByProductProductID(Long productID);
 }

@@ -28,15 +28,15 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public Review getReviewById(String id) {
+    public Review getReviewById(Long id) {
         return reviewRepository.findById(id).orElseThrow(() -> new RuntimeException("Review not found"));
     }
 
-    public List<Review> getReviewsByProductId(String productID) {
+    public List<Review> getReviewsByProductId(Long productID) {
         return reviewRepository.findByProductProductID(productID);
     }
 
-    public List<Review> getReviewsByCustomerId(String customerID) {
+    public List<Review> getReviewsByCustomerId(Long customerID) {
         return reviewRepository.findByCustomerCustomerID(customerID);
     }
 
@@ -49,7 +49,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public Review updateReview(String id, Review reviewDetails) {
+    public Review updateReview(Long id, Review reviewDetails) {
         Review review = getReviewById(id);
         review.setProduct(reviewDetails.getProduct());
         review.setCustomer(reviewDetails.getCustomer());
@@ -61,7 +61,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public void deleteReview(String id) {
+    public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
     }
 }

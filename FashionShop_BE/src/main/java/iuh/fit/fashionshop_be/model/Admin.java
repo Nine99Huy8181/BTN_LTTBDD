@@ -31,7 +31,8 @@ public class Admin {
 
     @Id
     @Column(name = "AdminID")
-    private String adminID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long adminID;
 
     @OneToOne
     @JoinColumn(name = "AccountID", nullable = false)

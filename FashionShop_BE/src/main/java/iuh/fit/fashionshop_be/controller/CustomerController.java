@@ -35,12 +35,12 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
     @GetMapping("/customers/account/{accountId}")
-    public ResponseEntity<List<Customer>> getCustomersByAccountId(@PathVariable String accountId) {
+    public ResponseEntity<List<Customer>> getCustomersByAccountId(@PathVariable Long accountId) {
         return ResponseEntity.ok(customerService.getCustomersByAccountId(accountId));
     }
 
@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @PutMapping("/customers/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable String id, @RequestBody Customer customerDetails) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customerDetails) {
         return ResponseEntity.ok(customerService.updateCustomer(id, customerDetails));
     }
 }

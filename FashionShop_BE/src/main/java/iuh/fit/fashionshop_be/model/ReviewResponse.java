@@ -29,7 +29,8 @@ public class ReviewResponse {
 
     @Id
     @Column(name = "ResponseID")
-    private String responseID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long responseID;
 
     @OneToOne
     @JoinColumn(name = "ReviewID", nullable = false)

@@ -29,7 +29,8 @@ public class WishlistItem {
 
     @Id
     @Column(name = "WishlistItemID")
-    private String wishlistItemID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long wishlistItemID;
 
     @ManyToOne
     @JoinColumn(name = "WishlistID", nullable = false)

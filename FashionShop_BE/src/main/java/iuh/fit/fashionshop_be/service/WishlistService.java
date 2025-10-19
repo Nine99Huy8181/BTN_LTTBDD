@@ -22,11 +22,11 @@ import org.springframework.stereotype.Service;
 public class WishlistService {
     private final WishlistRepository wishlistRepository;
 
-    public Wishlist getWishlistById(String id) {
+    public Wishlist getWishlistById(Long id) {
         return wishlistRepository.findById(id).orElseThrow(() -> new RuntimeException("Wishlist not found"));
     }
 
-    public Wishlist getWishlistByCustomerId(String customerID) {
+    public Wishlist getWishlistByCustomerId(Long customerID) {
         return wishlistRepository.findByCustomerCustomerID(customerID);
     }
 
@@ -34,14 +34,14 @@ public class WishlistService {
         return wishlistRepository.save(wishlist);
     }
 
-    public Wishlist updateWishlist(String id, Wishlist wishlistDetails) {
+    public Wishlist updateWishlist(Long id, Wishlist wishlistDetails) {
         Wishlist wishlist = getWishlistById(id);
         wishlist.setCustomer(wishlistDetails.getCustomer());
         wishlist.setCreatedDate(wishlistDetails.getCreatedDate());
         return wishlistRepository.save(wishlist);
     }
 
-    public void deleteWishlist(String id) {
+    public void deleteWishlist(Long id) {
         wishlistRepository.deleteById(id);
     }
 }

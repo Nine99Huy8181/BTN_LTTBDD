@@ -29,7 +29,8 @@ public class Inventory {
 
     @Id
     @Column(name = "InventoryID")
-    private String inventoryID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long inventoryID;
 
     @OneToOne
     @JoinColumn(name = "VariantID", nullable = false)

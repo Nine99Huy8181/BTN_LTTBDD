@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CouponRepository extends JpaRepository<Coupon, String> {
+public interface CouponRepository extends JpaRepository<Coupon, Long> {
     Coupon findByCode(String code);
     List<Coupon> findByStatus(String status);
 }

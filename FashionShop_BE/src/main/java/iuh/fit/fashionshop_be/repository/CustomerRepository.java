@@ -19,6 +19,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, String> {
-    List<Customer> findByAccountAccountID(String accountID);
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    List<Customer> findByAccountAccountID(Long accountID);
 }

@@ -35,12 +35,12 @@ public class ProductVariantController {
     }
 
     @GetMapping("/variants/{id}")
-    public ResponseEntity<ProductVariant> getVariantById(@PathVariable String id) {
+    public ResponseEntity<ProductVariant> getVariantById(@PathVariable Long id) {
         return ResponseEntity.ok(variantService.getVariantById(id));
     }
 
     @GetMapping("/variants/product/{productId}")
-    public ResponseEntity<List<ProductVariant>> getVariantsByProductId(@PathVariable String productId) {
+    public ResponseEntity<List<ProductVariant>> getVariantsByProductId(@PathVariable Long productId) {
         return ResponseEntity.ok(variantService.getVariantsByProductId(productId));
     }
 
@@ -50,7 +50,7 @@ public class ProductVariantController {
     }
 
     @PutMapping("/variants/{id}")
-    public ResponseEntity<ProductVariant> updateVariant(@PathVariable String id, @RequestBody ProductVariant variantDetails) {
+    public ResponseEntity<ProductVariant> updateVariant(@PathVariable Long id, @RequestBody ProductVariant variantDetails) {
         return ResponseEntity.ok(variantService.updateVariant(id, variantDetails));
     }
 }

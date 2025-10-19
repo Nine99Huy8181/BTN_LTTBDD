@@ -28,11 +28,11 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category getCategoryById(String id) {
+    public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
-    public List<Category> getSubCategoriesByParentId(String parentCategoryID) {
+    public List<Category> getSubCategoriesByParentId(Long parentCategoryID) {
         return categoryRepository.findByParentCategoryID(parentCategoryID);
     }
 
@@ -44,16 +44,16 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Category updateCategory(String id, Category categoryDetails) {
+    public Category updateCategory(Long id, Category categoryDetails) {
         Category category = getCategoryById(id);
         category.setName(categoryDetails.getName());
-        category.setParentCategoryID(categoryDetails.getParentCategoryID());
+        category.setParent(categoryDetails.getParent());
         category.setDescription(categoryDetails.getDescription());
         category.setImage(categoryDetails.getImage());
         return categoryRepository.save(category);
     }
 
-    public void deleteCategory(String id) {
+    public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
 }

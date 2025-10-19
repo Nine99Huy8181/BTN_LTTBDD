@@ -14,10 +14,7 @@ package iuh.fit.fashionshop_be.model;
  */
 // Account.java
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -31,7 +28,8 @@ public class Account {
 
     @Id
     @Column(name = "AccountID")
-    private String accountID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long accountID;
 
     @Column(unique = true, nullable = false)
     private String email;

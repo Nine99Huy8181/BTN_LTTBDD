@@ -28,15 +28,15 @@ public class WishlistItemService {
         return wishlistItemRepository.findAll();
     }
 
-    public WishlistItem getWishlistItemById(String id) {
+    public WishlistItem getWishlistItemById(Long id) {
         return wishlistItemRepository.findById(id).orElseThrow(() -> new RuntimeException("W MSWishItem not found"));
     }
 
-    public List<WishlistItem> getWishlistItemsByWishlistId(String wishlistID) {
+    public List<WishlistItem> getWishlistItemsByWishlistId(Long wishlistID) {
         return wishlistItemRepository.findByWishlistWishlistID(wishlistID);
     }
 
-    public List<WishlistItem> getWishlistItemsByProductId(String productID) {
+    public List<WishlistItem> getWishlistItemsByProductId(Long productID) {
         return wishlistItemRepository.findByProductProductID(productID);
     }
 
@@ -44,7 +44,7 @@ public class WishlistItemService {
         return wishlistItemRepository.save(wishlistItem);
     }
 
-    public WishlistItem updateWishlistItem(String id, WishlistItem itemDetails) {
+    public WishlistItem updateWishlistItem(Long id, WishlistItem itemDetails) {
         WishlistItem item = getWishlistItemById(id);
         item.setWishlist(itemDetails.getWishlist());
         item.setProduct(itemDetails.getProduct());
@@ -52,7 +52,7 @@ public class WishlistItemService {
         return wishlistItemRepository.save(item);
     }
 
-    public void deleteWishlistItem(String id) {
+    public void deleteWishlistItem(Long id) {
         wishlistItemRepository.deleteById(id);
     }
 }

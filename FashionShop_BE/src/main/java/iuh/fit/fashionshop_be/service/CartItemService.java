@@ -28,15 +28,15 @@ public class CartItemService {
         return cartItemRepository.findAll();
     }
 
-    public CartItem getCartItemById(String id) {
+    public CartItem getCartItemById(Long id) {
         return cartItemRepository.findById(id).orElseThrow(() -> new RuntimeException("CartItem not found"));
     }
 
-    public List<CartItem> getCartItemsByCartId(String cartID) {
+    public List<CartItem> getCartItemsByCartId(Long cartID) {
         return cartItemRepository.findByCartCartID(cartID);
     }
 
-    public List<CartItem> getCartItemsByVariantId(String variantID) {
+    public List<CartItem> getCartItemsByVariantId(Long variantID) {
         return cartItemRepository.findByVariantVariantID(variantID);
     }
 
@@ -44,7 +44,7 @@ public class CartItemService {
         return cartItemRepository.save(cartItem);
     }
 
-    public CartItem updateCartItem(String id, CartItem itemDetails) {
+    public CartItem updateCartItem(Long id, CartItem itemDetails) {
         CartItem item = getCartItemById(id);
         item.setCart(itemDetails.getCart());
         item.setVariant(itemDetails.getVariant());
@@ -52,7 +52,7 @@ public class CartItemService {
         return cartItemRepository.save(item);
     }
 
-    public void deleteCartItem(String id) {
+    public void deleteCartItem(Long id) {
         cartItemRepository.deleteById(id);
     }
 }

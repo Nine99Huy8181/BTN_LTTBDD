@@ -28,11 +28,11 @@ public class AdminService {
         return adminRepository.findAll();
     }
 
-    public Admin getAdminById(String id) {
+    public Admin getAdminById(Long id) {
         return adminRepository.findById(id).orElseThrow(() -> new RuntimeException("Admin not found"));
     }
 
-    public List<Admin> getAdminsByAccountId(String accountID) {
+    public List<Admin> getAdminsByAccountId(Long accountID) {
         return adminRepository.findByAccountAccountID(accountID);
     }
 
@@ -40,7 +40,7 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
-    public Admin updateAdmin(String id, Admin adminDetails) {
+    public Admin updateAdmin(Long id, Admin adminDetails) {
         Admin admin = getAdminById(id);
         admin.setAccount(adminDetails.getAccount());
         admin.setFullName(adminDetails.getFullName());
@@ -50,7 +50,7 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
-    public void deleteAdmin(String id) {
+    public void deleteAdmin(Long id) {
         adminRepository.deleteById(id);
     }
 }

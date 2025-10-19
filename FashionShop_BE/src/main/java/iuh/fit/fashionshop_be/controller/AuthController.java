@@ -10,6 +10,7 @@ import iuh.fit.fashionshop_be.dto.JwtResponse;
 import iuh.fit.fashionshop_be.dto.LoginRequest;
 import iuh.fit.fashionshop_be.dto.RegisterRequest;
 import iuh.fit.fashionshop_be.dto.UserResponse;
+import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.service.AccountService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -45,21 +46,29 @@ public class AuthController {
         this.accountService = accountService;
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
+            // Authenticate với email
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
 
+            // LẤY EMAIL ĐẦY ĐỦ TỪ AUTHENTICATION (không dùng request.getUserName())
+            String email = authentication.getName();
+
+            System.out.println("Login successful - Email: " + email); // Debug
+
             String jwt = Jwts.builder()
-                    .setSubject(request.getUserName())
+                    .setSubject(email)  // ← LƯU EMAIL ĐẦY ĐỦ
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                     .signWith(key)
                     .compact();
 
-//            System.out.println("Generated JWT: " + jwt); // Debug
+            System.out.println("Generated JWT subject: " +
+                    Jwts.parser().verifyWith(key).build()
+                            .parseSignedClaims(jwt).getPayload().getSubject()); // Debug
+
             if (jwt.split("\\.").length != 3) {
                 throw new IllegalStateException("Generated JWT is invalid");
             }
@@ -73,7 +82,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
-            accountService.registerCustomer(request.getEmail(), request.getPassword(), request.getFullName(), request.getPhoneNumber(), request.getDateOfBirth(), request.getGender());
+            accountService.registerCustomer(request.getEmail(), request.getPassword(),
+                    request.getFullName(), request.getPhoneNumber(),
+                    request.getDateOfBirth(), request.getGender());
             return ResponseEntity.ok("Registration successful");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Username already exists");
@@ -88,6 +99,8 @@ public class AuthController {
                     .findFirst()
                     .map(auth -> auth.replace("ROLE_", ""))
                     .orElse("CUSTOMER");
+
+            // Trả về email đầy đủ thay vì userName rút gọn
             return ResponseEntity.ok(new UserResponse(authentication.getName(), role));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
