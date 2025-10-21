@@ -50,7 +50,8 @@ public class Review {
     @Column(name = "ReviewDate")
     private LocalDateTime reviewDate;
 
-    @Column(columnDefinition = "JSON")
+    @jakarta.persistence.Convert(converter = iuh.fit.fashionshop_be.converter.StringArrayConverter.class)
+    @Column(columnDefinition = "TEXT")
     private String[] images;
 
     @Column(name = "Status")

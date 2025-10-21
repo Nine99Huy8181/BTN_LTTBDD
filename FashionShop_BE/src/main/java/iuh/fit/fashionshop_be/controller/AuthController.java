@@ -87,7 +87,8 @@ public class AuthController {
                     request.getDateOfBirth(), request.getGender());
             return ResponseEntity.ok("Registration successful");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Username already exists");
+            // Return the original exception message for clearer debugging
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

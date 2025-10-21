@@ -47,7 +47,7 @@ public class Account {
     private String accountStatus;
 
     // One-to-One với Customer
-    @OneToOne(mappedBy = "account")
+    @OneToOne(mappedBy = "account",cascade = CascadeType.ALL)
     @JsonIgnore
     private Customer customer;
 

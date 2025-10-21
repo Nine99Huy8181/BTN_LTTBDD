@@ -6,6 +6,7 @@
 
 package iuh.fit.fashionshop_be.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 
 /*
@@ -20,6 +21,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class LoginRequest {
+    @JsonAlias({"email", "userName"})
     private String userName;
     private String password;
 }

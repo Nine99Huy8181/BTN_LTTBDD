@@ -21,7 +21,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8081", "exp://192.168.2.26:8081") // Thay bằng URL của Expo
+//                .allowedOrigins("http://localhost:8081", "exp://192.168.2.26:8081") // Thay bằng URL của Expo
+                .allowedOrigins(
+                        "http://localhost:8081",         // khi chạy web trên máy tính
+                        "http://192.168.1.101:8081",     // khi chạy expo web
+                        "exp://192.168.1.101:8081"       // khi chạy Expo Go trên điện thoại
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*");
     }
