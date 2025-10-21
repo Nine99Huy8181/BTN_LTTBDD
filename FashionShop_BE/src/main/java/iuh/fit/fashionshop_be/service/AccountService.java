@@ -68,35 +68,6 @@ public class AccountService {
     }
 
     @Transactional
-//    public Account registerCustomer(String email, String password, String fullName, String phoneNumber, LocalDate dateOfBirth, String gender) {
-//        if (accountRepository.findByEmail(email).isPresent()) {
-//            System.out.println("Email already exists: " + email);
-//            throw new IllegalArgumentException("Email already exists");
-//        }
-//        Customer customer = Customer.builder()
-//                .fullName(fullName)
-//                .phoneNumber(phoneNumber)
-//                .dateOfBirth(dateOfBirth)
-//                .gender(gender)
-//                .build();
-//        customer = customerRepository.save(customer);
-//        System.out.println("Customer saved: " + customer.getCustomerID());
-//
-//        String encodedPassword = passwordEncoder.encode(password);
-//        System.out.println("Encoded password for " + email + ": " + encodedPassword);
-//
-//        Account account = Account.builder()
-//                .email(email)
-//                .password(encodedPassword)
-//                .role("CUSTOMER")  // Hoặc "USER" nếu giữ nguyên
-//                .registrationDate(LocalDateTime.now())
-//                .accountStatus("ACTIVE")  // Giả định status mặc định
-//                .customer(customer)  // Liên kết với Customer
-//                .build();
-//        Account savedAccount = accountRepository.save(account);
-//        System.out.println("Account saved: " + savedAccount.getEmail());
-//        return savedAccount;
-//    }
     public Account registerCustomer(String email, String password, String fullName,
                                     String phoneNumber, LocalDate dateOfBirth, String gender) {
         if (accountRepository.findByEmail(email).isPresent()) {
@@ -122,13 +93,10 @@ public class AccountService {
                 .registrationDate(LocalDateTime.now())
                 .accountStatus("ACTIVE")
                 .build();
-
         account.setCustomer(customer);
         customer.setAccount(account);  // 🔥 thêm dòng này ở đây
-
         // ✅ B3. Lưu theo hướng cascade
         Account savedAccount = accountRepository.save(account);
-
         System.out.println("Account saved: " + savedAccount.getEmail());
         return savedAccount;
     }
