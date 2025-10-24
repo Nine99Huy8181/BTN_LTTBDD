@@ -63,11 +63,19 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // 1. Public endpoints
-                        .requestMatchers("/api/auth/**",
+                        .requestMatchers(
+                                "/api/auth/**",
                                 "/api/products",
                                 "/api/products/{id}",
                                 "/api/products/category/{categoryId}",
-                                "/api/products/brand/{brand}").permitAll()
+                                "/api/products/brand/{brand}"
+//                                "/api/wishlists/**",
+//                                "/api/wishlist-items/**",
+//                                "/api/orders/**",
+//                                "/api/order-items/**",
+//                                "/api/addresses/**",
+//                                "/api/coupons/**"
+                        ).permitAll()
 
                         // 2. SUPER endpoints - ĐẶT TRƯỚC CÁC ROLE KHÁC
                         .requestMatchers("/api/accounts",           // GET /api/accounts
@@ -79,12 +87,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/customers/**",
                                 "/api/admins",
                                 "/api/admins/{id}",
-                                "/api/addresses/**",
                                 "/api/products/**",
                                 "/api/variants/**",
-                                "/api/orders/**",
-                                "/api/order-items/**",
-                                "/api/coupons/**",
                                 "/api/categories/**",
                                 "/api/inventories/**",
                                 "/api/shippings/**").hasRole("ADMIN")
@@ -111,6 +115,10 @@ public class SecurityConfig {
                                 "/api/wishlist-items/wishlist/{wishlistId}",
                                 "/api/reviews",
                                 "/api/reviews/{id}",
+                                "/api/orders/**",
+                                "/api/order-items/**",
+                                "/api/coupons/**",
+                                "/api/addresses/**",
                                 "/api/reviews/product/{productId}").hasRole("CUSTOMER")
 
                         // 5. Tất cả requests khác cần authenticated

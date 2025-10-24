@@ -6,11 +6,11 @@
 
 package iuh.fit.fashionshop_be.controller;
 
+import iuh.fit.fashionshop_be.dto.UserResponse;
 import iuh.fit.fashionshop_be.dto.request.LoginRequest;
 import iuh.fit.fashionshop_be.dto.request.RegisterRequest;
 import iuh.fit.fashionshop_be.dto.response.ApiResponse;
 import iuh.fit.fashionshop_be.dto.response.JwtResponse;
-import iuh.fit.fashionshop_be.dto.response.UserResponse;
 import iuh.fit.fashionshop_be.exception.AppException;
 import iuh.fit.fashionshop_be.exception.ErrorCode;
 import iuh.fit.fashionshop_be.model.Account;
@@ -112,13 +112,34 @@ public class AuthController {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
 
+        String email = authentication.getName();
+
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .findFirst()
                 .map(auth -> auth.replace("ROLE_", ""))
                 .orElse("CUSTOMER");
 
-        UserResponse response = new UserResponse(authentication.getName(), role);
+        Long customerId = null;
+        Long accountId = null;
+
+        try {
+            // Lấy Account từ email
+            Account account = accountService.getAccountByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Account not found"));
+
+            accountId = account.getAccountID();
+
+            // Nếu là CUSTOMER, lấy customerId từ quan hệ OneToOne
+            if ("CUSTOMER".equals(role) && account.getCustomer() != null) {
+                customerId = account.getCustomer().getCustomerID();
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching customer info: " + e.getMessage());
+        }
+
+        UserResponse response = new UserResponse(email, role, accountId, customerId);
+
         return ApiResponse.<UserResponse>builder()
                 .code(1000)
                 .message("User info retrieved")

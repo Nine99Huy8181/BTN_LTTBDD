@@ -53,4 +53,5 @@ public class CustomerController {
     public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customerDetails) {
         return ResponseEntity.ok(customerService.updateCustomer(id, customerDetails));
     }
+
 }

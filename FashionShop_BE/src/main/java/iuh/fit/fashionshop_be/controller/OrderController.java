@@ -48,4 +48,11 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         return ResponseEntity.status(201).body(orderService.createOrder(order));
     }
+
+    @PutMapping("/orders/{id}/cancel")
+    public ResponseEntity<Order> cancelOrder(@PathVariable Long id) {
+        Order canceled = orderService.cancelOrder(id);
+        return ResponseEntity.ok(canceled);
+    }
+
 }
