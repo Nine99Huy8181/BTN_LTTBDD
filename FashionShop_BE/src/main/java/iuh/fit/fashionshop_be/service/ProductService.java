@@ -13,8 +13,6 @@ package iuh.fit.fashionshop_be.service;
  * @version: 1.0
  */
 import iuh.fit.fashionshop_be.dto.response.ProductResponse;
-import iuh.fit.fashionshop_be.exception.AppException;
-import iuh.fit.fashionshop_be.exception.ErrorCode;
 import iuh.fit.fashionshop_be.mapper.ProductMapper;
 import iuh.fit.fashionshop_be.model.Product;
 import iuh.fit.fashionshop_be.repository.ProductRepository;
@@ -31,32 +29,26 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    // === Trả về List<ProductResponse> ===
+    // === Danh sách: trả về ProductResponse ===
     public List<ProductResponse> getAllProductResponses() {
         List<Product> products = productRepository.findAll();
-        return products.stream()
-                .map(product -> productMapper.toProductResponse(product, this))
-                .toList();
+        return productMapper.toProductResponseList(products, this);
     }
 
-    public List<ProductResponse> getProductResponsesByCategoryId(Long categoryID) {
-        List<Product> products = productRepository.findByCategoryCategoryID(categoryID);
-        return products.stream()
-                .map(product -> productMapper.toProductResponse(product, this))
-                .toList();
+    public List<ProductResponse> getProductResponsesByCategoryId(Long categoryId) {
+        List<Product> products = productRepository.findByCategoryCategoryID(categoryId);
+        return productMapper.toProductResponseList(products, this);
     }
 
     public List<ProductResponse> getProductResponsesByBrand(String brand) {
         List<Product> products = productRepository.findByBrand(brand);
-        return products.stream()
-                .map(product -> productMapper.toProductResponse(product, this))
-                .toList();
+        return productMapper.toProductResponseList(products, this);
     }
 
-    // === Trả về Product (entity) ===
+    // === Chi tiết: trả về Product (entity) ===
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     public Product createProduct(Product product) {
@@ -78,13 +70,12 @@ public class ProductService {
         product.setStatus(productDetails.getStatus());
         product.setIsFeatured(productDetails.getIsFeatured());
         product.setImage(productDetails.getImage());
-        // category, variants... nếu cần
         return productRepository.save(product);
     }
 
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
-            throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+            throw new RuntimeException("Product not found");
         }
         productRepository.deleteById(id);
     }

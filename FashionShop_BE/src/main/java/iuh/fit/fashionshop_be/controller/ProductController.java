@@ -12,12 +12,11 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
-import iuh.fit.fashionshop_be.dto.response.ApiResponse;
 import iuh.fit.fashionshop_be.dto.response.ProductResponse;
-import iuh.fit.fashionshop_be.mapper.ProductMapper;
 import iuh.fit.fashionshop_be.model.Product;
 import iuh.fit.fashionshop_be.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,75 +28,49 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductMapper productMapper;
 
+    // === Danh sách: trả về List<ProductResponse> ===
     @GetMapping("/products")
-    public ApiResponse<List<ProductResponse>> getAllProducts() {
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
         List<ProductResponse> responses = productService.getAllProductResponses();
-        return ApiResponse.<List<ProductResponse>>builder()
-                .code(1000)
-                .message("Products retrieved successfully")
-                .result(responses)
-                .build();
-    }
-
-    @GetMapping("/products/{id}")
-    public ApiResponse<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        return ApiResponse.<Product>builder()
-                .code(1000)
-                .message("Product found")
-                .result(product)
-                .build();
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/products/category/{categoryId}")
-    public ApiResponse<List<ProductResponse>> getProductsByCategoryId(@PathVariable Long categoryId) {
+    public ResponseEntity<List<ProductResponse>> getProductsByCategoryId(@PathVariable Long categoryId) {
         List<ProductResponse> responses = productService.getProductResponsesByCategoryId(categoryId);
-        return ApiResponse.<List<ProductResponse>>builder()
-                .code(1000)
-                .message("Products by category retrieved")
-                .result(responses)
-                .build();
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/products/brand/{brand}")
-    public ApiResponse<List<ProductResponse>> getProductsByBrand(@PathVariable String brand) {
+    public ResponseEntity<List<ProductResponse>> getProductsByBrand(@PathVariable String brand) {
         List<ProductResponse> responses = productService.getProductResponsesByBrand(brand);
-        return ApiResponse.<List<ProductResponse>>builder()
-                .code(1000)
-                .message("Products by brand retrieved")
-                .result(responses)
-                .build();
+        return ResponseEntity.ok(responses);
     }
 
+    // === Chi tiết: trả về Product ===
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    // === Tạo / Cập nhật ===
     @PostMapping("/products")
-    public ApiResponse<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product saved = productService.createProduct(product);
-        return ApiResponse.<Product>builder()
-                .code(1000)
-                .message("Product created successfully")
-                .result(saved)
-                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/products/{id}")
-    public ApiResponse<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
         Product updated = productService.updateProduct(id, productDetails);
-        return ApiResponse.<Product>builder()
-                .code(1000)
-                .message("Product updated successfully")
-                .result(updated)
-                .build();
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/products/{id}")
-    public ApiResponse<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return ApiResponse.<Void>builder()
-                .code(1000)
-                .message("Product deleted successfully")
-                .result(null)
-                .build();
+        return ResponseEntity.noContent().build();
     }
 }

@@ -5,14 +5,14 @@
 -- 1. accounts
 -- ========================
 INSERT INTO accounts (accountid, account_status, email, password, registration_date, role) VALUES
-(1, 'ACTIVE', 'nguyenvana@gmail.com', '123456', NOW(), 'CUSTOMER'),
-(2, 'ACTIVE', 'tranthib@gmail.com', '123456', NOW(), 'CUSTOMER'),
-(3, 'ACTIVE', 'leminhc@gmail.com', '123456', NOW(), 'CUSTOMER'),
-(4, 'ACTIVE', 'phamduct@gmail.com', '123456', NOW(), 'CUSTOMER'),
-(5, 'ACTIVE', 'hoanglan@gmail.com', '123456', NOW(), 'CUSTOMER'),
-(6, 'ACTIVE', 'admin1@shop.vn', 'admin123', NOW(), 'ADMIN'),
-(7, 'ACTIVE', 'admin2@shop.vn', 'admin123', NOW(), 'ADMIN'),
-(8, 'ACTIVE', 'superadmin@shop.vn', 'super123', NOW(), 'SUPER');
+(1, 'ACTIVE', 'nguyenvana@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
+(2, 'ACTIVE', 'tranthib@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
+(3, 'ACTIVE', 'leminhc@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
+(4, 'ACTIVE', 'phamduct@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
+(5, 'ACTIVE', 'hoanglan@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
+(6, 'ACTIVE', 'admin1@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'ADMIN'),
+(7, 'ACTIVE', 'admin2@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'ADMIN'),
+(8, 'ACTIVE', 'superadmin@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'SUPER');
 
 -- ========================
 -- 2. customers
@@ -60,111 +60,110 @@ INSERT INTO categories (categoryid, description, image, name, parent_categoryid)
 -- ========================
 -- 6. products (10 sản phẩm)
 -- ========================
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(1, 3.8, 258646.17, 'Việt Shop', NOW(), 'Sản phẩm áo thun nam cổ tròn', 271799.97, 1, 'Cotton', 'Áo thun nam cổ tròn', 197, 'ACTIVE', 6);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(2, 3.16, 409859.3, 'Việt Shop', NOW(), 'Sản phẩm áo sơ mi trắng công sở', 554540.58, 1, 'Cotton', 'Áo sơ mi trắng công sở', 38, 'ACTIVE', 1);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(3, 3.43, 684359.3, 'Việt Shop', NOW(), 'Sản phẩm quần jean nam xanh đậm', 259124.61, 1, 'Cotton', 'Quần jean nam xanh đậm', 143, 'ACTIVE', 8);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(4, 3.44, 372440.39, 'Việt Shop', NOW(), 'Sản phẩm váy hoa nhí mùa hè', 616717.22, 1, 'Cotton', 'Váy hoa nhí mùa hè', 54, 'ACTIVE', 6);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(5, 3.41, 435308.24, 'Việt Shop', NOW(), 'Sản phẩm giày thể thao nữ', 529061.79, 1, 'Cotton', 'Giày thể thao nữ', 5, 'ACTIVE', 5);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(6, 3.22, 721008.14, 'Việt Shop', NOW(), 'Sản phẩm giày da nam công sở', 204801.52, 1, 'Cotton', 'Giày da nam công sở', 66, 'ACTIVE', 2);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(7, 3.85, 564334.57, 'Việt Shop', NOW(), 'Sản phẩm túi xách nữ thời trang', 528136.11, 1, 'Cotton', 'Túi xách nữ thời trang', 159, 'ACTIVE', 10);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(8, 4.98, 700549.93, 'Việt Shop', NOW(), 'Sản phẩm thắt lưng da bò nam', 487857.95, 1, 'Cotton', 'Thắt lưng da bò nam', 52, 'ACTIVE', 2);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(9, 3.85, 613033.7, 'Việt Shop', NOW(), 'Sản phẩm mũ lưỡi trai nam', 524922.19, 1, 'Cotton', 'Mũ lưỡi trai nam', 46, 'ACTIVE', 4);
-INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid) VALUES
-(10, 3.84, 633335.9, 'Việt Shop', NOW(), 'Sản phẩm áo khoác gió nữ', 534303.96, 1, 'Cotton', 'Áo khoác gió nữ', 157, 'ACTIVE', 4);
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(1, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo blazer nam', 271799.97, 1, 'Cotton', 'Áo blazer nam GBZ0015-1NN', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316779/GBZ0015-1NN-navy-1_s62ir9.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(2, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo phông Golf dài tay nữ', 271799.97, 1, 'Cotton', 'Áo phông Golf dài tay nữ  DLP0003-1OB', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316780/DLP0003-1OB-blue-1_kvznnd.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(3, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo phông Golf dài tay nữ', 271799.97, 1, 'Cotton', 'Áo phông Golf dài tay nữ DLP0004-1BD', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316780/DLP0004-1BD-red-1_bnqa1b.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(4, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo polo cộc tay nam', 271799.97, 1, 'Cotton', 'Áo polo cộc tay nam Bernini BPL0033-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316782/BPL003-1-blue-1_i0dejq.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(5, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo Polo cộc tay nam', 271799.97, 1, 'Cotton', 'Áo Polo cộc tay nam Bernini BPL0044-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316789/BPL0044-1-white-1_wxzf3z.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(6, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo polo cộc tay nam', 271799.97, 1, 'Cotton', 'Áo polo cộc tay nam Bernini BPL0045-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-white-1_omqayt.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(7, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo Sơ Mi Cộc Tay Nam', 271799.97, 1, 'Cotton', 'Áo Sơ Mi Cộc Tay Nam GSS0173-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316795/GSS0173-1-pink-1_twsuvk.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(8, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo vest nam', 271799.97, 1, 'Cotton', 'Áo vest nam GJV0038-1DN', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316794/GJV0038-1DN-navy-1_e4phkh.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(9, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Âu Nam', 271799.97, 1, 'Cotton', 'Quần Âu Nam GPT0109-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316767/GPT0109-1-Navy-1_kr49yy.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(10, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Khaki Nam', 271799.97, 1, 'Cotton', 'Quần Khaki Nam GCN0040-1DM', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0040-1DM-mossgreen-1_lu4rui.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(11, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Khaki Nam', 271799.97, 1, 'Cotton', 'Quần Khaki Nam GCN0042-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0042-1-navy-1_xxdv06.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(12, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Vest Nam', 271799.97, 1, 'Cotton', 'Quần Vest Nam GPV0037-1DR', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GPV0037-1DR-gray-1_ortuvp.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(13, 3.8, 258646.17, 'Việt Shop', NOW(), 'Dây Lưng Nam', 271799.97, 1, 'Cotton', 'Dây Lưng Nam BBL0025-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316769/BBL0025-1-black-1_u9wkjg.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(14, 3.8, 258646.17, 'Việt Shop', NOW(), 'Túi Nữ', 271799.97, 1, 'Cotton', 'Túi Nữ OLD0003-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316768/OLD0003-1-black-1_gzpnlm.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(15, 3.8, 258646.17, 'Việt Shop', NOW(), 'Túi xách nam', 271799.97, 1, 'Cotton', 'Túi xách nam Bernini BBB0014-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316771/BBB0014-1-black-1_ocqczd.png');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(16, 3.8, 258646.17, 'Việt Shop', NOW(), 'Túi xách nữ', 271799.97, 1, 'Cotton', 'Túi xách nữ DLD0175-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316771/DLD0175-1-milk-1_l7xhww.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(17, 3.8, 258646.17, 'Việt Shop', NOW(), 'Vali GIOVANNI', 271799.97, 1, 'Cotton', 'Vali GIOVANNI GTL0014-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316773/GTL0014-1-pink-1_comvoc.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(18, 3.8, 258646.17, 'Việt Shop', NOW(), 'Bóp Tay Nam', 271799.97, 1, 'Cotton', 'Bóp Tay Nam BCL0009-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316773/BCL0009-1-black-1_jdjzx5.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(19, 3.8, 258646.17, 'Việt Shop', NOW(), 'Ví da nữ', 271799.97, 1, 'Cotton', 'Ví da nữ GWL0060-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-1_f49yz6.jpg');
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(20, 3.8, 258646.17, 'Việt Shop', NOW(), 'Ví nam Bernini', 271799.97, 1, 'Cotton', 'Ví nam Bernini BWL0017-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316777/BWL0017-1-black-1_b3i3xo.jpg');
 
 -- ========================
 -- 7. product_variants (40 dòng)
 -- ========================
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(1, 'Xanh', '["img_1.jpg", "img_2.jpg"]', 1018.82, 'XL', 'SKU0001', 'AVAILABLE', 1);
+(1, 'Xanh navy', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316779/GBZ0015-1NN-navy-2_hvzn64.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316780/GBZ0015-1NN-navy-3_dvjcg7.jpg"]', 1018.82, 'XL', 'SKU0001', 'AVAILABLE', 1);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(2, 'Đen', '["img_2.jpg", "img_2.jpg"]', -28880.72, 'M', 'SKU0002', 'AVAILABLE', 1);
+(2, 'Xanh da trời', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316781/DLP0004-1BD-red-2_m3tfqy.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316781/DLP0004-1BD-red-3_etxr9z.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316783/DLP0004-1BD-red-4_du0xds.jpg"]', -28880.72, 'M', 'SKU0002', 'AVAILABLE', 2);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(3, 'Đen', '["img_3.jpg", "img_2.jpg"]', 40133.37, 'L', 'SKU0003', 'AVAILABLE', 1);
+(3, 'Đỏ', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316781/DLP0004-1BD-red-2_m3tfqy.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316781/DLP0004-1BD-red-3_etxr9z.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316783/DLP0004-1BD-red-4_du0xds.jpg"]', 40133.37, 'L', 'SKU0003', 'AVAILABLE', 3);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(4, 'Đỏ', '["img_4.jpg", "img_2.jpg"]', -8691.49, 'M', 'SKU0004', 'AVAILABLE', 1);
+(4, 'Xanh da trời', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316782/BPL003-1-blue-2_bj1llr.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316782/BPL003-1-blue-3_yvmfg1.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316783/BPL003-1-blue-4_wdedkj.jpg"]', -8691.49, 'M', 'SKU0004', 'AVAILABLE', 4);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(5, 'Xanh', '["img_5.jpg", "img_2.jpg"]', 45389.39, 'XL', 'SKU0005', 'AVAILABLE', 2);
+(5, 'Trắng', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0044-1-white-2_wdxqq7.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316789/BPL0044-1-white-3_okohcq.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316789/BPL0044-1-white-4_sekfhc.jpg"]', 45389.39, 'XL', 'SKU0005', 'AVAILABLE', 5);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(6, 'Xanh', '["img_6.jpg", "img_2.jpg"]', -48369.52, 'L', 'SKU0006', 'AVAILABLE', 2);
+(6, 'Tím', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316788/BPL0044-1-pink-1_c4mryv.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316790/BPL0044-1-pink-2_lbhfxz.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316788/BPL0044-1-pink-3_gqcj8i.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316788/BPL0044-1-pink-4_xzvp6d.jpg"]', 45389.39, 'XL', 'SKU0005', 'AVAILABLE', 5);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(7, 'Đỏ', '["img_7.jpg", "img_2.jpg"]', 10018.51, 'S', 'SKU0007', 'AVAILABLE', 2);
+(7, 'Xanh lá cây', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316786/BPL0044-1-green-1_goye0k.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316787/BPL0044-1-green-2_zopvk9.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316787/BPL0044-1-green-3_e7bq9b.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316789/BPL0044-1-green-4_wj3r03.jpg"]', 45389.39, 'XL', 'SKU0005', 'AVAILABLE', 5);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(8, 'Trắng', '["img_8.jpg", "img_2.jpg"]', 19236.79, 'XL', 'SKU0008', 'AVAILABLE', 2);
+(8, 'Nâu', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316785/BPL0044-1-brown-1_jjwkfb.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316785/BPL0044-1-brown-2_gisast.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316785/BPL0044-1-brown-3_evkvcc.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316786/BPL0044-1-brown-4_sxfcoi.jpg"]', 45389.39, 'XL', 'SKU0005', 'AVAILABLE', 5);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(9, 'Đỏ', '["img_9.jpg", "img_2.jpg"]', 16494.97, 'L', 'SKU0009', 'AVAILABLE', 3);
+(9, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316783/BPL0044-1-black-1_z6o2ab.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316783/BPL0044-1-black-2_cyt3jr.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316783/BPL0044-1-black-3_aieo2n.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316783/BPL0044-1-black-4_wflh2y.jpg"]', 45389.39, 'XL', 'SKU0005', 'AVAILABLE', 5);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(10, 'Đỏ', '["img_10.jpg", "img_2.jpg"]', -21071.98, 'L', 'SKU0010', 'AVAILABLE', 3);
+(10, 'Trắng', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-white-2_hhxwpg.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-white-3_exhxnn.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-white-4_u5ykdt.jpg"]', -48369.52, 'L', 'SKU0006', 'AVAILABLE', 6);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(11, 'Đen', '["img_11.jpg", "img_2.jpg"]', -48187.76, 'XL', 'SKU0011', 'AVAILABLE', 3);
+(11, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316790/BPL0045-1-black-1_vqafmr.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-black-2_bipbkc.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316790/BPL0045-1-black-3_ymmrb0.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-black-4_fuzwlp.jpg"]', -48369.52, 'L', 'SKU0006', 'AVAILABLE', 6);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(12, 'Đen', '["img_12.jpg", "img_2.jpg"]', -39921.53, 'L', 'SKU0012', 'AVAILABLE', 3);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUESproduct_variants
-(13, 'Xanh', '["img_13.jpg", "img_2.jpg"]', -14024.07, 'XL', 'SKU0013', 'AVAILABLE', 4);
+(12, 'Tím', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316793/GSS0173-1-pink-2_aihq0k.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316793/GSS0173-1-pink-3_qytnay.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316794/GSS0173-1-pink-4_gg1g68.jpg"]', 10018.51, 'S', 'SKU0007', 'AVAILABLE', 7);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(14, 'Trắng', '["img_14.jpg", "img_2.jpg"]', 21942.42, 'XL', 'SKU0014', 'AVAILABLE', 4);
+(13, 'Xám', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316792/GSS0173-1-gray-1_lsrw73.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316793/GSS0173-1-gray-2_adtjzv.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316792/GSS0173-1-gray-3_edujxw.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316793/GSS0173-1-gray-4_qchy5i.jpg"]', 10018.51, 'S', 'SKU0007', 'AVAILABLE', 7);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(15, 'Đen', '["img_15.jpg", "img_2.jpg"]', 32637.15, 'S', 'SKU0015', 'AVAILABLE', 4);
+(14, 'Xanh navy', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316794/GJV0038-1DN-navy-2_t8uwws.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316795/GJV0038-1DN-navy-3_lfwx68.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316796/GJV0038-1DN-navy-4_j41usg.jpg"]', 19236.79, 'XL', 'SKU0008', 'AVAILABLE', 8);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(16, 'Đen', '["img_16.jpg", "img_2.jpg"]', -26764.92, 'S', 'SKU0016', 'AVAILABLE', 4);
+(15, 'Navy', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316767/GPT0109-1-Navy-3_anxq0n.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316767/GPT0109-1-Navy-4_xggnfl.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316769/GPT0109-1-Navy-2_eg2ml4.jpg"]', 16494.97, 'L', 'SKU0009', 'AVAILABLE',9);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(17, 'Xanh', '["img_17.jpg", "img_2.jpg"]', 25822.99, 'S', 'SKU0017', 'AVAILABLE', 5);
+(16, 'Xanh rêu', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0040-1DM-mossgreen-2_ban8np.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0040-1DM-mossgreen-3_c8kkou.jpg"]', -21071.98, 'L', 'SKU0010', 'AVAILABLE', 10);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(18, 'Xanh', '["img_18.jpg", "img_2.jpg"]', -46516.73, 'L', 'SKU0018', 'AVAILABLE', 5);
+(17, 'Navy', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316765/GCN0042-1-navy-2_zziuuh.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GCN0042-1-navy-3_sj0pfx.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316765/GCN0042-1-navy-4_snpkyu.jpg"]', -48187.76, 'XL', 'SKU0011', 'AVAILABLE', 11);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(19, 'Đỏ', '["img_19.jpg", "img_2.jpg"]', 40003.95, 'L', 'SKU0019', 'AVAILABLE', 5);
+(18, 'Cam', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GCN0042-1-orange-1_cqtk4m.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0042-1-orange-2_u93dt9.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316765/GCN0042-1-orange-3_zfqwti.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GCN0042-1-orange-4_r8dkky.jpg"]', -48187.76, 'XL', 'SKU0011', 'AVAILABLE', 11);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(20, 'Đen', '["img_20.jpg", "img_2.jpg"]', -17276.69, 'S', 'SKU0020', 'AVAILABLE', 5);
+(19, 'Xám', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GPV0037-1DR-gray-2_fx1jkd.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GPV0037-1DR-gray-3_htfdfv.jpg"]', -39921.53, 'L', 'SKU0012', 'AVAILABLE', 12);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(21, 'Đen', '["img_21.jpg", "img_2.jpg"]', -21366.53, 'S', 'SKU0021', 'AVAILABLE', 6);
+(20, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316768/BBL0025-1-black-2_zvvyut.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316768/BBL0025-1-black-3_wnd9pw.jpg"]', -14024.07, 'XL', 'SKU0013', 'AVAILABLE', 13);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(22, 'Đen', '["img_22.jpg", "img_2.jpg"]', -44563.49, 'XL', 'SKU0022', 'AVAILABLE', 6);
+(21, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316769/OLD0003-1-black-2_zbiswx.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316770/OLD0003-1-black-3_zfvn7g.jpg"]', 21942.42, 'XL', 'SKU0014', 'AVAILABLE', 14);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(23, 'Trắng', '["img_23.jpg", "img_2.jpg"]', -1841.61, 'L', 'SKU0023', 'AVAILABLE', 6);
+(22, 'Đỏ', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316769/OLD0003-1-red-1_i4hhuj.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316769/OLD0003-1-red-2_dbram2.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316770/OLD0003-1-red-3_v5orsi.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316770/OLD0003-1-red-4_s9atzn.jpg"]', 21942.42, 'XL', 'SKU0014', 'AVAILABLE', 14);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(24, 'Đen', '["img_24.jpg", "img_2.jpg"]', 43187.84, 'L', 'SKU0024', 'AVAILABLE', 6);
+(23, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316776/BBB0014-1-black-2_xuqe4t.png", "https://res.cloudinary.com/duffcwady/image/upload/v1761316772/BBB0014-1-black-3_rxifet.png", "https://res.cloudinary.com/duffcwady/image/upload/v1761316771/BBB0014-1-black-4_a5vgz3.png"]', 32637.15, 'S', 'SKU0015', 'AVAILABLE', 15);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(25, 'Đỏ', '["img_25.jpg", "img_2.jpg"]', -20462.19, 'M', 'SKU0025', 'AVAILABLE', 7);
+(24, 'Sữa', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316772/DLD0175-1-milk-2_gmlg9f.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316772/DLD0175-1-milk-3_gbensp.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316773/DLD0175-1-milk-4_pgjsfd.jpg"]', -26764.92, 'S', 'SKU0016', 'AVAILABLE', 16);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(26, 'Đỏ', '["img_26.jpg", "img_2.jpg"]', 16521.59, 'M', 'SKU0026', 'AVAILABLE', 7);
+(25, 'Hồng', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316773/GTL0014-1-pink-2_wfoiw1.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316774/GTL0014-1-pink-3_hnd70d.jpg"]', 25822.99, 'S', 'SKU0017', 'AVAILABLE', 17);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(27, 'Trắng', '["img_27.jpg", "img_2.jpg"]', -35472.55, 'L', 'SKU0027', 'AVAILABLE', 7);
+(26, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316774/BCL0009-1-black-2_c7c5fv.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316774/BCL0009-1-black-3_ze5aqo.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316774/BCL0009-1-black-4_gqekk9.jpg"]', -46516.73, 'L', 'SKU0018', 'AVAILABLE', 18);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(28, 'Đen', '["img_28.jpg", "img_2.jpg"]', -38117.44, 'M', 'SKU0028', 'AVAILABLE', 7);
+(27, 'Xanh navy', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316774/BCL0009-1-navy-1_zcztuf.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316774/BCL0009-1-navy-2_tfjyok.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316775/BCL0009-1-navy-3_ssgwrp.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316775/BCL0009-1-navy-4_oxa5ej.jpg"]', -46516.73, 'L', 'SKU0018', 'AVAILABLE', 18);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(29, 'Trắng', '["img_29.jpg", "img_2.jpg"]', -40687.08, 'XL', 'SKU0029', 'AVAILABLE', 8);
+(28, 'Vàng', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-3_vqhs93.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-2_dwr2nz.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-4_hyg3c8.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-4_hyg3c8.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316777/GWL0060-1-yellow-5_c4hyxo.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316778/GWL0060-1-yellow-6_aosnk0.jpg"]', 40003.95, 'L', 'SKU0019', 'AVAILABLE', 19);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(30, 'Trắng', '["img_30.jpg", "img_2.jpg"]', -49518.04, 'M', 'SKU0030', 'AVAILABLE', 8);
+(29, 'Đỏ', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316775/GWL0060-1-red-1_hgvxol.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316775/GWL0060-1-red-3_hwfl6r.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316775/GWL0060-1-red-2_hs0zob.jpg"]', 40003.95, 'L', 'SKU0019', 'AVAILABLE', 19);
 INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(31, 'Xanh', '["img_31.jpg", "img_2.jpg"]', -48783.25, 'S', 'SKU0031', 'AVAILABLE', 8);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(32, 'Đỏ', '["img_32.jpg", "img_2.jpg"]', -29716.94, 'XL', 'SKU0032', 'AVAILABLE', 8);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(33, 'Đỏ', '["img_33.jpg", "img_2.jpg"]', -30320.85, 'S', 'SKU0033', 'AVAILABLE', 9);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(34, 'Đen', '["img_34.jpg", "img_2.jpg"]', -28889.09, 'S', 'SKU0034', 'AVAILABLE', 9);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(35, 'Đỏ', '["img_35.jpg", "img_2.jpg"]', 28454.83, 'M', 'SKU0035', 'AVAILABLE', 9);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(36, 'Đỏ', '["img_36.jpg", "img_2.jpg"]', -5455.4, 'S', 'SKU0036', 'AVAILABLE', 9);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(37, 'Xanh', '["img_37.jpg", "img_2.jpg"]', 43037.54, 'L', 'SKU0037', 'AVAILABLE', 10);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(38, 'Đỏ', '["img_38.jpg", "img_2.jpg"]', 32399.99, 'XL', 'SKU0038', 'AVAILABLE', 10);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(39, 'Xanh', '["img_39.jpg", "img_2.jpg"]', 32404.36, 'M', 'SKU0039', 'AVAILABLE', 10);
-INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
-(40, 'Đen', '["img_40.jpg", "img_2.jpg"]', 42847.59, 'S', 'SKU0040', 'AVAILABLE', 10);
-
+(30, 'Đen', '["https://res.cloudinary.com/duffcwady/image/upload/v1761316778/BWL0017-1-brown-1_esxgky.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316778/BWL0017-1-brown-2_tophzl.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316778/BWL0017-1-brown-3_nrdo1n.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1761316778/BWL0017-1-brown-4_r8nsaj.jpg"]', -17276.69, 'S', 'SKU0020', 'AVAILABLE', 20);
 -- ========================
 -- 8. inventory
 -- ========================
@@ -198,16 +197,6 @@ INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, v
 INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (28, 14, 9, NOW(), 28);
 INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (29, 65, 2, NOW(), 29);
 INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (30, 32, 2, NOW(), 30);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (31, 76, 5, NOW(), 31);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (32, 65, 4, NOW(), 32);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (33, 11, 7, NOW(), 33);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (34, 43, 1, NOW(), 34);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (35, 21, 8, NOW(), 35);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (36, 30, 8, NOW(), 36);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (37, 84, 4, NOW(), 37);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (38, 86, 1, NOW(), 38);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (39, 42, 1, NOW(), 39);
-INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES (40, 83, 1, NOW(), 40);
 
 -- ========================
 -- 9. coupons
@@ -253,22 +242,22 @@ INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid,
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (2, 1, 318181.04, 143271.3, 7, 10);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (3, 2, 765368.19, 599972.49, 1, 11);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (4, 3, 419496.91, 195140.51, 3, 22);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (5, 1, 766601.18, 526605.3, 6, 32);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (6, 3, 296099.68, 442518.51, 10, 34);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (5, 1, 766601.18, 526605.3, 6, 3);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (6, 3, 296099.68, 442518.51, 10, 3);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (7, 2, 522515.26, 115250.38, 8, 5);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (8, 1, 629846.88, 238444.75, 7, 15);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (9, 1, 473826.57, 485265.68, 3, 25);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (10, 1, 783388.14, 420252.11, 1, 14);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (11, 2, 669239.82, 235274.96, 5, 35);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (11, 2, 669239.82, 235274.96, 5, 3);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (12, 1, 439185.03, 544289.78, 3, 16);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (13, 2, 402523.62, 534818.5, 3, 32);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (14, 3, 723522.15, 264030.75, 2, 34);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (13, 2, 402523.62, 534818.5, 3, 3);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (14, 3, 723522.15, 264030.75, 2, 3);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (15, 3, 613840.38, 296107.32, 5, 6);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (16, 2, 321384.28, 414279.4, 10, 4);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (17, 3, 660811.6, 572551.98, 7, 31);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (17, 3, 660811.6, 572551.98, 7, 3);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (18, 1, 457161.45, 205295.09, 4, 7);
 INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (19, 3, 600687.7, 348367.75, 8, 18);
-INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (20, 1, 727196.75, 319916.67, 2, 38);
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES (20, 1, 727196.75, 319916.67, 2, 8);
 
 -- ========================
 -- 13. carts
@@ -287,9 +276,9 @@ INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (2, 3, 
 INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (3, 3, 4, 24);
 INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (4, 3, 4, 11);
 INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (5, 1, 3, 9);
-INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (6, 3, 5, 31);
+INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (6, 3, 5, 30);
 INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (7, 2, 1, 17);
-INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (8, 3, 5, 35);
+INSERT INTO cart_items (cart_itemid, quantity, cartid, variantid) VALUES (8, 3, 5, 4);
 
 -- ========================
 -- 15. wishlists

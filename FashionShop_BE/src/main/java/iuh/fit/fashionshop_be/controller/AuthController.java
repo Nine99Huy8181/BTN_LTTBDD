@@ -23,9 +23,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
@@ -58,22 +62,31 @@ public class AuthController {
 
     @PostMapping("/login")
     public ApiResponse<JwtResponse> login(@RequestBody LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
 
-        String email = authentication.getName();
-        String jwt = Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86_400_000)) // 24h
-                .signWith(key)
-                .compact();
+            String email = authentication.getName();
+            String jwt = Jwts.builder()
+                    .setSubject(email)
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + 86_400_000)) // 24h
+                    .signWith(key)
+                    .compact();
 
-        return ApiResponse.<JwtResponse>builder()
-                .code(1000)
-                .message("Login successful")
-                .result(new JwtResponse(jwt))
-                .build();
+            return ApiResponse.<JwtResponse>builder()
+                    .code(1000)
+                    .message("Login successful")
+                    .result(new JwtResponse(jwt))
+                    .build();
+
+        } catch (UsernameNotFoundException | DisabledException e) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTED); // User không tồn tại hoặc bị khóa
+        } catch (BadCredentialsException e) {
+            throw new AppException(ErrorCode.INVALID_ACCOUNT); // Sai thong tin dan nhap
+        } catch (AuthenticationException e) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED); // Các lỗi xác thực khác
+        }
     }
 
     @PostMapping("/register")

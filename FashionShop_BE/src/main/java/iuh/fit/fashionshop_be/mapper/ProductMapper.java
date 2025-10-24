@@ -13,6 +13,8 @@ import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 /*
  * @description:
  * @author: Nguyen Quoc Huy
@@ -24,4 +26,6 @@ public interface ProductMapper {
 
     @Mapping(target = "soldQuantity", expression = "java(productService.getSoldQuantity(product.getProductID()))")
     ProductResponse toProductResponse(Product product, @Context ProductService productService);
+
+    List<ProductResponse> toProductResponseList(List<Product> products, @Context ProductService productService);
 }
