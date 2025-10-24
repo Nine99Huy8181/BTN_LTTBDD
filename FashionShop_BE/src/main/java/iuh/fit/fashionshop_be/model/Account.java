@@ -46,6 +46,9 @@ public class Account {
     @Column(nullable = false)
     private String accountStatus;
 
+    @Column(name = "Image")
+    private String image;
+
     // One-to-One với Customer
     @OneToOne(mappedBy = "account",cascade = CascadeType.ALL)
     @JsonIgnore

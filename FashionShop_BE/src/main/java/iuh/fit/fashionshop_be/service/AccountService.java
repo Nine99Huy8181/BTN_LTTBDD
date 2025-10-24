@@ -12,6 +12,8 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.exception.AppException;
+import iuh.fit.fashionshop_be.exception.ErrorCode;
 import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.model.Admin;
 import iuh.fit.fashionshop_be.model.Customer;
@@ -71,8 +73,7 @@ public class AccountService {
     public Account registerCustomer(String email, String password, String fullName,
                                     String phoneNumber, LocalDate dateOfBirth, String gender) {
         if (accountRepository.findByEmail(email).isPresent()) {
-            System.out.println("Email already exists: " + email);
-            throw new IllegalArgumentException("Email already exists");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         // ✅ B1. Tạo entity nhưng CHƯA lưu ngay
@@ -104,9 +105,8 @@ public class AccountService {
 
     @Transactional
     public Account addAdmin(String email, String password, String fullName, String department, String position) {
-        if (accountRepository.findByEmail(email) != null) {
-            System.out.println("Email already exists: " + email);
-            throw new IllegalArgumentException("Email already exists");
+        if (accountRepository.findByEmail(email).isPresent()) {
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
         Admin admin = Admin.builder()
                 .fullName(fullName)
