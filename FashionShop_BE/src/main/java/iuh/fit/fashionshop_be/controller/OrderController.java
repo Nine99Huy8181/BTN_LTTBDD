@@ -12,11 +12,14 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.OrderCreateRequest;
 import iuh.fit.fashionshop_be.model.Order;
 import iuh.fit.fashionshop_be.service.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -45,7 +48,18 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        return ResponseEntity.status(201).body(orderService.createOrder(order));
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Order> createOrder(@RequestBody OrderCreateRequest req, Principal principal) {
+        Order created = orderService.createOrderFromRequest(req, principal.getName());
+        return ResponseEntity.status(201).body(created);
+    }
+
+    @PutMapping("/orders/{id}/confirm")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER')")
+    public ResponseEntity<Order> confirmOrder(@PathVariable Long id) {
+        Order order = orderService.getOrderById(id);
+        order.setOrderStatus("CONFIRMED");
+        Order updated = orderService.updateOrder(id, order);
+        return ResponseEntity.ok(updated);
     }
 }

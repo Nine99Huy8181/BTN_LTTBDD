@@ -1,9 +1,3 @@
-/*
- * @ (#) AuthController.java     1.0    17-Oct-25
- *
- * Copyright (c) 2025 IUH. All rights reserved.
- */
-
 package iuh.fit.fashionshop_be.controller;
 
 import iuh.fit.fashionshop_be.dto.request.LoginRequest;
@@ -17,11 +11,8 @@ import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.service.AccountService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -36,15 +27,11 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-/*
- * @description:
- * @author: Nguyen Quoc Huy
- * @date:17-Oct-25
- * @version: 1.0
+/**
+ * AuthController — single clean implementation
  */
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -81,11 +68,11 @@ public class AuthController {
                     .build();
 
         } catch (UsernameNotFoundException | DisabledException e) {
-            throw new AppException(ErrorCode.USER_NOT_EXISTED); // User không tồn tại hoặc bị khóa
+            throw new AppException(ErrorCode.USER_NOT_EXISTED);
         } catch (BadCredentialsException e) {
-            throw new AppException(ErrorCode.INVALID_ACCOUNT); // Sai thong tin dan nhap
+            throw new AppException(ErrorCode.INVALID_ACCOUNT);
         } catch (AuthenticationException e) {
-            throw new AppException(ErrorCode.UNAUTHENTICATED); // Các lỗi xác thực khác
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
     }
 
@@ -118,7 +105,15 @@ public class AuthController {
                 .map(auth -> auth.replace("ROLE_", ""))
                 .orElse("CUSTOMER");
 
-        UserResponse response = new UserResponse(authentication.getName(), role);
+        Long accountId = null;
+        try {
+            accountId = accountService.getAccountByEmail(authentication.getName())
+                    .map(Account::getAccountID)
+                    .orElse(null);
+        } catch (Exception ignored) {
+        }
+
+        UserResponse response = new UserResponse(accountId, authentication.getName(), role);
         return ApiResponse.<UserResponse>builder()
                 .code(1000)
                 .message("User info retrieved")
