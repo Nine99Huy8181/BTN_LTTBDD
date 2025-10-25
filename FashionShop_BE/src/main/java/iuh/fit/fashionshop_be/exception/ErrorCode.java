@@ -29,7 +29,8 @@ public enum ErrorCode {
     ROLE_NOT_FOUND(2004, "Role not found", HttpStatus.NOT_FOUND),
     ACCESS_DENIED(1008, "Access denied", HttpStatus.FORBIDDEN),
     INVALID_REQUEST(1009, "Invalid request", HttpStatus.BAD_REQUEST),
-    DATA_INTEGRITY_VIOLATION(1010, "Data integrity violation", HttpStatus.CONFLICT);
+    DATA_INTEGRITY_VIOLATION(1010, "Data integrity violation", HttpStatus.CONFLICT),
+    INVENTORY_INSUFFICIENT(3001, "Insufficient inventory", HttpStatus.BAD_REQUEST);
 
 
     private final int code;

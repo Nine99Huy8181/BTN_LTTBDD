@@ -24,4 +24,10 @@ public class AppException extends RuntimeException {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
+
+    // Allow creating AppException with a custom message while keeping an ErrorCode
+    public AppException(ErrorCode errorCode, String message) {
+        super(message != null ? message : errorCode.getMessage());
+        this.errorCode = errorCode;
+    }
 }

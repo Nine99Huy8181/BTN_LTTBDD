@@ -12,8 +12,11 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.ReviewDTO;
 import iuh.fit.fashionshop_be.model.Review;
 import iuh.fit.fashionshop_be.service.ReviewService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,8 +48,14 @@ public class ReviewController {
     }
 
     @PostMapping("/reviews")
-    public ResponseEntity<Review> createReview(@RequestBody Review review) {
-        return ResponseEntity.status(201).body(reviewService.createReview(review));
+    public ResponseEntity<Review> createReview(@RequestBody ReviewDTO reviewDTO,
+                                               @AuthenticationPrincipal UserDetails principal) {
+        // principal should be non-null because endpoint is protected; extra check to be safe
+        if (principal == null) {
+            return ResponseEntity.status(401).build();
+        }
+        Review saved = reviewService.createReview(reviewDTO, principal.getUsername());
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/reviews/{id}")

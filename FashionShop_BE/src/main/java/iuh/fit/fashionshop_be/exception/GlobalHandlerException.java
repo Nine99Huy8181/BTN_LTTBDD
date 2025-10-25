@@ -37,7 +37,8 @@ public class GlobalHandlerException {
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ApiResponse<Object>> handlingAppException(AppException exception) {
         ErrorCode errorCode = exception.getErrorCode();
-        return buildResponse(errorCode);
+        // Use the exception's message (may be a custom message) when available
+        return buildResponse(errorCode, exception.getMessage()); // Sử dụng message từ exception(Khoa)
     }
 
     @ExceptionHandler(AccessDeniedException.class)

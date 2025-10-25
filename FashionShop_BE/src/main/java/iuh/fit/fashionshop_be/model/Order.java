@@ -62,6 +62,10 @@ public class Order {
     @Column(name = "Notes")
     private String notes;
 
+    // raw FK column for Address so we can set it from DTO (shippingAddress is read-only mapping)
+    @Column(name = "AddressID")
+    private Long addressID;
+
     // Quan hệ
     @ManyToOne
     @JoinColumn(name = "AddressID", insertable = false, updatable = false)

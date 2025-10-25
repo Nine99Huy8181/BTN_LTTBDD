@@ -18,9 +18,23 @@ import lombok.Data;
 public class UserResponse {
     private String userName;
     private String role;
+    private Long accountId;
 
-    public UserResponse(String userName, String role) {
+    public UserResponse(Long accountId, String userName, String role) {
+        this.accountId = accountId;
         this.userName = userName;
         this.role = role.replace("[", "").replace("]", "");
+    }
+
+    // Default constructor for serialization
+    public UserResponse() {
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }
