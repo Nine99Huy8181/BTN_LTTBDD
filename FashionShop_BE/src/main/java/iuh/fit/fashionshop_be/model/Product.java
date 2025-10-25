@@ -67,6 +67,9 @@ public class Product {
     @Column(name = "IsFeatured")
     private Boolean isFeatured;
 
+    @Column(name = "Image")
+    private String image;
+
     // Quan hệ
     @ManyToOne
     @JoinColumn(name = "CategoryID", insertable = false, updatable = false)

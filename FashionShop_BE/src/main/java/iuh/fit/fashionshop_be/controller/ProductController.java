@@ -12,8 +12,11 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.response.ProductResponse;
 import iuh.fit.fashionshop_be.model.Product;
 import iuh.fit.fashionshop_be.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,41 +24,53 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-
+    // === Danh sách: trả về List<ProductResponse> ===
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
-    }
-
-    @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+        List<ProductResponse> responses = productService.getAllProductResponses();
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/products/category/{categoryId}")
-    public ResponseEntity<List<Product>> getProductsByCategoryId(@PathVariable Long categoryId) {
-        return ResponseEntity.ok(productService.getProductsByCategoryId(categoryId));
+    public ResponseEntity<List<ProductResponse>> getProductsByCategoryId(@PathVariable Long categoryId) {
+        List<ProductResponse> responses = productService.getProductResponsesByCategoryId(categoryId);
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/products/brand/{brand}")
-    public ResponseEntity<List<Product>> getProductsByBrand(@PathVariable String brand) {
-        return ResponseEntity.ok(productService.getProductsByBrand(brand));
+    public ResponseEntity<List<ProductResponse>> getProductsByBrand(@PathVariable String brand) {
+        List<ProductResponse> responses = productService.getProductResponsesByBrand(brand);
+        return ResponseEntity.ok(responses);
     }
 
+    // === Chi tiết: trả về Product ===
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    // === Tạo / Cập nhật ===
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.status(201).body(productService.createProduct(product));
+        Product saved = productService.createProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/products/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
-        return ResponseEntity.ok(productService.updateProduct(id, productDetails));
+        Product updated = productService.updateProduct(id, productDetails);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
 }

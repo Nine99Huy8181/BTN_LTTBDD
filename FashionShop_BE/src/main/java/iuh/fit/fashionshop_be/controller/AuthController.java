@@ -6,20 +6,30 @@
 
 package iuh.fit.fashionshop_be.controller;
 
-import iuh.fit.fashionshop_be.dto.JwtResponse;
-import iuh.fit.fashionshop_be.dto.LoginRequest;
-import iuh.fit.fashionshop_be.dto.RegisterRequest;
-import iuh.fit.fashionshop_be.dto.UserResponse;
+import iuh.fit.fashionshop_be.dto.request.LoginRequest;
+import iuh.fit.fashionshop_be.dto.request.RegisterRequest;
+import iuh.fit.fashionshop_be.dto.response.ApiResponse;
+import iuh.fit.fashionshop_be.dto.response.JwtResponse;
+import iuh.fit.fashionshop_be.dto.response.UserResponse;
+import iuh.fit.fashionshop_be.exception.AppException;
+import iuh.fit.fashionshop_be.exception.ErrorCode;
 import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.service.AccountService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
@@ -34,76 +44,85 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final AccountService accountService;
-    private static final String SECRET_KEY = "your-very-long-secret-key-at-least-32-characters-long-for-hs256";
-    private static final SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    private final SecretKey key;
 
-    public AuthController(AuthenticationManager authenticationManager, AccountService accountService) {
+    @Autowired
+    public AuthController(AuthenticationManager authenticationManager,
+                          AccountService accountService,
+                          @Value("${jwt.secret}") String secretKey) {
         this.authenticationManager = authenticationManager;
         this.accountService = accountService;
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ApiResponse<JwtResponse> login(@RequestBody LoginRequest request) {
         try {
-            // Authenticate với email
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
 
-            // LẤY EMAIL ĐẦY ĐỦ TỪ AUTHENTICATION (không dùng request.getUserName())
             String email = authentication.getName();
-
-            System.out.println("Login successful - Email: " + email); // Debug
-
             String jwt = Jwts.builder()
-                    .setSubject(email)  // ← LƯU EMAIL ĐẦY ĐỦ
+                    .setSubject(email)
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                    .setExpiration(new Date(System.currentTimeMillis() + 86_400_000)) // 24h
                     .signWith(key)
                     .compact();
 
-            System.out.println("Generated JWT subject: " +
-                    Jwts.parser().verifyWith(key).build()
-                            .parseSignedClaims(jwt).getPayload().getSubject()); // Debug
+            return ApiResponse.<JwtResponse>builder()
+                    .code(1000)
+                    .message("Login successful")
+                    .result(new JwtResponse(jwt))
+                    .build();
 
-            if (jwt.split("\\.").length != 3) {
-                throw new IllegalStateException("Generated JWT is invalid");
-            }
-
-            return ResponseEntity.ok(new JwtResponse(jwt));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Invalid credentials: " + e.getMessage());
+        } catch (UsernameNotFoundException | DisabledException e) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTED); // User không tồn tại hoặc bị khóa
+        } catch (BadCredentialsException e) {
+            throw new AppException(ErrorCode.INVALID_ACCOUNT); // Sai thong tin dan nhap
+        } catch (AuthenticationException e) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED); // Các lỗi xác thực khác
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        try {
-            accountService.registerCustomer(request.getEmail(), request.getPassword(),
-                    request.getFullName(), request.getPhoneNumber(),
-                    request.getDateOfBirth(), request.getGender());
-            return ResponseEntity.ok("Registration successful");
-        } catch (Exception e) {
-            // Return the original exception message for clearer debugging
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ApiResponse<String> register(@RequestBody RegisterRequest request) {
+        accountService.registerCustomer(
+                request.getEmail(),
+                request.getPassword(),
+                request.getFullName(),
+                request.getPhoneNumber(),
+                request.getDateOfBirth(),
+                request.getGender()
+        );
+        return ApiResponse.<String>builder()
+                .code(1000)
+                .message("Registration successful")
+                .result(null)
+                .build();
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String role = authentication.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .findFirst()
-                    .map(auth -> auth.replace("ROLE_", ""))
-                    .orElse("CUSTOMER");
-
-            // Trả về email đầy đủ thay vì userName rút gọn
-            return ResponseEntity.ok(new UserResponse(authentication.getName(), role));
+    public ApiResponse<UserResponse> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
+
+        String role = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .map(auth -> auth.replace("ROLE_", ""))
+                .orElse("CUSTOMER");
+
+        UserResponse response = new UserResponse(authentication.getName(), role);
+        return ApiResponse.<UserResponse>builder()
+                .code(1000)
+                .message("User info retrieved")
+                .result(response)
+                .build();
     }
 }

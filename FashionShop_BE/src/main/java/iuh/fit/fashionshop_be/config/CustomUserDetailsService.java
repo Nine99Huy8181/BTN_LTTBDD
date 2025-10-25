@@ -6,6 +6,8 @@
 
 package iuh.fit.fashionshop_be.config;
 
+import iuh.fit.fashionshop_be.exception.AppException;
+import iuh.fit.fashionshop_be.exception.ErrorCode;
 import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println("loadUserByUsername called with email: " + email);
 
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> {
-                    System.out.println("User not found: " + email);
-                    return new UsernameNotFoundException("User not found: " + email);
-                });
+                .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_EXISTED.getMessage()));
 
         System.out.println("User found: " + account.getEmail() + ", Role: " + account.getRole());
 
