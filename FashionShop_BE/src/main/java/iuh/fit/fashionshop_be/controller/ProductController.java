@@ -73,4 +73,17 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
+
+    // === PHẦN THÊM MỚI ===
+    @GetMapping("/products/search")
+    public ResponseEntity<List<ProductResponse>> searchProducts(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Float minPrice,
+            @RequestParam(required = false) Float maxPrice,
+            @RequestParam(required = false) Float minRating,
+            @RequestParam(required = false) Float maxRating
+    ) {
+        List<ProductResponse> responses = productService.searchProducts(keyword, minPrice, maxPrice, minRating, maxRating);
+        return ResponseEntity.ok(responses);
+    }
 }

@@ -83,4 +83,12 @@ public class ProductService {
     public Integer getSoldQuantity(Long productId) {
         return productRepository.getSoldQuantity(productId);
     }
+
+    //Huy
+    public List<ProductResponse> searchProducts(String keyword, Float minPrice, Float maxPrice, Float minRating, Float maxRating) {
+        // Gọi phương thức repository mới
+        List<Product> products = productRepository.searchProducts(keyword, minPrice, maxPrice, minRating, maxRating);
+        // Map kết quả sang Response
+        return productMapper.toProductResponseList(products, this);
+    }
 }

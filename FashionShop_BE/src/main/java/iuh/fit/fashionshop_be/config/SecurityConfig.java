@@ -64,7 +64,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 1. Public endpoints
                         .requestMatchers("/api/auth/**",
+                                "/api/categories",
                                 "/api/products",
+                                "/api/products/search",
+                                "/api/variants",
+                                "/api/variants/product/{id}",
                                 "/api/products/{id}",
                                 "/api/products/category/{categoryId}",
                                 "/api/products/brand/{brand}").permitAll()

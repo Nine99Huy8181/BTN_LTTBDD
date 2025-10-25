@@ -12,6 +12,8 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.response.ProductVariantResponse;
+import iuh.fit.fashionshop_be.mapper.ProductVariantMapper;
 import iuh.fit.fashionshop_be.model.ProductVariant;
 import iuh.fit.fashionshop_be.repository.ProductVariantRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,29 +25,44 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductVariantService {
     private final ProductVariantRepository variantRepository;
+    private final ProductVariantMapper variantMapper;
+    private final ProductVariantRepository productVariantRepository;
 
-    public List<ProductVariant> getAllVariants() {
-        return variantRepository.findAll();
+    // Phương thức private helper để tìm entity, dùng nội bộ
+    private ProductVariant findVariantById(Long id) {
+        return variantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ProductVariant not found with id: " + id));
     }
 
-    public ProductVariant getVariantById(Long id) {
-        return variantRepository.findById(id).orElseThrow(() -> new RuntimeException("ProductVariant not found"));
+    public List<ProductVariantResponse> getAllVariants() {
+        List<ProductVariant> variants = variantRepository.findAll();
+        return variantMapper.toProductVariantResponseList(variants, this); // <--- Map sang List DTO
     }
 
-    public List<ProductVariant> getVariantsByProductId(Long productID) {
-        return variantRepository.findByProductProductID(productID);
+    public ProductVariantResponse getVariantById(Long id) {
+        ProductVariant variant = findVariantById(id); // <--- Dùng helper
+        return variantMapper.toProductVariantResponse(variant, this); // <--- Map sang DTO
     }
 
-    public List<ProductVariant> getVariantsBySku(String sku) {
-        return variantRepository.findBySku(sku);
+    public List<ProductVariantResponse> getVariantsByProductId(Long productID) {
+        List<ProductVariant> variants = variantRepository.findByProductProductID(productID);
+        return variantMapper.toProductVariantResponseList(variants, this); // <--- Map sang List DTO
     }
 
-    public ProductVariant createVariant(ProductVariant variant) {
-        return variantRepository.save(variant);
+    public List<ProductVariantResponse> getVariantsBySku(String sku) {
+        List<ProductVariant> variants = variantRepository.findBySku(sku);
+        return variantMapper.toProductVariantResponseList(variants, this); // <--- Map sang List DTO
     }
 
-    public ProductVariant updateVariant(Long id, ProductVariant variantDetails) {
-        ProductVariant variant = getVariantById(id);
+    public ProductVariantResponse createVariant(ProductVariant variant) {
+        ProductVariant savedVariant = variantRepository.save(variant);
+        return variantMapper.toProductVariantResponse(savedVariant, this); // <--- Map sang DTO
+    }
+
+    public ProductVariantResponse updateVariant(Long id, ProductVariant variantDetails) {
+        ProductVariant variant = findVariantById(id); // <--- Dùng helper để lấy entity
+
+        // Cập nhật các trường từ DTO
         variant.setProduct(variantDetails.getProduct());
         variant.setSku(variantDetails.getSku());
         variant.setSize(variantDetails.getSize());
@@ -53,10 +70,17 @@ public class ProductVariantService {
         variant.setPriceAdjustment(variantDetails.getPriceAdjustment());
         variant.setImages(variantDetails.getImages());
         variant.setStatus(variantDetails.getStatus());
-        return variantRepository.save(variant);
+
+        ProductVariant updatedVariant = variantRepository.save(variant);
+        return variantMapper.toProductVariantResponse(updatedVariant, this); // <--- Map sang DTO
+    }
+    public Integer getAvailableStockByVariant(Long id){
+        return productVariantRepository.getAvailableStockByVariant(id);
     }
 
     public void deleteVariant(Long id) {
-        variantRepository.deleteById(id);
+        // Đảm bảo variant tồn tại trước khi xóa
+        ProductVariant variant = findVariantById(id);
+        variantRepository.delete(variant);
     }
 }

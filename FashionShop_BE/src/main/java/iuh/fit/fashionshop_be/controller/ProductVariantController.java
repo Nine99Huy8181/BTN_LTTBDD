@@ -12,6 +12,7 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.response.ProductVariantResponse;
 import iuh.fit.fashionshop_be.model.ProductVariant;
 import iuh.fit.fashionshop_be.service.ProductVariantService;
 import org.springframework.http.ResponseEntity;
@@ -30,27 +31,34 @@ public class ProductVariantController {
     }
 
     @GetMapping("/variants")
-    public ResponseEntity<List<ProductVariant>> getAllVariants() {
+    public ResponseEntity<List<ProductVariantResponse>> getAllVariants() { // <--- Thay đổi kiểu trả về
         return ResponseEntity.ok(variantService.getAllVariants());
     }
 
     @GetMapping("/variants/{id}")
-    public ResponseEntity<ProductVariant> getVariantById(@PathVariable Long id) {
+    public ResponseEntity<ProductVariantResponse> getVariantById(@PathVariable Long id) { // <--- Thay đổi kiểu trả về
         return ResponseEntity.ok(variantService.getVariantById(id));
     }
 
     @GetMapping("/variants/product/{productId}")
-    public ResponseEntity<List<ProductVariant>> getVariantsByProductId(@PathVariable Long productId) {
+    public ResponseEntity<List<ProductVariantResponse>> getVariantsByProductId(@PathVariable Long productId) { // <--- Thay đổi kiểu trả về
         return ResponseEntity.ok(variantService.getVariantsByProductId(productId));
     }
 
     @PostMapping("/variants")
-    public ResponseEntity<ProductVariant> createVariant(@RequestBody ProductVariant variant) {
+    public ResponseEntity<ProductVariantResponse> createVariant(@RequestBody ProductVariant variant) { // <--- Thay đổi kiểu trả về
         return ResponseEntity.status(201).body(variantService.createVariant(variant));
     }
 
     @PutMapping("/variants/{id}")
-    public ResponseEntity<ProductVariant> updateVariant(@PathVariable Long id, @RequestBody ProductVariant variantDetails) {
+    public ResponseEntity<ProductVariantResponse> updateVariant(@PathVariable Long id, @RequestBody ProductVariant variantDetails) { // <--- Thay đổi kiểu trả về
         return ResponseEntity.ok(variantService.updateVariant(id, variantDetails));
     }
+
+    // (Bạn có thể thêm endpoint cho delete nếu cần)
+    // @DeleteMapping("/variants/{id}")
+    // public ResponseEntity<Void> deleteVariant(@PathVariable Long id) {
+    //     variantService.deleteVariant(id);
+    //     return ResponseEntity.noContent().build();
+    // }
 }

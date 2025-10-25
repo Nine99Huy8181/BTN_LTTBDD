@@ -12,6 +12,8 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.response.CategoryResponse;
+import iuh.fit.fashionshop_be.mapper.CategoryMapper;
 import iuh.fit.fashionshop_be.model.Category;
 import iuh.fit.fashionshop_be.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,21 +25,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryResponse> getAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        return categoryMapper.toCategoryResponseList(categories);
     }
 
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+    public CategoryResponse getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        return categoryMapper.toCategoryResponse(category);
     }
 
-    public List<Category> getSubCategoriesByParentId(Long parentCategoryID) {
-        return categoryRepository.findByParentCategoryID(parentCategoryID);
+    public List<CategoryResponse> getSubCategoriesByParentId(Long parentCategoryID) {
+        List<Category> subCategories = categoryRepository.findByParentCategoryID(parentCategoryID);
+        return categoryMapper.toCategoryResponseList(subCategories);
     }
 
-    public List<Category> searchCategoriesByName(String name) {
-        return categoryRepository.findByNameContainingIgnoreCase(name);
+    public List<CategoryResponse> searchCategoriesByName(String name) {
+        List<Category> categories = categoryRepository.findByNameContainingIgnoreCase(name);
+        return categoryMapper.toCategoryResponseList(categories);
     }
 
     public Category createCategory(Category category) {
@@ -45,7 +53,8 @@ public class CategoryService {
     }
 
     public Category updateCategory(Long id, Category categoryDetails) {
-        Category category = getCategoryById(id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
         category.setName(categoryDetails.getName());
         category.setParent(categoryDetails.getParent());
         category.setDescription(categoryDetails.getDescription());

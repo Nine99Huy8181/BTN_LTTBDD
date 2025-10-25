@@ -26,6 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByBrand(String brand);
     List<Product> findByStatus(String status);
 
+    //Huy
     @Query("SELECT COALESCE(SUM(oi.quantity), 0) " +
             "FROM OrderItem oi " +
             "JOIN oi.variant pv " +
@@ -33,4 +34,19 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE pv.product.productID = :productId " +
             "AND o.orderStatus = 'DELIVERED'")
     Integer getSoldQuantity(@Param("productId") Long productId);
+    @Query("SELECT p FROM Product p WHERE " +
+            "(:keyword IS NULL OR (LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(p.brand) LIKE LOWER(CONCAT('%', :keyword, '%')))) " +
+            "AND (:minPrice IS NULL OR p.basePrice >= :minPrice) " +
+            "AND (:maxPrice IS NULL OR p.basePrice <= :maxPrice) " +
+            "AND (:minRating IS NULL OR p.averageRating >= :minRating) " +
+            "AND (:maxRating IS NULL OR p.averageRating <= :maxRating)")
+    List<Product> searchProducts(
+            @Param("keyword") String keyword,
+            @Param("minPrice") Float minPrice,
+            @Param("maxPrice") Float maxPrice,
+            @Param("minRating") Float minRating,
+            @Param("maxRating") Float maxRating
+    );
 }

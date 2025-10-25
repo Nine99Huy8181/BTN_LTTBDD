@@ -14,6 +14,8 @@ package iuh.fit.fashionshop_be.repository;
  */
 import iuh.fit.fashionshop_be.model.ProductVariant;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +24,8 @@ import java.util.List;
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long> {
     List<ProductVariant> findByProductProductID(Long productID);
     List<ProductVariant> findBySku(String sku);
+    @Query("SELECT COALESCE(i.quantity - i.reservedQuantity, 0) " +
+            "FROM Inventory i " +
+            "WHERE i.variant.variantID = :variantId")
+    Integer getAvailableStockByVariant(@Param("variantId") Long variantId);
 }
