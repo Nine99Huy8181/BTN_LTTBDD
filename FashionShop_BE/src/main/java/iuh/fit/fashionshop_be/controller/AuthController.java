@@ -99,6 +99,8 @@ public class AuthController {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
 
+        String email = authentication.getName();
+
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .findFirst()
@@ -106,6 +108,7 @@ public class AuthController {
                 .orElse("CUSTOMER");
 
         Long accountId = null;
+        Long customerId = null;
         try {
             accountId = accountService.getAccountByEmail(authentication.getName())
                     .map(Account::getAccountID)
@@ -114,6 +117,25 @@ public class AuthController {
         }
 
         UserResponse response = new UserResponse(accountId, authentication.getName(), role);
+
+
+        try {
+            // Lấy Account từ email
+            Account account = accountService.getAccountByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Account not found"));
+
+            accountId = account.getAccountID();
+
+            // Nếu là CUSTOMER, lấy customerId từ quan hệ OneToOne
+            if ("CUSTOMER".equals(role) && account.getCustomer() != null) {
+                customerId = account.getCustomer().getCustomerID();
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching customer info: " + e.getMessage());
+        }
+
+        response = new UserResponse(email, role, accountId, customerId);
+
         return ApiResponse.<UserResponse>builder()
                 .code(1000)
                 .message("User info retrieved")

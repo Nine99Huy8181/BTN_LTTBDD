@@ -65,78 +65,103 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                // 1. Public endpoints
-                .requestMatchers(
-                        "/api/auth/**",
-                        "/api/categories",
-                        "/api/products",
-                        "/api/products/search",
-                        "/api/variants",
-                        "/api/variants/product/{id}",
-                        "/api/products/{id}",
-                        "/api/products/category/{categoryId}",
-                        "/api/products/brand/{brand}",
-                         "/ws/**")
-                        .permitAll()
-                // Khoa
-                // Allow customers to create orders (method-based rules before admin wildcard)
-                .requestMatchers(HttpMethod.POST, "/api/orders").hasRole("CUSTOMER")
-                .requestMatchers(HttpMethod.GET, "/api/orders/customer/{customerId}").hasRole("CUSTOMER")
 
-                // 2. SUPER endpoints - ĐẶT TRƯỚC CÁC ROLE KHÁC
-                .requestMatchers("/api/accounts",           // GET /api/accounts
-                    "/api/accounts/**",          // CRUD operations
-                    "/api/admins/**",
-                    "/api/review-responses/**").hasRole("SUPER")
+                        // ==============================================================
+                        // 1. PUBLIC ENDPOINTS – AI CŨNG TRUY CẬP ĐƯỢC (không cần login)
+                        // ==============================================================
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/api/categories",
+                                "/api/categories/**",
+                                "/api/products",
+                                "/api/products/**",
+                                "/api/products/search",
+                                "/api/products/category/{categoryId}",
+                                "/api/products/brand/{brand}",
+                                "/api/variants",
+                                "/api/variants/**",
+                                "/api/variants/product/{id}",
+                                "/ws/**"
+                        ).permitAll()
 
-                // 3. ADMIN endpoints
-                // Note: do NOT include "/api/customers/**" here because customer endpoints are authorized for CUSTOMER role below.
-                .requestMatchers(
-                    "/api/admins",
-                    "/api/admins/{id}",
-                    "/api/addresses/**",
-                    "/api/products/**",
-                    "/api/variants/**",
-                    "/api/orders/**",
-                    "/api/order-items/**",
-                    "/api/coupons/**",
-                    "/api/categories/**",
-                    "/api/inventories/**",
-                    "/api/shippings/**").hasRole("ADMIN")
+                        // ==============================================================
+                        // 2. SUPER ADMIN – QUYỀN CAO NHẤT (phải đặt TRƯỚC)
+                        // ==============================================================
+                        .requestMatchers(
+                                "/api/accounts",
+                                "/api/accounts/**",
+                                "/api/admins/**",
+                                "/api/review-responses/**"
+                        ).hasRole("SUPER")
 
-                // 4. CUSTOMER endpoints - ĐẶT SAU CÙNG
-                .requestMatchers(
-                        "/api/customers/{id}",
-                        "/api/customers/account/{accountId}",
-                        "/api/carts/{id}",
-                        "/api/carts/customer/{customerId}",
-                        "/api/cart-items",
-                        "/api/cart-items/{id}",
-                        "/api/cart-items/cart/{cartId}",
-                        "/api/orders",
-                        "/api/orders/{id}",
-                        "/api/orders/customer/{customerId}",
-                        "/api/order-items",
-                        "/api/order-items/{id}",
-                        "/api/order-items/order/{orderId}",
-                        "/api/wishlists/{id}",
-                        "/api/wishlists/customer/{customerId}",
-                        "/api/wishlist-items",
-                        "/api/wishlist-items/{id}",
-                        "/api/wishlist-items/wishlist/{wishlistId}",
-                        "/api/reviews",
-                        "/api/reviews/{id}",
-                        "/api/orders/**",
-                        "/api/order-items/**",
-                        "/api/coupons/**",
-                        "/api/addresses/**",
-                        "/api/reviews/product/{productId}").hasRole("CUSTOMER")
+                        // ==============================================================
+                        // 3. ADMIN ONLY – CHỈ ADMIN (không cho Customer)
+                        // ==============================================================
+                        .requestMatchers(
+                                "/api/inventories/**",
+                                "/api/shippings/**",
+                                "/api/admins",
+                                "/api/admins/{id}"
+                        ).hasRole("ADMIN")
 
-                // 5. Tất cả requests khác cần authenticated
-                .anyRequest().authenticated()
+                        // ==============================================================
+                        // 4. CUSTOMER ONLY – CHỈ CUSTOMER (không cho Admin)
+                        // ==============================================================
+                        .requestMatchers(
+                                "/api/carts/{id}",
+                                "/api/carts/customer/{customerId}",
+                                "/api/cart-items",
+                                "/api/cart-items/{id}",
+                                "/api/cart-items/cart/{cartId}",
+                                "/api/wishlists/{id}",
+                                "/api/wishlists/customer/{customerId}",
+                                "/api/wishlist-items",
+                                "/api/wishlist-items/{id}",
+                                "/api/wishlist-items/wishlist/{wishlistId}",
+                                "/api/reviews",
+                                "/api/reviews/{id}",
+                                "/api/reviews/product/{productId}"
+                        ).hasRole("CUSTOMER")
+
+                        // ==============================================================
+                        // 5. CẢ ADMIN & CUSTOMER ĐỀU DÙNG → authenticated() (phải login)
+                        // ==============================================================
+                        .requestMatchers(
+                                "/api/customers/{id}",
+                                "/api/customers/account/{accountId}",
+                                "/api/customers/**",           // Admin quản lý, Customer xem của mình
+                                "/api/addresses/**",
+                                "/api/coupons/**",
+                                "/api/orders/**",              // CẢ hai đều dùng: Customer đặt, Admin duyệt
+                                "/api/order-items/**"
+                        ).authenticated()
+
+                        // ==============================================================
+                        // 6. RIÊNG: TẠO ĐƠN HÀNG – CHỈ CUSTOMER
+                        // ==============================================================
+                        .requestMatchers(HttpMethod.POST, "/api/orders").hasRole("CUSTOMER")
+
+                        // ==============================================================
+                        // 7. TẤT CẢ CÁC REQUEST KHÁC → YÊU CẦU ĐĂNG NHẬP
+                        // ==============================================================
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth -> auth
+//                        // TẤT CẢ CÁC REQUEST → CHO PHÉP KHÔNG CẦN AUTH
+//                        .anyRequest().permitAll()
+//                )
+//                // VẪN GIỮ LẠI FILTER ĐỂ JWT CÓ THỂ ĐƯỢC ĐỌC (nếu cần log user)
+//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
 }

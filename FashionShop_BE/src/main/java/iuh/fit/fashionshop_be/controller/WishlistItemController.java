@@ -53,4 +53,10 @@ public class WishlistItemController {
     public ResponseEntity<WishlistItem> updateWishlistItem(@PathVariable Long id, @RequestBody WishlistItem itemDetails) {
         return ResponseEntity.ok(wishlistItemService.updateWishlistItem(id, itemDetails));
     }
+
+    @DeleteMapping("/wishlist-items/{id}")
+    public ResponseEntity<Void> deleteWishlistItem(@PathVariable Long id) {
+        wishlistItemService.deleteWishlistItem(id);
+        return ResponseEntity.noContent().build();
+    }
 }

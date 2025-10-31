@@ -46,4 +46,5 @@ public class WishlistController {
     public ResponseEntity<Wishlist> updateWishlist(@PathVariable Long id, @RequestBody Wishlist wishlistDetails) {
         return ResponseEntity.ok(wishlistService.updateWishlist(id, wishlistDetails));
     }
+
 }

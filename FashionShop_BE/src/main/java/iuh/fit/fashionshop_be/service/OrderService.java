@@ -150,6 +150,17 @@ public class OrderService {
         order.setNotes(orderDetails.getNotes());
         return orderRepository.save(order);
     }
+    public Order cancelOrder(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        if (!order.getOrderStatus().equalsIgnoreCase("PENDING")) {
+            throw new RuntimeException("Chỉ có thể hủy đơn hàng khi đang chờ xử lý (PENDING)");
+        }
+
+        order.setOrderStatus("CANCELED");
+        return orderRepository.save(order);
+    }
 
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);

@@ -1,40 +1,23 @@
-/*
- * @ (#) UserResponse.java     1.0    17-Oct-25
- *
- * Copyright (c) 2025 IUH. All rights reserved.
- */
-
 package iuh.fit.fashionshop_be.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/*
- * @description:
- * @author: Nguyen Quoc Huy
- * @date:17-Oct-25
- * @version: 1.0
- */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserResponse {
     private String userName;
     private String role;
     private Long accountId;
+    private Long customerId;
 
     public UserResponse(Long accountId, String userName, String role) {
         this.accountId = accountId;
         this.userName = userName;
-        this.role = role.replace("[", "").replace("]", "");
-    }
-
-    // Default constructor for serialization
-    public UserResponse() {
-    }
-
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+        this.role = role;
     }
 }

@@ -17,7 +17,9 @@ import iuh.fit.fashionshop_be.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +63,14 @@ public class CouponService {
 
     public void deleteCoupon(Long id) {
         couponRepository.deleteById(id);
+    }
+    public List<Coupon> getAvailableCoupons() {
+        LocalDate today = LocalDate.now();
+        return couponRepository.findAll().stream()
+                .filter(c -> "ACTIVE".equalsIgnoreCase(c.getStatus()))
+                .filter(c -> (c.getStartDate() == null || !c.getStartDate().isAfter(today)))
+                .filter(c -> (c.getEndDate() == null || !c.getEndDate().isBefore(today)))
+                .filter(c -> c.getMaxUses() == null || (c.getUsedCount() == null || c.getUsedCount() < c.getMaxUses()))
+                .collect(Collectors.toList());
     }
 }
