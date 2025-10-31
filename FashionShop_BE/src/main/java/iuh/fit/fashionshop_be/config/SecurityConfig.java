@@ -74,7 +74,9 @@ public class SecurityConfig {
                                 "/api/variants/product/{id}",
                                 "/api/products/{id}",
                                 "/api/products/category/{categoryId}",
-                                "/api/products/brand/{brand}").permitAll()
+                                "/api/products/brand/{brand}",
+                                 "/ws/**")
+                                .permitAll()
 // Khoa 
             // Allow customers to create orders (method-based rules before admin wildcard)
             .requestMatchers(HttpMethod.POST, "/api/orders").hasRole("CUSTOMER")

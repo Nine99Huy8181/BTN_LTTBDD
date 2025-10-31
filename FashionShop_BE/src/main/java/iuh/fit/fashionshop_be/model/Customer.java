@@ -76,4 +76,8 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     @JsonIgnore
     private Wishlist wishlist;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Notification> notifications;
 }
