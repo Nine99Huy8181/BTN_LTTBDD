@@ -12,6 +12,7 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+
 import iuh.fit.fashionshop_be.model.Account;
 import iuh.fit.fashionshop_be.service.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +42,31 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
+    //    @GetMapping("/accounts/email/{email}")
+//    public ResponseEntity<Optional<Account>> getAccountByEmail(@PathVariable String email) {
+//        return ResponseEntity.ok(accountService.getAccountByEmail(email));
+//    }
+    //hung
     @GetMapping("/accounts/email/{email}")
-    public ResponseEntity<Optional<Account>> getAccountByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(accountService.getAccountByEmail(email));
+    public ResponseEntity<Account> getAccountByEmail(@PathVariable String email) {
+        System.out.println("📩 Nhận yêu cầu lấy account theo email: " + email);
+        Optional<Account> accountOpt = accountService.getAccountByEmail(email);
+
+        if (accountOpt.isEmpty()) {
+            System.out.println("⚠️ Không tìm thấy account!");
+            return ResponseEntity.notFound().build();
+        }
+
+        Account account = accountOpt.get();
+
+        // Nếu có liên kết Customer → thêm log kiểm tra
+        if (account.getCustomer() != null) {
+            System.out.println("👤 Tên người dùng: " + account.getCustomer().getFullName());
+        }
+
+        return ResponseEntity.ok(account);
     }
+
 
     @PostMapping("/accounts")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
