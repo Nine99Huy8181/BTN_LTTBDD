@@ -14,6 +14,7 @@ package iuh.fit.fashionshop_be.model;
  */
 // Account.java
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 public class Account {
 
     @Id
-    @Column(name = "AccountID")
+    @Column(name = "accountid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountID;
 
@@ -37,21 +38,22 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "role")
     private String role;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "registration_date")
     private LocalDateTime registrationDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "account_status")
     private String accountStatus;
 
-    @Column(name = "Image")
-    private String image;
+
+    @Column(name = "avatar")
+    private String avatar;
 
     // One-to-One với Customer
-    @OneToOne(mappedBy = "account",cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Customer customer;
 
     // One-to-One với Admin

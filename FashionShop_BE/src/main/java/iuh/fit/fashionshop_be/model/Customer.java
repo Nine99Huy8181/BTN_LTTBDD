@@ -12,7 +12,9 @@ package iuh.fit.fashionshop_be.model;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +38,7 @@ public class Customer {
 
     @OneToOne
     @JoinColumn(name = "AccountID", nullable = false)
+    @JsonBackReference
     private Account account;
 
     @Column(name = "FullName")
@@ -80,4 +83,5 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Notification> notifications;
+
 }

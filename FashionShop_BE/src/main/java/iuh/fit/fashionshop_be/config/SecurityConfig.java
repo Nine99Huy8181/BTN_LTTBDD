@@ -77,7 +77,7 @@ public class SecurityConfig {
                                 "/api/products/**",
                                 "/api/products/search",
                                 "/api/products/category/{categoryId}",
-                                "/api/products/brand/{brand}",
+                                "/api/products/br   and/{brand}",
                                 "/api/variants",
                                 "/api/variants/**",
                                 "/api/variants/product/{id}",
@@ -87,14 +87,26 @@ public class SecurityConfig {
                         // ==============================================================
                         // 2. SUPER ADMIN – QUYỀN CAO NHẤT (phải đặt TRƯỚC)
                         // ==============================================================
-                        .requestMatchers(
-                                "/api/accounts",
-                                "/api/accounts/**",
-                                "/api/admins/**",
-                                "/api/review-responses/**"
-                        ).hasRole("SUPER")
+//                        .requestMatchers(
+//                                "/api/accounts",
+//                                "/api/accounts/**",
+//                                "/api/admins/**",
+//                                "/api/review-responses/**"
+//                        ).hasRole("SUPER")
+                        //hung
+                                .requestMatchers(
+                                        "/api/accounts/email/**"
+                                ).hasAnyRole("ADMIN", "CUSTOMER")
 
-                        // ==============================================================
+                                .requestMatchers(
+                                        "/api/accounts",
+                                        "/api/accounts/{id}",
+                                        "/api/admins/**",
+                                        "/api/review-responses/**"
+                                ).hasRole("SUPER")
+
+
+                                // ==============================================================
                         // 3. ADMIN ONLY – CHỈ ADMIN (không cho Customer)
                         // ==============================================================
                         .requestMatchers(
