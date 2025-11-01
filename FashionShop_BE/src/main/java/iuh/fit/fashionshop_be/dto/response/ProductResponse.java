@@ -9,12 +9,15 @@ package iuh.fit.fashionshop_be.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 /*
  * @description:
  * @author: Nguyen Quoc Huy
  * @date:24-Oct-25
  * @version: 1.0
  */
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,9 +26,16 @@ import lombok.experimental.FieldDefaults;
 public class ProductResponse {
     Long productID;
     String name;
+    String description;
     String brand;
-    Float discountPrice;
+    Float basePrice;
+    String material;
+    LocalDateTime createdDate;
+    String status;
     Float averageRating;
+    Float discountPrice;
+    Boolean isFeatured;
+    Integer reviewCount;
     String image;
     Integer soldQuantity;
 }

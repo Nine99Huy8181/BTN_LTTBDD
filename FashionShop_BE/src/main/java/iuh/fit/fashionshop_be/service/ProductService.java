@@ -19,6 +19,7 @@ import iuh.fit.fashionshop_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,6 +44,9 @@ public class ProductService {
     public List<ProductResponse> getProductResponsesByBrand(String brand) {
         List<Product> products = productRepository.findByBrand(brand);
         return productMapper.toProductResponseList(products, this);
+    }
+    public ProductResponse getProductResponseById(Long id) {
+        return productMapper.toProductResponse(productRepository.findByProductID(id), this);
     }
 
     // === Chi tiết: trả về Product (entity) ===

@@ -21,6 +21,7 @@ import java.util.List;
  * @date:24-Oct-25
  * @version: 1.0
  */
+//hãy chuyển mapper này cho phù hợp với WishProductResponse
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 

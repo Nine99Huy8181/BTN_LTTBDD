@@ -12,7 +12,11 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.model.Customer;
 import iuh.fit.fashionshop_be.model.Wishlist;
+import iuh.fit.fashionshop_be.repository.CustomerRepository;
+import iuh.fit.fashionshop_be.repository.ProductRepository;
+import iuh.fit.fashionshop_be.repository.WishlistItemRepository;
 import iuh.fit.fashionshop_be.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WishlistService {
     private final WishlistRepository wishlistRepository;
+    private final WishlistItemRepository wishlistItemRepository;
+    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
     public Wishlist getWishlistById(Long id) {
         return wishlistRepository.findById(id).orElseThrow(() -> new RuntimeException("Wishlist not found"));
@@ -39,9 +46,5 @@ public class WishlistService {
         wishlist.setCustomer(wishlistDetails.getCustomer());
         wishlist.setCreatedDate(wishlistDetails.getCreatedDate());
         return wishlistRepository.save(wishlist);
-    }
-
-    public void deleteWishlist(Long id) {
-        wishlistRepository.deleteById(id);
     }
 }

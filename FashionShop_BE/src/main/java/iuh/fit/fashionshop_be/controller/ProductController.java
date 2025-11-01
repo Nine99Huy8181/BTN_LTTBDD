@@ -18,6 +18,7 @@ import iuh.fit.fashionshop_be.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,9 +51,9 @@ public class ProductController {
 
     // === Chi tiết: trả về Product ===
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
+        ProductResponse productResponse = productService.getProductResponseById(id);
+        return ResponseEntity.ok(productResponse);
     }
 
     // === Tạo / Cập nhật ===
