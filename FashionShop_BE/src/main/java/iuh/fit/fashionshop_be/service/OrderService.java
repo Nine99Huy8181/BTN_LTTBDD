@@ -75,7 +75,7 @@ public class OrderService {
         Order order = new Order();
         order.setCustomer(customer);
         order.setOrderDate(LocalDateTime.now());
-        order.setOrderStatus("NEW");
+        order.setOrderStatus("PENDING");
         order.setPaymentStatus("PENDING");
         order.setPaymentMethod(req.getPaymentMethod());
         order.setNotes(req.getNotes());
