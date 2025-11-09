@@ -14,6 +14,7 @@ package iuh.fit.fashionshop_be.service;
  */
 import iuh.fit.fashionshop_be.dto.OrderCreateRequest;
 import iuh.fit.fashionshop_be.dto.OrderItemRequest;
+import iuh.fit.fashionshop_be.enums.PaymentStatus;
 import iuh.fit.fashionshop_be.model.Customer;
 import iuh.fit.fashionshop_be.model.Inventory;
 import iuh.fit.fashionshop_be.model.Order;
@@ -161,7 +162,13 @@ public class OrderService {
         order.setOrderStatus("CANCELED");
         return orderRepository.save(order);
     }
+    public void updatePaymentStatus(Long id, PaymentStatus status) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
 
+        order.setPaymentStatus(String.valueOf(status)); // Truyền trực tiếp enum
+        orderRepository.save(order);
+    }
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }

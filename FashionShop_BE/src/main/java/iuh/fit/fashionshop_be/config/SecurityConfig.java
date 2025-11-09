@@ -80,7 +80,10 @@ public class SecurityConfig {
                                 "/api/products/br   and/{brand}",
                                 "/api/variants",
                                 "/api/variants/**",
+                                "/api/chat",
                                 "/api/variants/product/{id}",
+                                "/api/payment/create-payment",
+                                "/api/payment/vnpay-return",
                                 "/ws/**"
                         ).permitAll()
 

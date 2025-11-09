@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -94,5 +95,39 @@ public class ProductService {
         List<Product> products = productRepository.searchProducts(keyword, minPrice, maxPrice, minRating, maxRating);
         // Map kết quả sang Response
         return productMapper.toProductResponseList(products, this);
+    }
+    // Lấy danh sách sản phẩm
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+    public List<Product> searchByKeyword(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return productRepository.findAll();
+        }
+
+        String lowerKeyword = keyword.toLowerCase().trim();
+
+        // Nếu người dùng nhập số → tìm theo giá gần đúng
+        Double priceValue = null;
+        try {
+            priceValue = Double.parseDouble(lowerKeyword);
+        } catch (NumberFormatException ignored) {}
+
+        Double finalPrice = priceValue;
+        double priceRange = 30.0; // khoảng dao động ±50
+
+        return productRepository.findAll().stream()
+                .filter(p -> {
+                    boolean matchName = p.getName() != null &&
+                            p.getName().toLowerCase().contains(lowerKeyword);
+
+                    boolean matchPrice = false;
+                    if (finalPrice != null && p.getBasePrice() != null) {
+                        matchPrice = Math.abs(p.getBasePrice() - finalPrice) <= priceRange;
+                    }
+
+                    return matchName || matchPrice;
+                })
+                .collect(Collectors.toList());
     }
 }
