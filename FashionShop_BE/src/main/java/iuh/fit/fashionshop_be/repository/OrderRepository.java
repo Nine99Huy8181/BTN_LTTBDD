@@ -13,6 +13,8 @@ package iuh.fit.fashionshop_be.repository;
  * @version: 1.0
  */
 import iuh.fit.fashionshop_be.model.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +25,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomerCustomerID(Long customerID);
     List<Order> findByOrderStatus(String orderStatus);
     List<Order> findByPaymentStatus(String paymentStatus);
+    Page<Order> findAllByOrderStatus(String status, Pageable pageable);
 }

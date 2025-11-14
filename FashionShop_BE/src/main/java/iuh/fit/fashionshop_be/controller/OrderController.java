@@ -13,14 +13,18 @@ package iuh.fit.fashionshop_be.controller;
  * @version: 1.0
  */
 import iuh.fit.fashionshop_be.dto.OrderCreateRequest;
+import iuh.fit.fashionshop_be.dto.OrderDTO;
 import iuh.fit.fashionshop_be.model.Order;
 import iuh.fit.fashionshop_be.service.OrderService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -69,4 +73,30 @@ public class OrderController {
         return ResponseEntity.ok(canceled);
     }
 
+    @PutMapping("/orders/{orderId}/status")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER')")
+    public ResponseEntity<OrderDTO> updateOrderStatus(
+            @PathVariable Long orderId,
+            @RequestBody Map<String, String> body,
+            Authentication authentication) {
+
+        String status = body.get("status");
+        if (status == null || status.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        OrderDTO updatedOrder = orderService.updateOrderStatus(orderId, status, authentication);
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @GetMapping("/page-orders")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER')")
+    public ResponseEntity<Page<OrderDTO>> getAllOrders(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String status) { // <-- THÊM CÁI NÀY
+
+        Page<OrderDTO> orderPage = orderService.getOrdersPaginated(page, size, status);
+        return ResponseEntity.ok(orderPage);
+    }
 }

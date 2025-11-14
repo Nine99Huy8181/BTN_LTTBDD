@@ -19,6 +19,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
+import java.util.stream.Stream;
+
 @Entity
 @Table(name = "addresses")
 @Data
@@ -59,4 +61,11 @@ public class Address {
 
     @Column(name = "IsDefault")
     private Boolean isDefault;
+
+    @Transient
+    public String getFullAddress() {
+        return Stream.of(streetAddress, district, city, postalCode, country)
+                .filter(s -> s != null && !s.isBlank())
+                .collect(java.util.stream.Collectors.joining(", "));
+    }
 }

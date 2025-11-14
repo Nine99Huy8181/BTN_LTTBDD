@@ -84,4 +84,6 @@ public class Customer {
     @JsonIgnore
     private List<Notification> notifications;
 
+    @Column(name = "ExpoPushToken", length = 500)
+    private String expoPushToken; // Lưu token từ Expo
 }

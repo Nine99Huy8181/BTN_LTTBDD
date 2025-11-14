@@ -12,12 +12,16 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.config.security.CustomerDetails;
 import iuh.fit.fashionshop_be.model.Customer;
 import iuh.fit.fashionshop_be.service.CustomerService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -54,4 +58,21 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.updateCustomer(id, customerDetails));
     }
 
+    @PutMapping("/push-token")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Void> updatePushToken(
+            @RequestBody Map<String, Object> body,
+            @AuthenticationPrincipal CustomerDetails user) {
+        Long customerId = Long.valueOf(body.get("customerId").toString());
+        String token = (String) body.get("expoPushToken");
+
+        if (!user.getCustomerID().equals(customerId)) {
+            return ResponseEntity.status(403).build();
+        }
+
+        Customer customer = customerService.findById(customerId);
+        customer.setExpoPushToken(token);
+        customerService.save(customer);
+        return ResponseEntity.ok().build();
+    }
 }

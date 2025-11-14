@@ -12,9 +12,12 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.config.security.CustomerDetails;
 import iuh.fit.fashionshop_be.dto.OrderCreateRequest;
+import iuh.fit.fashionshop_be.dto.OrderDTO;
 import iuh.fit.fashionshop_be.dto.OrderItemRequest;
 import iuh.fit.fashionshop_be.enums.PaymentStatus;
+import iuh.fit.fashionshop_be.mapper.OrderMapper;
 import iuh.fit.fashionshop_be.model.Customer;
 import iuh.fit.fashionshop_be.model.Inventory;
 import iuh.fit.fashionshop_be.model.Order;
@@ -28,12 +31,18 @@ import iuh.fit.fashionshop_be.repository.OrderItemRepository;
 import iuh.fit.fashionshop_be.repository.OrderRepository;
 import iuh.fit.fashionshop_be.repository.ProductVariantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +52,12 @@ public class OrderService {
     private final ProductVariantRepository productVariantRepository;
     private final InventoryRepository inventoryRepository;
     private final CustomerRepository customerRepository;
+    private final NotificationService notificationService;
+    private final OrderMapper orderMapper;
+
+    private static final Set<String> VALID_STATUSES = Set.of(
+            "PENDING", "APPROVED", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"
+    );
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -134,6 +149,12 @@ public class OrderService {
             orderItemRepository.save(oi);
         }
 
+// Trong createOrderFromRequest(), sau khi lưu order
+        notificationService.sendToAllAdmins(
+                "Đơn hàng mới cần duyệt",
+                "Khách hàng " + customer.getFullName() + " vừa đặt đơn #" + saved.getOrderID(),
+                "app://admin/order/" + saved.getOrderID()
+        );
         return saved;
     }
 
@@ -171,5 +192,87 @@ public class OrderService {
     }
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public OrderDTO updateOrderStatus(Long orderId, String status, Authentication auth) {
+        // 1. Kiểm tra quyền
+        if (!hasAdminRole(auth)) {
+            throw new RuntimeException("Only ADMIN or SUPER can update order status");
+        }
+
+        // 2. Tìm order
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
+        // 3. Validate status
+        if (!VALID_STATUSES.contains(status)) {
+            throw new RuntimeException("Invalid status: " + status);
+        }
+
+        // 4. Cập nhật
+        order.setOrderStatus(status);
+        order = orderRepository.save(order);
+
+        // 5. Gửi thông báo
+        sendStatusNotification(order, status);
+
+        // 6. Trả về DTO
+        return orderMapper.toDTO(order);
+    }
+
+    private boolean hasAdminRole(Authentication auth) {
+        return auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_SUPER"));
+    }
+
+    private void sendStatusNotification(Order order, String status) {
+        Long customerId = order.getCustomer().getCustomerID();
+        String orderNo = "#" + order.getOrderID();
+        String deepLink = "app://order/" + order.getOrderID();
+
+        String title, message, type;
+
+        switch (status) {
+            case "APPROVED" -> {
+                title = "Đơn hàng đã được duyệt!";
+                message = "Đơn hàng " + orderNo + " đã được xác nhận. Chúng tôi đang chuẩn bị hàng.";
+                type = "ORDER";
+            }
+            case "SHIPPED" -> {
+                title = "Đơn hàng đang giao!";
+                message = "Đơn hàng " + orderNo + " đã được giao cho đơn vị vận chuyển.";
+                type = "SHIPPING";
+            }
+            case "DELIVERED" -> {
+                title = "Đơn hàng đã giao thành công!";
+                message = "Đơn hàng " + orderNo + " đã được giao đến bạn. Cảm ơn bạn đã mua sắm!";
+                type = "ORDER";
+            }
+            case "CANCELLED" -> {
+                title = "Đơn hàng đã hủy";
+                message = "Đơn hàng " + orderNo + " đã bị hủy theo yêu cầu.";
+                type = "ORDER";
+            }
+            default -> {
+                return; // không gửi
+            }
+        }
+
+        notificationService.sendPersonalNotification(
+                customerId, title, message, type, deepLink, null
+        );
+    }
+
+    public Page<OrderDTO> getOrdersPaginated(int page, int size, String status) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "orderDate"));
+
+        Page<Order> orderPage;
+
+        if (status != null && !status.isBlank()) {
+            orderPage = orderRepository.findAllByOrderStatus(status, pageable);
+        } else {
+            orderPage = orderRepository.findAll(pageable);
+        }
+        return orderPage.map(orderMapper::toDTO);
     }
 }

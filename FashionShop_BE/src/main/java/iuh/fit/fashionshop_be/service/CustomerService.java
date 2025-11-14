@@ -36,6 +36,14 @@ public class CustomerService {
         return customerRepository.findByAccountAccountID(accountID);
     }
 
+    public Customer save(Customer customer){
+        return customerRepository.save(customer);
+    }
+
+    public Customer findById(Long customerId){
+        return customerRepository.findById(customerId).orElse(null);
+    }
+
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
