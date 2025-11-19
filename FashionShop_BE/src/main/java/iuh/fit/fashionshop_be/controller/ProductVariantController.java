@@ -12,6 +12,8 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+
+import iuh.fit.fashionshop_be.dto.request.ProductVariantRequest;
 import iuh.fit.fashionshop_be.dto.response.ProductVariantResponse;
 import iuh.fit.fashionshop_be.model.ProductVariant;
 import iuh.fit.fashionshop_be.service.ProductVariantService;
@@ -45,14 +47,25 @@ public class ProductVariantController {
         return ResponseEntity.ok(variantService.getVariantsByProductId(productId));
     }
 
+    //    @PostMapping("/variants")
+//    public ResponseEntity<ProductVariantResponse> createVariant(@RequestBody ProductVariant variant) { // <--- Thay đổi kiểu trả về
+//        return ResponseEntity.status(201).body(variantService.createVariant(variant));
+//    }
+//
+//    @PutMapping("/variants/{id}")
+//    public ResponseEntity<ProductVariantResponse> updateVariant(@PathVariable Long id, @RequestBody ProductVariant variantDetails) { // <--- Thay đổi kiểu trả về
+//        return ResponseEntity.ok(variantService.updateVariant(id, variantDetails));
+//    }
+    //hung
     @PostMapping("/variants")
-    public ResponseEntity<ProductVariantResponse> createVariant(@RequestBody ProductVariant variant) { // <--- Thay đổi kiểu trả về
-        return ResponseEntity.status(201).body(variantService.createVariant(variant));
+    public ResponseEntity<ProductVariantResponse> createVariant(@RequestBody ProductVariantRequest req) {
+        return ResponseEntity.status(201).body(variantService.createVariant(req));
     }
 
     @PutMapping("/variants/{id}")
-    public ResponseEntity<ProductVariantResponse> updateVariant(@PathVariable Long id, @RequestBody ProductVariant variantDetails) { // <--- Thay đổi kiểu trả về
-        return ResponseEntity.ok(variantService.updateVariant(id, variantDetails));
+    public ResponseEntity<ProductVariantResponse> updateVariant(@PathVariable Long id,
+                                                                @RequestBody ProductVariantRequest req) {
+        return ResponseEntity.ok(variantService.updateVariant(id, req));
     }
 
     // (Bạn có thể thêm endpoint cho delete nếu cần)

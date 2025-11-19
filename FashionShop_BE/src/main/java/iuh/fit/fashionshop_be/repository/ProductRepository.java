@@ -50,4 +50,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("minRating") Float minRating,
             @Param("maxRating") Float maxRating
     );
+
+    //hung
+    @Query("SELECT COUNT(p) FROM Product p")
+    Long countTotalProducts();
+
+    // Sản phẩm sắp hết hàng (tổng inventory < 10)
+    @Query("SELECT COUNT(DISTINCT p) FROM Product p JOIN p.variants pv JOIN pv.inventory i WHERE i.quantity < 10")
+    Long countLowStockProducts();
 }

@@ -59,6 +59,10 @@ public class Customer {
     @Column(name = "ReferralCode")
     private String referralCode;
 
+    @Column(name = "CreatedAt")
+    private LocalDate createdAt;
+
+
     // Quan hệ
     @OneToMany(mappedBy = "customer")
     @JsonIgnore

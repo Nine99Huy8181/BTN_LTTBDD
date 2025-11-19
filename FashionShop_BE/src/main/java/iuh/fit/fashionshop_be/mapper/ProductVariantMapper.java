@@ -25,7 +25,14 @@ import java.util.List;
 public interface ProductVariantMapper {
     @Mapping(target = "productID", source = "product.productID")
     @Mapping(target = "validQuantity", expression = "java(productVariantService.getAvailableStockByVariant(productVariant.getVariantID()))")
-    ProductVariantResponse toProductVariantResponse(iuh.fit.fashionshop_be.model.ProductVariant productVariant, @Context ProductVariantService productVariantService);
+    @Mapping(target = "reservedQuantity", expression = "java(productVariantService.getReservedQuantityByVariant(productVariant.getVariantID()))")
+    ProductVariantResponse toProductVariantResponse(
+            iuh.fit.fashionshop_be.model.ProductVariant productVariant,
+            @Context ProductVariantService productVariantService
+    );
 
-    List<ProductVariantResponse> toProductVariantResponseList(List<iuh.fit.fashionshop_be.model.ProductVariant> productVariants, @Context ProductVariantService productVariantService);
+    List<ProductVariantResponse> toProductVariantResponseList(
+            List<iuh.fit.fashionshop_be.model.ProductVariant> productVariants,
+            @Context ProductVariantService productVariantService
+    );
 }
