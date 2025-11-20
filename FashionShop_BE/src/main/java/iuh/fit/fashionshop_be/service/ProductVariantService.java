@@ -182,9 +182,14 @@ public class ProductVariantService {
         return productVariantRepository.getReservedQuantityByVariant(id);
     }
 
+    @Transactional
     public void deleteVariant(Long id) {
+        inventoryService.deleteByVariantId(id);
         // Đảm bảo variant tồn tại trước khi xóa
         ProductVariant variant = findVariantById(id);
         variantRepository.delete(variant);
     }
+
+
+
 }

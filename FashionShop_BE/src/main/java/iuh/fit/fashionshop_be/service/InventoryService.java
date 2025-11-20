@@ -16,6 +16,7 @@ import iuh.fit.fashionshop_be.model.Inventory;
 import iuh.fit.fashionshop_be.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,4 +47,12 @@ public class InventoryService {
     public void deleteInventory(Long id) {
         inventoryRepository.deleteById(id);
     }
+
+    // hung
+    @Transactional
+    public void deleteByVariantId(Long variantId) {
+        inventoryRepository.deleteByVariantVariantID(variantId);
+    }
+
+
 }

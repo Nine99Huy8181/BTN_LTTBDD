@@ -69,9 +69,9 @@ public class ProductVariantController {
     }
 
     // (Bạn có thể thêm endpoint cho delete nếu cần)
-    // @DeleteMapping("/variants/{id}")
-    // public ResponseEntity<Void> deleteVariant(@PathVariable Long id) {
-    //     variantService.deleteVariant(id);
-    //     return ResponseEntity.noContent().build();
-    // }
+     @DeleteMapping("/variants/{id}")
+     public ResponseEntity<Void> deleteVariant(@PathVariable Long id) {
+         variantService.deleteVariant(id);
+         return ResponseEntity.noContent().build();
+     }
 }

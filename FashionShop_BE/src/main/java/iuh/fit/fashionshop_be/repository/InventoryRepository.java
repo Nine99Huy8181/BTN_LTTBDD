@@ -19,4 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     Inventory findByVariantVariantID(Long variantID);
+
+    //hung
+    void deleteByVariantVariantID(Long variantID);
 }
