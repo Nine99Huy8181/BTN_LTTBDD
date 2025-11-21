@@ -13,6 +13,7 @@ package iuh.fit.fashionshop_be.model;
  * @version: 1.0
  */
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,6 @@ public class Customer {
 
     @OneToOne
     @JoinColumn(name = "AccountID", nullable = false)
-    @JsonBackReference
     private Account account;
 
     @Column(name = "FullName")
@@ -47,6 +47,7 @@ public class Customer {
     @Column(name = "PhoneNumber")
     private String phoneNumber;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "DateOfBirth")
     private LocalDate dateOfBirth;
 

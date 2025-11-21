@@ -50,13 +50,18 @@ public class CustomerService {
 
     public Customer updateCustomer(Long id, Customer customerDetails) {
         Customer customer = getCustomerById(id);
-        customer.setAccount(customerDetails.getAccount());
+
+        // customer.setAccount(customerDetails.getAccount());
+
         customer.setFullName(customerDetails.getFullName());
         customer.setPhoneNumber(customerDetails.getPhoneNumber());
         customer.setDateOfBirth(customerDetails.getDateOfBirth());
         customer.setGender(customerDetails.getGender());
-        customer.setLoyaltyPoints(customerDetails.getLoyaltyPoints());
-        customer.setReferralCode(customerDetails.getReferralCode());
+
+
+        // customer.setLoyaltyPoints(customerDetails.getLoyaltyPoints());
+        // customer.setReferralCode(customerDetails.getReferralCode());
+
         return customerRepository.save(customer);
     }
 
