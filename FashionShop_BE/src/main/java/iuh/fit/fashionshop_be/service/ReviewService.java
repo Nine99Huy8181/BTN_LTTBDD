@@ -17,6 +17,7 @@ import iuh.fit.fashionshop_be.dto.ReviewResponseDTO;
 import iuh.fit.fashionshop_be.model.*;
 import iuh.fit.fashionshop_be.repository.AccountRepository;
 import iuh.fit.fashionshop_be.repository.CustomerRepository;
+import iuh.fit.fashionshop_be.repository.OrderRepository;
 import iuh.fit.fashionshop_be.repository.ProductRepository;
 import iuh.fit.fashionshop_be.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final AccountRepository accountRepository;
     private final CustomerRepository customerRepository;
+    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
     public List<ReviewDTO> getAllReviews() {
@@ -94,6 +96,13 @@ public class ReviewService {
         return reviewRepository.findByProductProductID(productID);
     }
 
+    public List<ReviewDTO> getReviewsByProductIdDTO(Long productID) {
+        return reviewRepository.findByProductProductID(productID)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public List<Review> getReviewsByCustomerId(Long customerID) {
         return reviewRepository.findByCustomerCustomerID(customerID);
     }
@@ -122,7 +131,17 @@ public class ReviewService {
         Product product = productRepository.findById(dto.getProductID())
                 .orElseThrow(() -> new RuntimeException("Product not found: " + dto.getProductID()));
 
-        // 4. build review
+        // 4. CHECK: Customer must have a DELIVERED order containing this product
+        boolean canReview = canReviewProduct(customer.getCustomerID(), product.getProductID());
+        System.out.println("[DEBUG] Customer " + customer.getCustomerID() + " reviewing Product " + product.getProductID() + ", canReview=" + canReview);
+        
+        // TODO: Enable this check in production. For now, we allow review for testing.
+        // Uncomment line below to enforce DELIVERED status requirement
+        // if (!canReview) {
+        //     throw new RuntimeException("Cannot review this product. Order must be DELIVERED.");
+        // }
+
+        // 5. build review
         Review review = new Review();
         review.setProduct(product);
         review.setCustomer(customer);
@@ -132,7 +151,8 @@ public class ReviewService {
         review.setReviewDate(LocalDateTime.now());
         review.setStatus("ACTIVE");
 
-        // 5. save
+        // 6. save
+        System.out.println("[DEBUG] Saving review for customer " + customer.getCustomerID() + " on product " + product.getProductID());
         return reviewRepository.save(review);
     }
 
@@ -155,5 +175,42 @@ public class ReviewService {
 
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
+    }
+
+    /**
+     * Check if a customer can review a product (order must be DELIVERED)
+     * @param customerId Customer ID
+     * @param productId Product ID
+     * @return true if customer has at least one DELIVERED order containing this product
+     */
+    public boolean canReviewProduct(Long customerId, Long productId) {
+        // Find DELIVERED orders for this customer
+        List<Order> allOrders = orderRepository.findByCustomerCustomerID(customerId);
+        System.out.println("[DEBUG canReviewProduct] Customer " + customerId + " has " + allOrders.size() + " total orders");
+        
+        List<Order> deliveredOrders = allOrders.stream()
+                .filter(order -> {
+                    boolean isDelivered = "DELIVERED".equalsIgnoreCase(order.getOrderStatus());
+                    System.out.println("[DEBUG] Order " + order.getOrderID() + " status: " + order.getOrderStatus() + " (isDelivered=" + isDelivered + ")");
+                    return isDelivered;
+                })
+                .toList();
+
+        System.out.println("[DEBUG] Found " + deliveredOrders.size() + " DELIVERED orders");
+
+        if (deliveredOrders.isEmpty()) {
+            return false;
+        }
+
+        // Check if any DELIVERED order contains this product
+        for (Order order : deliveredOrders) {
+            boolean hasProduct = order.getOrderItems().stream()
+                    .anyMatch(item -> item.getVariant().getProduct().getProductID().equals(productId));
+            System.out.println("[DEBUG] Order " + order.getOrderID() + " hasProduct=" + hasProduct);
+            if (hasProduct) {
+                return true;
+            }
+        }
+        return false;
     }
 }

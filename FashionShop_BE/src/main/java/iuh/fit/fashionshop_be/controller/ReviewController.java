@@ -21,8 +21,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -60,23 +61,34 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/product/{productId}")
-    public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable Long productId) {
-        return ResponseEntity.ok(reviewService.getReviewsByProductId(productId));
+    public ResponseEntity<List<ReviewDTO>> getReviewsByProductId(@PathVariable Long productId) {
+        return ResponseEntity.ok(reviewService.getReviewsByProductIdDTO(productId));
     }
 
     @PostMapping("/reviews")
-    public ResponseEntity<Review> createReview(@RequestBody ReviewDTO reviewDTO,
+    public ResponseEntity<?> createReview(@RequestBody ReviewDTO reviewDTO,
                                                @AuthenticationPrincipal UserDetails principal) {
         // principal should be non-null because endpoint is protected; extra check to be safe
         if (principal == null) {
             return ResponseEntity.status(401).build();
         }
-        Review saved = reviewService.createReview(reviewDTO, principal.getUsername());
-        return ResponseEntity.status(201).body(saved);
+        try {
+            Review saved = reviewService.createReview(reviewDTO, principal.getUsername());
+            return ResponseEntity.status(201).body(saved);
+        } catch (RuntimeException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", e.getMessage());
+            return ResponseEntity.status(400).body(error);
+        }
     }
 
     @PutMapping("/reviews/{id}")
     public ResponseEntity<Review> updateReview(@PathVariable Long id, @RequestBody Review reviewDetails) {
         return ResponseEntity.ok(reviewService.updateReview(id, reviewDetails));
+    }
+
+    @GetMapping("/reviews/check-eligible/{customerId}/{productId}")
+    public ResponseEntity<Boolean> canReviewProduct(@PathVariable Long customerId, @PathVariable Long productId) {
+        return ResponseEntity.ok(reviewService.canReviewProduct(customerId, productId));
     }
 }

@@ -13,6 +13,7 @@ package iuh.fit.fashionshop_be.model;
  * @version: 1.0
  */
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -73,7 +74,7 @@ public class Order {
     private Address shippingAddress;
 
     @OneToMany(mappedBy = "order")
-    @JsonIgnore
+    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     @OneToOne(mappedBy = "order")
