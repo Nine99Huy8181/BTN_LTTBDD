@@ -1,0 +1,78 @@
+server:
+  port: 8085
+  address: 0.0.0.0
+
+# === DATABASE ===
+spring:
+  application:
+    name: FashionShop_BE
+  datasource:
+    url: jdbc:mariadb://localhost:3306/fashion_shop_db
+    username: root
+    password: root
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
+
+  sql:
+    init:
+      mode: always
+      platform: mariadb
+
+  # === REDIS (CHO OTP - SIÊU NHANH) ===
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 12345678
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 16
+          max-idle: 8
+          min-idle: 0
+
+  # === EMAIL (G?I OTP QUA GMAIL - D? NH?T) ===
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nguyenquochuy81819@gmail.com
+    password: qzaa wala aesi rtwk
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: true  # b?t ?? xem log g?i mail khi dev
+
+# === JWT ===
+jwt:
+  secret: your-very-long-secret-key-at-least-32-characters-long-for-hs256
+
+# === VNPAY ===
+vnpay:
+  tmnCode: ${VNPAY_TMN_CODE}
+  hashSecret: ${VNPAY_HASH_SECRET}
+  url: ${VNPAY_URL:https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}
+  returnUrl: http://192.168.1.32:8085/api/payment/vnpay-return
+
+# === GEMINI AI ===
+spring.ai.openai.api-key: AIzaSyCpKXoOu65eFeyAjygNSr_DGDJi9-iWnhc
+spring.ai.openai.base-url: https://generativelanguage.googleapis.com/v1beta/openai
+spring.ai.openai.chat.options.model: gemini-1.5-flash
+
+# === LOGGING ===
+logging:
+  level:
+    web: debug
+    org.springframework.mail: debug   # xem log g?i mail
+    com.yourpackage: debug           # thay b?ng package c?a b?n n?u mu?n
