@@ -12,6 +12,7 @@ package iuh.fit.fashionshop_be.model;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +48,7 @@ public class Admin {
     @Column(name = "Position")
     private String position;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "HireDate")
     private LocalDate hireDate;
 

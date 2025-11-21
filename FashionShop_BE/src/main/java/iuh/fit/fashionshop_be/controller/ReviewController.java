@@ -12,6 +12,7 @@ package iuh.fit.fashionshop_be.controller;
  * @date:17-Oct-25
  * @version: 1.0
  */
+
 import iuh.fit.fashionshop_be.dto.ReviewDTO;
 import iuh.fit.fashionshop_be.model.Review;
 import iuh.fit.fashionshop_be.service.ReviewService;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -32,14 +34,29 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+    //    @GetMapping("/reviews")
+//    public ResponseEntity<List<Review>> getAllReviews() {
+//        return ResponseEntity.ok(reviewService.getAllReviews());
+//    }
+//
+//    @GetMapping("/reviews/{id}")
+//    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
+//        return ResponseEntity.ok(reviewService.getReviewById(id));
+//    }
+//
+//    @GetMapping("/reviews/product/{productId}")
+//    public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable Long productId) {
+//        return ResponseEntity.ok(reviewService.getReviewsByProductId(productId));
+//    }
+    //hung
     @GetMapping("/reviews")
-    public ResponseEntity<List<Review>> getAllReviews() {
+    public ResponseEntity<List<ReviewDTO>> getAllReviews() {
         return ResponseEntity.ok(reviewService.getAllReviews());
     }
 
     @GetMapping("/reviews/{id}")
-    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
-        return ResponseEntity.ok(reviewService.getReviewById(id));
+    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id) {
+        return ResponseEntity.ok(reviewService.getReviewDTOById(id));
     }
 
     @GetMapping("/reviews/product/{productId}")

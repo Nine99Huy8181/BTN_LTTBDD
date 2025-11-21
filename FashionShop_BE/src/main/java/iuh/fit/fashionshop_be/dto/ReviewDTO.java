@@ -1,21 +1,28 @@
+
 package iuh.fit.fashionshop_be.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * DTO dùng để nhận payload từ client khi tạo review.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ReviewDTO {
+    private Long reviewID;
     private Long productID;
+    private String productName;
+    private Long customerID;
+    private String customerName;
+    private String customerAvatar;
     private Integer rating;
     private String comment;
     private LocalDateTime reviewDate;
     private String[] images;
+    private String status;
+    private ReviewResponseDTO response;
 }
