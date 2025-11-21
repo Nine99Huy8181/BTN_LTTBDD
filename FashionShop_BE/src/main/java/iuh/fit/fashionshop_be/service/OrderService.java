@@ -275,4 +275,11 @@ public class OrderService {
         }
         return orderPage.map(orderMapper::toDTO);
     }
+
+    public OrderDTO getOrderDTOById(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+
+        return orderMapper.toDTO(order);
+    }
 }

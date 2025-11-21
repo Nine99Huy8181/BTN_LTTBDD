@@ -104,4 +104,11 @@ public class OrderController {
         Page<OrderDTO> orderPage = orderService.getOrdersPaginated(page, size, status);
         return ResponseEntity.ok(orderPage);
     }
+
+    @GetMapping("/orders-dto/{id}")
+    public ResponseEntity<OrderDTO> getOrderDTOById(@PathVariable Long id) {
+        OrderDTO order = orderService.getOrderDTOById(id);
+
+        return ResponseEntity.ok(order);
+    }
 }

@@ -17,6 +17,9 @@ import iuh.fit.fashionshop_be.mapper.ProductMapper;
 import iuh.fit.fashionshop_be.model.Product;
 import iuh.fit.fashionshop_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -129,5 +132,18 @@ public class ProductService {
                     return matchName || matchPrice;
                 })
                 .collect(Collectors.toList());
+    }
+    // Top 10 sản phẩm bán chạy nhất (active)
+    public Page<ProductResponse> getTopSellingProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> products = productRepository.findTopSellingActiveProducts(pageable);
+        return products.map(product -> productMapper.toProductResponse(product, this));
+    }
+
+    // 10 sản phẩm ngẫu nhiên (active) - có phân trang
+    public Page<ProductResponse> getRandomActiveProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> products = productRepository.findRandomActiveProducts(pageable);
+        return products.map(product -> productMapper.toProductResponse(product, this));
     }
 }

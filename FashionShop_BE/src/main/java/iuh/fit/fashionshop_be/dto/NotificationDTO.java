@@ -13,6 +13,7 @@ package iuh.fit.fashionshop_be.dto;
  * @version: 1.0
  */
 // src/main/java/iuh/fit/fashionshop_be/dto/NotificationDTO.java
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class NotificationDTO {
     private String message;
     private String type; // ORDER, PROMOTION, SYSTEM...
     private Boolean isRead;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
     private LocalDateTime readDate;
     private String deepLink; // app://order/123

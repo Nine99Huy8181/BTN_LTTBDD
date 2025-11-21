@@ -16,6 +16,7 @@ import iuh.fit.fashionshop_be.dto.response.ProductResponse;
 import iuh.fit.fashionshop_be.model.Product;
 import iuh.fit.fashionshop_be.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -86,5 +87,24 @@ public class ProductController {
     ) {
         List<ProductResponse> responses = productService.searchProducts(keyword, minPrice, maxPrice, minRating, maxRating);
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/products/top-selling")
+    public ResponseEntity<Page<ProductResponse>> getTopSellingProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<ProductResponse> result = productService.getTopSellingProducts(page, size);
+        return ResponseEntity.ok(result);
+    }
+
+    // Sản phẩm gợi ý ngẫu nhiên (rất hay cho trang chủ)
+    @GetMapping("/products/random")
+    public ResponseEntity<Page<ProductResponse>> getRandomActiveProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<ProductResponse> result = productService.getRandomActiveProducts(page, size);
+        return ResponseEntity.ok(result);
     }
 }

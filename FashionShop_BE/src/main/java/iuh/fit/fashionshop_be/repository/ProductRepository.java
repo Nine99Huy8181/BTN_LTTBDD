@@ -13,6 +13,8 @@ package iuh.fit.fashionshop_be.repository;
  * @version: 1.0
  */
 import iuh.fit.fashionshop_be.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -50,6 +52,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("minRating") Float minRating,
             @Param("maxRating") Float maxRating
     );
+    @Query("""
+        SELECT p FROM Product p
+        WHERE p.status = 'ACTIVE'
+        ORDER BY p.reviewCount DESC, p.averageRating DESC
+        """)
+    Page<Product> findTopSellingActiveProducts(Pageable pageable);
+
+    // Sản phẩm active ngẫu nhiên
+    @Query(value = "SELECT * FROM products WHERE Status = 'ACTIVE' ORDER BY RAND()", nativeQuery = true)
+    Page<Product> findRandomActiveProducts(Pageable pageable);
+
+    // Hoặc dùng JPQL + function("RAND") nếu không muốn native
+    @Query("SELECT p FROM Product p WHERE p.status = 'ACTIVE' ORDER BY function('RAND')")
+    Page<Product> findRandomActiveProductsJPQL(Pageable pageable);
 
     //hung
     @Query("SELECT COUNT(p) FROM Product p")
