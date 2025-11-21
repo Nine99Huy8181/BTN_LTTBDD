@@ -12,6 +12,7 @@ package iuh.fit.fashionshop_be.config;
  * @date:17-Oct-25
  * @version: 1.0
  */
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -66,37 +67,38 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
 
-                        // ==============================================================
-                        // 1. PUBLIC ENDPOINTS – AI CŨNG TRUY CẬP ĐƯỢC (không cần login)
-                        // ==============================================================
-                        .requestMatchers(
-                                "/api/auth/**",
-                                "/api/categories",
-                                "/api/categories/**",
-                                "/api/products",
-                                "/api/products/**",
-                                "/api/products/search",
-                                "/api/products/category/{categoryId}",
-                                "/api/products/br   and/{brand}",
-                                "/api/variants",
-                                "/api/variants/**",
-                                "/api/chat",
-                                "/api/variants/product/{id}",
-                                "/api/payment/create-payment",
-                                "/api/payment/vnpay-return",
-                                "/ws/**"
-                        ).permitAll()
+                                // ==============================================================
+                                // 1. PUBLIC ENDPOINTS – AI CŨNG TRUY CẬP ĐƯỢC (không cần login)
+                                // ==============================================================
+                                .requestMatchers(
+                                        "/api/auth/**",
+                                        "/api/categories",
+                                        "/api/categories/**",
+                                        "/api/products",
+                                        "/api/products/**",
+                                        "/api/products/search",
+                                        "/api/products/category/{categoryId}",
+                                        "/api/products/br   and/{brand}",
+                                        "/api/variants",
+                                        "/api/variants/**",
+                                        "/api/chat",
+                                        "/api/variants/product/{id}",
+                                        "/api/payment/create-payment",
+                                        "/api/payment/vnpay-return",
+                                        "/ws/**",
+                                        "/api/reviews/**"
+                                ).permitAll()
 
-                        // ==============================================================
-                        // 2. SUPER ADMIN – QUYỀN CAO NHẤT (phải đặt TRƯỚC)
-                        // ==============================================================
+                                // ==============================================================
+                                // 2. SUPER ADMIN – QUYỀN CAO NHẤT (phải đặt TRƯỚC)
+                                // ==============================================================
 //                        .requestMatchers(
 //                                "/api/accounts",
 //                                "/api/accounts/**",
 //                                "/api/admins/**",
 //                                "/api/review-responses/**"
 //                        ).hasRole("SUPER")
-                        //hung
+                                //hung
                                 .requestMatchers(
                                         "/api/accounts/email/**"
                                 ).hasAnyRole("ADMIN", "CUSTOMER")
@@ -106,60 +108,75 @@ public class SecurityConfig {
                                         "/api/accounts/{id}",
                                         "/api/admins/**",
                                         "/api/review-responses/**"
-                                ).hasRole("SUPER")
-
+                                ).hasAnyRole("SUPER", "ADMIN")
+                                //hung thêm cho ADMIN
 
                                 // ==============================================================
-                        // 3. ADMIN ONLY – CHỈ ADMIN (không cho Customer)
-                        // ==============================================================
-                        .requestMatchers(
-                                "/api/inventories/**",
-                                "/api/shippings/**",
-                                "/api/admins",
-                                "/api/admins/{id}"
-                        ).hasRole("ADMIN")
+                                // 3. ADMIN ONLY – CHỈ ADMIN (không cho Customer)
+                                // ==============================================================
+                                .requestMatchers(
+                                        "/api/inventories/**",
+                                        "/api/shippings/**",
+                                        "/api/admins",
+                                        "/api/admins/{id}"
+                                ).hasRole("ADMIN")
 
-                        // ==============================================================
-                        // 4. CUSTOMER ONLY – CHỈ CUSTOMER (không cho Admin)
-                        // ==============================================================
-                        .requestMatchers(
-                                "/api/carts/{id}",
-                                "/api/carts/customer/{customerId}",
-                                "/api/cart-items",
-                                "/api/cart-items/{id}",
-                                "/api/cart-items/cart/{cartId}",
-                                "/api/wishlists/{id}",
-                                "/api/wishlists/customer/{customerId}",
-                                "/api/wishlist-items",
-                                "/api/wishlist-items/{id}",
-                                "/api/wishlist-items/wishlist/{wishlistId}",
-                                "/api/reviews",
-                                "/api/reviews/{id}",
-                                "/api/reviews/product/{productId}"
-                        ).hasRole("CUSTOMER")
+                                // ==============================================================
+                                // 4. CUSTOMER ONLY – CHỈ CUSTOMER (không cho Admin)
+                                // ==============================================================
+                                .requestMatchers(
+//                                "/api/carts/{id}",
+//                                "/api/carts/customer/{customerId}",
+//                                "/api/cart-items",
+//                                "/api/cart-items/{id}",
+//                                "/api/cart-items/cart/{cartId}",
+//                                "/api/wishlists/{id}",
+//                                "/api/wishlists/customer/{customerId}",
+//                                "/api/wishlist-items",
+//                                "/api/wishlist-items/{id}",
+//                                "/api/wishlist-items/wishlist/{wishlistId}",
+//                                "/api/reviews",
+//                                "/api/reviews/{id}",
+//                                "/api/reviews/product/{productId}"
+                                        "/api/carts/*",
+                                        "/api/carts/customer/*",
+                                        "/api/cart-items/**",
+                                        "/api/cart-items/*",
+                                        "/api/cart-items/cart/*",
+                                        "/api/wishlists/*",
+                                        "/api/wishlists/customer/*",
+                                        "/api/wishlist-items/**",
+                                        "/api/wishlist-items/*",
+                                        "/api/wishlist-items/wishlist/*"
+//                                "/api/reviews/**"
+                                ).hasAnyRole("CUSTOMER", "ADMIN")
+                                //hung thêm cho phép admin, sửa lại pattem cho gọn hơn
 
-                        // ==============================================================
-                        // 5. CẢ ADMIN & CUSTOMER ĐỀU DÙNG → authenticated() (phải login)
-                        // ==============================================================
-                        .requestMatchers(
-                                "/api/customers/{id}",
-                                "/api/customers/account/{accountId}",
-                                "/api/customers/**",           // Admin quản lý, Customer xem của mình
-                                "/api/addresses/**",
-                                "/api/coupons/**",
-                                "/api/orders/**",              // CẢ hai đều dùng: Customer đặt, Admin duyệt
-                                "/api/order-items/**"
-                        ).authenticated()
+                                // ==============================================================
+                                // 5. CẢ ADMIN & CUSTOMER ĐỀU DÙNG → authenticated() (phải login)
+                                // ==============================================================
+                                //hung
+                                .requestMatchers(HttpMethod.DELETE, "/api/coupons/**").hasRole("ADMIN")
 
-                        // ==============================================================
-                        // 6. RIÊNG: TẠO ĐƠN HÀNG – CHỈ CUSTOMER
-                        // ==============================================================
-                        .requestMatchers(HttpMethod.POST, "/api/orders").hasRole("CUSTOMER")
+                                .requestMatchers(
+                                        "/api/customers/{id}",
+                                        "/api/customers/account/{accountId}",
+                                        "/api/customers/**",           // Admin quản lý, Customer xem của mình
+                                        "/api/addresses/**",
+                                        "/api/coupons/**",
+                                        "/api/orders/**",              // CẢ hai đều dùng: Customer đặt, Admin duyệt
+                                        "/api/order-items/**"
+                                ).authenticated()
 
-                        // ==============================================================
-                        // 7. TẤT CẢ CÁC REQUEST KHÁC → YÊU CẦU ĐĂNG NHẬP
-                        // ==============================================================
-                        .anyRequest().authenticated()
+                                // ==============================================================
+                                // 6. RIÊNG: TẠO ĐƠN HÀNG – CHỈ CUSTOMER
+                                // ==============================================================
+                                .requestMatchers(HttpMethod.POST, "/api/orders").hasRole("CUSTOMER")
+
+                                // ==============================================================
+                                // 7. TẤT CẢ CÁC REQUEST KHÁC → YÊU CẦU ĐĂNG NHẬP
+                                // ==============================================================
+                                .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

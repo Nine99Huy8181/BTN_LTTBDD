@@ -12,10 +12,13 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+
+import iuh.fit.fashionshop_be.model.Review;
 import iuh.fit.fashionshop_be.model.ReviewResponse;
 import iuh.fit.fashionshop_be.repository.ReviewResponseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +47,17 @@ public class ReviewResponseService {
         return responseRepository.save(response);
     }
 
+    @Transactional
     public void deleteResponse(Long id) {
-        responseRepository.deleteById(id);
+        // Tìm và cập nhật Review trước
+        ReviewResponse response = responseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ReviewResponse not found"));
+
+        Review review = response.getReview();
+        if (review != null) {
+            review.setResponse(null);
+        }
+
+        responseRepository.deleteByResponseID(id);
     }
 }

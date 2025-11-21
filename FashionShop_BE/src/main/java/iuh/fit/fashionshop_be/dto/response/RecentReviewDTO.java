@@ -1,5 +1,4 @@
-
-package iuh.fit.fashionshop_be.dto;
+package iuh.fit.fashionshop_be.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,20 +8,17 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ReviewDTO {
-    private Long reviewID;
-    private Long productID;
+public class RecentReviewDTO {
+    private Long reviewId;
+    private Long productId;
     private String productName;
-    private Long customerID;
+    private String productImage;
     private String customerName;
-    private String customerAvatar;
     private Integer rating;
     private String comment;
     private LocalDateTime reviewDate;
-    private String[] images;
-    private String status;
-    private ReviewResponseDTO response;
+    private Boolean hasResponse;
 }

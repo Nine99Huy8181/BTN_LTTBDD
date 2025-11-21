@@ -14,6 +14,7 @@ package iuh.fit.fashionshop_be.controller;
  */
 import iuh.fit.fashionshop_be.model.ReviewResponse;
 import iuh.fit.fashionshop_be.service.ReviewResponseService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +46,11 @@ public class ReviewResponseController {
     @PutMapping("/review-responses/{id}")
     public ResponseEntity<ReviewResponse> updateResponse(@PathVariable Long id, @RequestBody ReviewResponse responseDetails) {
         return ResponseEntity.ok(responseService.updateResponse(id, responseDetails));
+    }
+
+    @DeleteMapping("/review-responses/{id}")
+    public ResponseEntity<Void> deleteResponse(@PathVariable Long id) {
+        responseService.deleteResponse(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -34,4 +34,5 @@ public class ProductVariantResponse {
     String status;
     Long productID;
     Integer validQuantity;
+    Integer reservedQuantity;
 }

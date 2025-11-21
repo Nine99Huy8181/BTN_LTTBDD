@@ -14,10 +14,19 @@ package iuh.fit.fashionshop_be.repository;
  */
 import iuh.fit.fashionshop_be.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     List<Customer> findByAccountAccountID(Long accountID);
+
+
+    //hung
+    @Query("SELECT COUNT(c) FROM Customer c")
+    Long countTotalCustomers();
+
+    @Query("SELECT COUNT(c) FROM Customer c WHERE MONTH(c.createdAt) = MONTH(CURRENT_DATE) AND YEAR(c.createdAt) = YEAR(CURRENT_DATE)")
+    Long countNewCustomersThisMonth();
 }

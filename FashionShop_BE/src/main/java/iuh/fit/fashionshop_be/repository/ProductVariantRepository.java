@@ -28,4 +28,10 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
             "FROM Inventory i " +
             "WHERE i.variant.variantID = :variantId")
     Integer getAvailableStockByVariant(@Param("variantId") Long variantId);
+
+    @Query("SELECT COALESCE(i.reservedQuantity, 0) " +
+            "FROM Inventory i " +
+            "WHERE i.variant.variantID = :variantId")
+    Integer getReservedQuantityByVariant(@Param("variantId") Long variantId);
+
 }

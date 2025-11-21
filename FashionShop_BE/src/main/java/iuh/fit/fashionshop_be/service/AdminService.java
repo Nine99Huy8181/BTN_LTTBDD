@@ -42,7 +42,7 @@ public class AdminService {
 
     public Admin updateAdmin(Long id, Admin adminDetails) {
         Admin admin = getAdminById(id);
-        admin.setAccount(adminDetails.getAccount());
+//        admin.setAccount(adminDetails.getAccount());
         admin.setFullName(adminDetails.getFullName());
         admin.setDepartment(adminDetails.getDepartment());
         admin.setPosition(adminDetails.getPosition());

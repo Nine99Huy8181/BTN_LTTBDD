@@ -55,13 +55,40 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+//    public Account updateAccount(Long id, Account accountDetails) {
+//        Account account = getAccountById(id);
+//        account.setEmail(accountDetails.getEmail());
+//        account.setPassword(accountDetails.getPassword());
+//        account.setRole(accountDetails.getRole());
+//        account.setRegistrationDate(accountDetails.getRegistrationDate());
+//        account.setAccountStatus(accountDetails.getAccountStatus());
+//        return accountRepository.save(account);
+//    }
+    //hung
+    // ... các import giữ nguyên
+
     public Account updateAccount(Long id, Account accountDetails) {
         Account account = getAccountById(id);
-        account.setEmail(accountDetails.getEmail());
-        account.setPassword(accountDetails.getPassword());
-        account.setRole(accountDetails.getRole());
-        account.setRegistrationDate(accountDetails.getRegistrationDate());
-        account.setAccountStatus(accountDetails.getAccountStatus());
+
+        if (accountDetails.getEmail() != null && !accountDetails.getEmail().isEmpty()) {
+            account.setEmail(accountDetails.getEmail());
+        }
+        if (accountDetails.getPassword() != null && !accountDetails.getPassword().isEmpty()) {
+            account.setPassword(accountDetails.getPassword());
+        }
+
+        if (accountDetails.getAvatar() != null) {
+            account.setAvatar(accountDetails.getAvatar());
+        }
+
+        if (accountDetails.getRole() != null) {
+            account.setRole(accountDetails.getRole());
+        }
+
+        if (accountDetails.getAccountStatus() != null) {
+            account.setAccountStatus(accountDetails.getAccountStatus());
+        }
+
         return accountRepository.save(account);
     }
 

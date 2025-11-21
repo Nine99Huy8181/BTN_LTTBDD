@@ -13,10 +13,8 @@ package iuh.fit.fashionshop_be.service;
  * @version: 1.0
  */
 import iuh.fit.fashionshop_be.dto.ReviewDTO;
-import iuh.fit.fashionshop_be.model.Account;
-import iuh.fit.fashionshop_be.model.Customer;
-import iuh.fit.fashionshop_be.model.Product;
-import iuh.fit.fashionshop_be.model.Review;
+import iuh.fit.fashionshop_be.dto.ReviewResponseDTO;
+import iuh.fit.fashionshop_be.model.*;
 import iuh.fit.fashionshop_be.repository.AccountRepository;
 import iuh.fit.fashionshop_be.repository.CustomerRepository;
 import iuh.fit.fashionshop_be.repository.ProductRepository;
@@ -26,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +34,60 @@ public class ReviewService {
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
 
-    public List<Review> getAllReviews() {
-        return reviewRepository.findAll();
+    public List<ReviewDTO> getAllReviews() {
+        return reviewRepository.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public Review getReviewById(Long id) {
-        return reviewRepository.findById(id).orElseThrow(() -> new RuntimeException("Review not found"));
+        return reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+    }
+
+    public ReviewDTO getReviewDTOById(Long id) {
+        Review r = reviewRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+        return convertToDTO(r);
+    }
+
+    //hung
+    private ReviewDTO convertToDTO(Review review) {
+        ReviewDTO dto = ReviewDTO.builder()
+                .reviewID(review.getReviewID())
+                .productID(review.getProduct().getProductID())
+                .productName(review.getProduct().getName())
+                .customerID(review.getCustomer().getCustomerID())
+                .customerName(review.getCustomer().getFullName())
+                // Lấy avatar từ Account thông qua Customer
+                .customerAvatar(review.getCustomer().getAccount() != null
+                        ? review.getCustomer().getAccount().getAvatar()
+                        : null)
+                .rating(review.getRating())
+                .comment(review.getComment())
+                .reviewDate(review.getReviewDate())
+                .images(review.getImages())
+                .status(review.getStatus())
+                .build();
+
+        // Thêm response nếu có
+        if (review.getResponse() != null) {
+            dto.setResponse(convertResponseToDTO(review.getResponse()));
+        }
+
+        return dto;
+    }
+
+    private ReviewResponseDTO convertResponseToDTO(ReviewResponse response) {
+        return ReviewResponseDTO.builder()
+                .responseID(response.getResponseID())
+                .reviewID(response.getReview().getReviewID())
+                .responseContent(response.getResponseContent())
+                .responseDate(response.getResponseDate())
+                .status(response.getStatus())
+                .adminName(response.getAdmin().getAccount().getEmail()) // hoặc tên admin nếu có
+                .build();
     }
 
     public List<Review> getReviewsByProductId(Long productID) {
