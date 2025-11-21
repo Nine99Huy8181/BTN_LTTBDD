@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "order_items")
@@ -33,6 +34,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "OrderID", nullable = false)
+    @JsonBackReference
     private Order order;
 
     @ManyToOne

@@ -12,6 +12,7 @@ package iuh.fit.fashionshop_be.model;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +49,7 @@ public class Review {
     @Column(name = "Comment")
     private String comment;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "ReviewDate")
     private LocalDateTime reviewDate;
 

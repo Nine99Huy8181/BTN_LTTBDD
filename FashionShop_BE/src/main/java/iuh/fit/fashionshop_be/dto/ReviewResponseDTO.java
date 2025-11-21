@@ -1,7 +1,7 @@
 
-
 package iuh.fit.fashionshop_be.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,7 @@ public class ReviewResponseDTO {
     private Long responseID;
     private Long reviewID;
     private String responseContent;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime responseDate;
     private String status;
     private String adminName;

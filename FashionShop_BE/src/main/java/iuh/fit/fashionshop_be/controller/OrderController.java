@@ -43,7 +43,12 @@ public class OrderController {
 
     @GetMapping("/orders/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
+        Order order = orderService.getOrderById(id);
+        // Force lazy load of orderItems
+        if (order.getOrderItems() != null) {
+            order.getOrderItems().size();
+        }
+        return ResponseEntity.ok(order);
     }
 
     @GetMapping("/orders/customer/{customerId}")
