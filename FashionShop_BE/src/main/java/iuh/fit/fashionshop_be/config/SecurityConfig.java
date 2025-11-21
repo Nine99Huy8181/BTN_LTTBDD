@@ -100,12 +100,13 @@ public class SecurityConfig {
 //                        ).hasRole("SUPER")
                                 //hung
                                 .requestMatchers(
-                                        "/api/accounts/email/**"
+                                        "/api/accounts/email/**",
+                                        "/api/accounts",
+                                        "/api/accounts/**"
                                 ).hasAnyRole("ADMIN", "CUSTOMER")
 
                                 .requestMatchers(
-                                        "/api/accounts",
-                                        "/api/accounts/{id}",
+
                                         "/api/admins/**",
                                         "/api/review-responses/**"
                                 ).hasAnyRole("SUPER", "ADMIN")

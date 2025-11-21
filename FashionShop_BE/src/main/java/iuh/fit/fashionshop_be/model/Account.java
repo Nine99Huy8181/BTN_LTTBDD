@@ -53,7 +53,7 @@ public class Account {
 
     // One-to-One với Customer
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private Customer customer;
 
     // One-to-One với Admin

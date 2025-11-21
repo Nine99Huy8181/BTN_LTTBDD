@@ -4,25 +4,25 @@
 -- ========================
 -- 1. accounts
 -- ========================
-INSERT INTO accounts (accountid, account_status, email, password, registration_date, role) VALUES
-(1, 'ACTIVE', 'nguyenvana@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
-(2, 'ACTIVE', 'tranthib@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
-(3, 'ACTIVE', 'leminhc@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
-(4, 'ACTIVE', 'phamduct@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
-(5, 'ACTIVE', 'hoanglan@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER'),
-(6, 'ACTIVE', 'admin1@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'ADMIN'),
-(7, 'ACTIVE', 'admin2@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'ADMIN'),
-(8, 'ACTIVE', 'superadmin@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'SUPER');
+INSERT INTO accounts (accountid, account_status, email, password, registration_date, ROLE, avatar) VALUES
+(1, 'ACTIVE', 'nguyenvana@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(2, 'ACTIVE', 'tranthib@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(3, 'ACTIVE', 'leminhc@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(4, 'ACTIVE', 'phamduct@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(5, 'ACTIVE', 'hoanglan@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(6, 'ACTIVE', 'admin1@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'ADMIN','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(7, 'ACTIVE', 'admin2@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'ADMIN','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png'),
+(8, 'ACTIVE', 'superadmin@shop.vn', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'SUPER','https://res.cloudinary.com/duffcwady/image/upload/v1761921986/60f525ad-e101-45f2-83ba-1fdf40fdff3b.png');
 
 -- ========================
 -- 2. customers
 -- ========================
-INSERT INTO customers (customerid, date_of_birth, full_name, gender, loyalty_points, phone_number, referral_code, accountid) VALUES
-(1, '1990-05-12', 'Nguyễn Văn A', 'Nam', 120, '0905123456', 'REF001', 1),
-(2, '1995-08-23', 'Trần Thị B', 'Nữ', 200, '0912234567', 'REF002', 2),
-(3, '1988-11-03', 'Lê Minh C', 'Nam', 150, '0933456789', 'REF003', 3),
-(4, '1992-04-15', 'Phạm Đức T', 'Nam', 300, '0987123456', 'REF004', 4),
-(5, '1998-07-07', 'Hoàng Lan', 'Nữ', 180, '0978123123', 'REF005', 5);
+INSERT INTO customers (customerid, date_of_birth, full_name, gender, loyalty_points, phone_number, referral_code, accountid, created_at) VALUES
+(1, '1990-05-12', 'Nguyễn Văn A', 'Nam', 120, '0905123456', 'REF001', 1, NOW()),
+(2, '1995-08-23', 'Trần Thị B', 'Nữ', 200, '0912234567', 'REF002', 2, NOW()),
+(3, '1988-11-03', 'Lê Minh C', 'Nam', 150, '0933456789', 'REF003', 3, NOW()),
+(4, '1992-04-15', 'Phạm Đức T', 'Nam', 300, '0987123456', 'REF004', 4, NOW()),
+(5, '1998-07-07', 'Hoàng Lan', 'Nữ', 180, '0978123123', 'REF005', 5, NOW());
 
 -- ========================
 -- 3. admins
@@ -61,45 +61,48 @@ INSERT INTO categories (categoryid, description, image, name, parent_categoryid)
 -- 6. products (10 sản phẩm)
 -- ========================
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(1, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo blazer nam', 271799.97, 1, 'Cotton', 'Áo blazer nam GBZ0015-1NN', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316779/GBZ0015-1NN-navy-1_s62ir9.jpg');
+(1, 4.2, 720000, 'Việt Shop 2', NOW(), 'Áo blazer nam', 650000, 1, 'Cotton', 'Áo blazer nam GBZ0015-1NN', 124, 'ACTIVE', 7, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316779/GBZ0015-1NN-navy-1_s62ir9.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(2, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo phông Golf dài tay nữ', 271799.97, 1, 'Cotton', 'Áo phông Golf dài tay nữ  DLP0003-1OB', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316780/DLP0003-1OB-blue-1_kvznnd.jpg');
+(2, 4.1, 320000, 'Việt Shop', NOW(), 'Áo phông Golf dài tay nữ', 290000, 1, 'Cotton', 'Áo phông Golf dài tay nữ DLP0003-1OB', 211, 'ACTIVE', 2, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316780/DLP0003-1OB-blue-1_kvznnd.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(3, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo phông Golf dài tay nữ', 271799.97, 1, 'Cotton', 'Áo phông Golf dài tay nữ DLP0004-1BD', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316780/DLP0004-1BD-red-1_bnqa1b.jpg');
+(3, 4.0, 340000, 'Việt Shop 2', NOW(), 'Áo phông Golf dài tay nữ', 310000, 1, 'Cotton', 'Áo phông Golf dài tay nữ DLP0004-1BD', 178, 'ACTIVE', 2, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316780/DLP0004-1BD-red-1_bnqa1b.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(4, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo polo cộc tay nam', 271799.97, 1, 'Cotton', 'Áo polo cộc tay nam Bernini BPL0033-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316782/BPL003-1-blue-1_i0dejq.jpg');
+(4, 4.3, 280000, 'Việt Shop', NOW(), 'Áo polo cộc tay nam', 250000, 1, 'Cotton', 'Áo polo cộc tay nam Bernini BPL0033-1', 312, 'ACTIVE', 8, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316782/BPL003-1-blue-1_i0dejq.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(5, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo Polo cộc tay nam', 271799.97, 1, 'Cotton', 'Áo Polo cộc tay nam Bernini BPL0044-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316789/BPL0044-1-white-1_wxzf3z.jpg');
+(5, 4.1, 310000, 'Việt Shop', NOW(), 'Áo Polo cộc tay nam', 275000, 1, 'Cotton', 'Áo Polo cộc tay nam Bernini BPL0044-1', 198, 'ACTIVE', 8, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316789/BPL0044-1-white-1_wxzf3z.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(6, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo polo cộc tay nam', 271799.97, 1, 'Cotton', 'Áo polo cộc tay nam Bernini BPL0045-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-white-1_omqayt.jpg');
+(6, 4.0, 295000, 'Việt Shop', NOW(), 'Áo polo cộc tay nam', 270000, 1, 'Cotton', 'Áo polo cộc tay nam Bernini BPL0045-1', 241, 'ACTIVE', 8, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316791/BPL0045-1-white-1_omqayt.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(7, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo Sơ Mi Cộc Tay Nam', 271799.97, 1, 'Cotton', 'Áo Sơ Mi Cộc Tay Nam GSS0173-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316795/GSS0173-1-pink-1_twsuvk.jpg');
+(7, 4.2, 330000, 'Việt Shop', NOW(), 'Áo Sơ Mi Cộc Tay Nam', 300000, 1, 'Cotton', 'Áo Sơ Mi Cộc Tay Nam GSS0173-1', 176, 'ACTIVE', 7, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316795/GSS0173-1-pink-1_twsuvk.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(8, 3.8, 258646.17, 'Việt Shop', NOW(), 'Áo vest nam', 271799.97, 1, 'Cotton', 'Áo vest nam GJV0038-1DN', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316794/GJV0038-1DN-navy-1_e4phkh.jpg');
+(8, 4.5, 850000, 'Việt Shop', NOW(), 'Áo vest nam', 770000, 1, 'Cotton', 'Áo vest nam GJV0038-1DN', 204, 'ACTIVE', 7, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316794/GJV0038-1DN-navy-1_e4phkh.jpg');
+-- 🔹 QUẦN NAM
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(9, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Âu Nam', 271799.97, 1, 'Cotton', 'Quần Âu Nam GPT0109-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316767/GPT0109-1-Navy-1_kr49yy.jpg');
+(9, 4.0, 480000, 'Việt Shop', NOW(), 'Quần Âu Nam', 440000, 1, 'Cotton', 'Quần Âu Nam GPT0109-1', 156, 'ACTIVE', 10, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316767/GPT0109-1-Navy-1_kr49yy.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(10, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Khaki Nam', 271799.97, 1, 'Cotton', 'Quần Khaki Nam GCN0040-1DM', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0040-1DM-mossgreen-1_lu4rui.jpg');
+(10, 4.2, 420000, 'Việt Shop', NOW(), 'Quần Khaki Nam', 380000, 1, 'Cotton', 'Quần Khaki Nam GCN0040-1DM', 199, 'ACTIVE', 10, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0040-1DM-mossgreen-1_lu4rui.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(11, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Khaki Nam', 271799.97, 1, 'Cotton', 'Quần Khaki Nam GCN0042-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0042-1-navy-1_xxdv06.jpg');
+(11, 4.0, 415000, 'Việt Shop', NOW(), 'Quần Khaki Nam', 385000, 1, 'Cotton', 'Quần Khaki Nam GCN0042-1', 184, 'ACTIVE', 10, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316764/GCN0042-1-navy-1_xxdv06.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(12, 3.8, 258646.17, 'Việt Shop', NOW(), 'Quần Vest Nam', 271799.97, 1, 'Cotton', 'Quần Vest Nam GPV0037-1DR', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GPV0037-1DR-gray-1_ortuvp.jpg');
+(12, 4.3, 490000, 'Việt Shop 2', NOW(), 'Quần Vest Nam', 460000, 1, 'Cotton', 'Quần Vest Nam GPV0037-1DR', 207, 'ACTIVE', 10, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316766/GPV0037-1DR-gray-1_ortuvp.jpg');
+-- 🔹 PHỤ KIỆN NAM
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(13, 3.8, 258646.17, 'Việt Shop', NOW(), 'Dây Lưng Nam', 271799.97, 1, 'Cotton', 'Dây Lưng Nam BBL0025-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316769/BBL0025-1-black-1_u9wkjg.jpg');
+(13, 4.4, 250000, 'Việt Shop', NOW(), 'Dây Lưng Nam', 220000, 1, 'Leather', 'Dây Lưng Nam BBL0025-1', 155, 'ACTIVE', 5, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316769/BBL0025-1-black-1_u9wkjg.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(14, 3.8, 258646.17, 'Việt Shop', NOW(), 'Túi Nữ', 271799.97, 1, 'Cotton', 'Túi Nữ OLD0003-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316768/OLD0003-1-black-1_gzpnlm.jpg');
+(15, 4.2, 550000, 'Việt Shop', NOW(), 'Túi xách nam', 500000, 1, 'Leather', 'Túi xách nam Bernini BBB0014-1', 132, 'ACTIVE', 5, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316771/BBB0014-1-black-1_ocqczd.png');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(15, 3.8, 258646.17, 'Việt Shop', NOW(), 'Túi xách nam', 271799.97, 1, 'Cotton', 'Túi xách nam Bernini BBB0014-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316771/BBB0014-1-black-1_ocqczd.png');
+(18, 4.3, 290000, 'Việt Shop', NOW(), 'Bóp Tay Nam', 260000, 1, 'Leather', 'Bóp Tay Nam BCL0009-1', 117, 'ACTIVE', 5, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316773/BCL0009-1-black-1_jdjzx5.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(16, 3.8, 258646.17, 'Việt Shop', NOW(), 'Túi xách nữ', 271799.97, 1, 'Cotton', 'Túi xách nữ DLD0175-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316771/DLD0175-1-milk-1_l7xhww.jpg');
+(20, 4.5, 310000, 'Việt Shop', NOW(), 'Ví nam Bernini', 285000, 1, 'Leather', 'Ví nam Bernini BWL0017-1', 210, 'ACTIVE', 5, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316777/BWL0017-1-black-1_b3i3xo.jpg');
+-- 🔹 SẢN PHẨM NỮ
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(17, 3.8, 258646.17, 'Việt Shop', NOW(), 'Vali GIOVANNI', 271799.97, 1, 'Cotton', 'Vali GIOVANNI GTL0014-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316773/GTL0014-1-pink-1_comvoc.jpg');
+(14, 4.6, 600000, 'Việt Shop 2', NOW(), 'Túi Nữ', 550000, 1, 'Leather', 'Túi Nữ OLD0003-1', 175, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316768/OLD0003-1-black-1_gzpnlm.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(18, 3.8, 258646.17, 'Việt Shop', NOW(), 'Bóp Tay Nam', 271799.97, 1, 'Cotton', 'Bóp Tay Nam BCL0009-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316773/BCL0009-1-black-1_jdjzx5.jpg');
+(16, 4.5, 680000, 'Việt Shop', NOW(), 'Túi xách nữ', 640000, 1, 'Leather', 'Túi xách nữ DLD0175-1', 198, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316771/DLD0175-1-milk-1_l7xhww.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(19, 3.8, 258646.17, 'Việt Shop', NOW(), 'Ví da nữ', 271799.97, 1, 'Cotton', 'Ví da nữ GWL0060-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-1_f49yz6.jpg');
+(17, 4.1, 950000, 'Việt Shop 2', NOW(), 'Vali GIOVANNI', 880000, 1, 'ABS', 'Vali GIOVANNI GTL0014-1', 139, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316773/GTL0014-1-pink-1_comvoc.jpg');
 INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
-(20, 3.8, 258646.17, 'Việt Shop', NOW(), 'Ví nam Bernini', 271799.97, 1, 'Cotton', 'Ví nam Bernini BWL0017-1', 197, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316777/BWL0017-1-black-1_b3i3xo.jpg');
+(19, 4.3, 320000, 'Việt Shop', NOW(), 'Ví da nữ', 290000, 1, 'Leather', 'Ví da nữ GWL0060-1', 166, 'ACTIVE', 6, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316776/GWL0060-1-yellow-1_f49yz6.jpg');
 
 -- ========================
 -- 7. product_variants (40 dòng)
@@ -201,11 +204,11 @@ INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, v
 -- ========================
 -- 9. coupons
 -- ========================
-INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (1, 'SALE001', 'Đơn trên 200k', 'Giảm giá ưu đãi 1', 'PERCENT', 5, '2021-11-12', 100, '2024-12-17', 'ACTIVE', 2);
-INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (2, 'SALE002', 'Đơn trên 200k', 'Giảm giá ưu đãi 2', 'PERCENT', 10, '2023-04-01', 100, '2025-04-23', 'ACTIVE', 10);
-INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (3, 'SALE003', 'Đơn trên 200k', 'Giảm giá ưu đãi 3', 'PERCENT', 15, '2022-03-19', 100, '2024-11-11', 'ACTIVE', 2);
-INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (4, 'SALE004', 'Đơn trên 200k', 'Giảm giá ưu đãi 4', 'PERCENT', 20, '2023-05-13', 100, '2025-11-23', 'ACTIVE', 5);
-INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (5, 'SALE005', 'Đơn trên 200k', 'Giảm giá ưu đãi 5', 'PERCENT', 25, '2021-11-26', 100, '2025-09-09', 'ACTIVE', 3);
+INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (1, 'SALE001', 'Đơn trên 200k', 'Giảm giá ưu đãi với đơn hàng nhỏ', 'PERCENTAGE', 5, '2021-11-12', 100, '2024-12-17', 'ACTIVE', 2);
+INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (2, 'SALE002', 'Đơn trên 2sản phẩm', 'Giảm giá ưu đãi double', 'PERCENTAGE', 10, '2023-04-01', 100, '2025-04-23', 'ACTIVE', 10);
+INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (3, 'SALE003', 'Đơn trên 1 triệu', 'Giảm giá ưu đãi với đơn hàng vừa', 'PERCENTAGE', 15, '2022-03-19', 100, '2024-11-11', 'ACTIVE', 2);
+INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (4, 'SALE004', 'Đơn trên 2 triệu', 'Giảm giá ưu đãi với đơn hàng lớn', 'FIXED_AMOUNT', 20, '2023-05-13', 100, '2025-11-23', 'INACTIVE', 5);
+INSERT INTO coupons (couponid, code, conditions, description, discount_type, discount_value, end_date, max_uses, start_date, status, used_count) VALUES (5, 'SALE005', 'Đơn trên 5 sản phẩm', 'Giảm giá ưu đãi penta', 'FIXED_AMOUNT', 25, '2021-11-26', 100, '2025-09-09', 'EXPIRED', 3);
 
 -- ========================
 -- 10. orders
@@ -214,12 +217,12 @@ INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, paym
 INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (2, 'Đơn hàng số 2', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 1368233.41, 4, 5, 3);
 INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (3, 'Đơn hàng số 3', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 393385.67, 5, 1, 5);
 INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (4, 'Đơn hàng số 4', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 1327459.02, 1, 2, 2);
-INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (5, 'Đơn hàng số 5', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 1343524.91, 2, 4, 1);
-INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (6, 'Đơn hàng số 6', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 924803.8, 2, 4, 5);
-INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (7, 'Đơn hàng số 7', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 535666.28, 2, 4, 4);
-INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (8, 'Đơn hàng số 8', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 1430916.23, 5, 2, 3);
-INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (9, 'Đơn hàng số 9', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 1592299.01, 2, 1, 4);
-INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (10, 'Đơn hàng số 10', NOW(), 'DELIVERED', NOW(), 'COD', 'PAID', 30000, 427258.87, 1, 4, 3);
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (5, 'Đơn hàng số 5', NOW(), 'DELIVERED', NOW(), 'VNPAY', 'PENDING', 30000, 1343524.91, 2, 4, 1);
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (6, 'Đơn hàng số 6', NOW(), 'DELIVERED', NOW(), 'VNPAY', 'PAID', 30000, 924803.8, 2, 4, 5);
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (7, 'Đơn hàng số 7', NOW(), 'DELIVERED', NOW(), 'COD', 'PENDING', 30000, 535666.28, 2, 4, 4);
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (8, 'Đơn hàng số 8', NOW(), 'DELIVERED', NOW(), 'VNPAY', 'PAID', 30000, 1430916.23, 5, 2, 3);
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (9, 'Đơn hàng số 9', NOW(), 'DELIVERED', NOW(), 'COD', 'PENDING', 30000, 1592299.01, 2, 1, 4);
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES (10, 'Đơn hàng số 10', NOW(), 'PENDING', NOW(), 'VNPAY', 'PAID', 30000, 427258.87, 1, 4, 3);
 
 -- ========================
 -- 11. shipping
@@ -304,22 +307,122 @@ INSERT INTO wishlist_items (wishlist_itemid, added_date, productid, wishlistid) 
 -- ========================
 -- 17. reviews
 -- ========================
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (1, 'Sản phẩm rất tốt 1', '["rev1.jpg", "rev_2.jpg"]', 5, NOW(), 'APPROVED', 4, 7);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (2, 'Sản phẩm rất tốt 2', '["rev2.jpg", "rev_2.jpg"]', 4, NOW(), 'APPROVED', 5, 10);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (3, 'Sản phẩm rất tốt 3', '["rev3.jpg", "rev_2.jpg"]', 5, NOW(), 'APPROVED', 4, 4);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (4, 'Sản phẩm rất tốt 4', '["rev4.jpg", "rev_2.jpg"]', 5, NOW(), 'APPROVED', 2, 3);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (5, 'Sản phẩm rất tốt 5', '["rev5.jpg", "rev_2.jpg"]', 5, NOW(), 'APPROVED', 4, 10);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (6, 'Sản phẩm rất tốt 6', '["rev6.jpg", "rev_2.jpg"]', 4, NOW(), 'APPROVED', 1, 1);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (7, 'Sản phẩm rất tốt 7', '["rev7.jpg", "rev_2.jpg"]', 4, NOW(), 'APPROVED', 1, 10);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (8, 'Sản phẩm rất tốt 8', '["rev8.jpg", "rev_2.jpg"]', 3, NOW(), 'APPROVED', 3, 6);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (9, 'Sản phẩm rất tốt 9', '["rev9.jpg", "rev_2.jpg"]', 3, NOW(), 'APPROVED', 3, 2);
-INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (10, 'Sản phẩm rất tốt 10', '["rev10.jpg", "rev_2.jpg"]', 4, NOW(), 'APPROVED', 3, 2);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (1, 'Sản phẩm rất tốt  mặc thoáng mát', '["https://res.cloudinary.com/duffcwady/image/upload/v1763728523/api_mobile/image_btl/products/product_1763728520794_bojrff.jpg"]', 5, NOW(), 'APPROVED', 4, 7);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (2, 'Sản phẩm rẻ, bền', '["https://res.cloudinary.com/duffcwady/image/upload/v1763705621/api_mobile/image_btl/products/product_1763705620585_lx90p7.jpg"]', 4, NOW(), 'APPROVED', 5, 10);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (3, 'sản phẩm tuyệt vời', '["https://res.cloudinary.com/duffcwady/image/upload/v1763592946/api_mobile/image_btl/products/product_1763592944009_xx0ucn.jpg"]', 5, NOW(), 'APPROVED', 4, 4);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (4, 'Sản phẩm hơi nhỏ với size', '["https://res.cloudinary.com/duffcwady/image/upload/v1763632932/api_mobile/image_btl/products/product_1763632929604_fprr2r.jpg"]', 1, NOW(), 'APPROVED', 2, 3);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (5, 'Sản phẩm ship nhất nhanh', '["https://res.cloudinary.com/duffcwady/image/upload/v1763630495/api_mobile/image_btl/products/product_1763630492835_unqat0.jpg"]', 2, NOW(), 'APPROVED', 4, 10);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (6, 'Sản phẩm cũng tạm', '["https://res.cloudinary.com/duffcwady/image/upload/v1763630495/api_mobile/image_btl/products/product_1763630492835_unqat0.jpg"]', 4, NOW(), 'APPROVED', 1, 1);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (7, 'Sản phẩm ổn', '["https://res.cloudinary.com/duffcwady/image/upload/v1763633631/api_mobile/image_btl/products/product_1763633624045_h9e0bv.jpg"]', 4, NOW(), 'APPROVED', 1, 10);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (8, 'Sản phẩm đáng tiền', '["https://res.cloudinary.com/duffcwady/image/upload/v1763633631/api_mobile/image_btl/products/product_1763633624045_h9e0bv.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1763677601/api_mobile/image_btl/products/product_1763677599005_sq0dwq.jpg"]', 3, NOW(), 'INAPPROVED', 3, 6);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (9, 'Sản phẩm không đáng tiền', '["https://res.cloudinary.com/duffcwady/image/upload/v1763678297/api_mobile/image_btl/products/product_1763678294576_frt1ct.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1763633716/api_mobile/image_btl/products/product_1763633713253_zpd77h.jpg"]', 3, NOW(), 'INAPPROVED', 3, 2);
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES (10, 'xịn', '["https://res.cloudinary.com/duffcwady/image/upload/v1763677601/api_mobile/image_btl/products/product_1763677599005_sq0dwq.jpg", "https://res.cloudinary.com/duffcwady/image/upload/v1763686422/api_mobile/image_btl/products/product_1763686419694_p9uyp7.jpg"]', 4, NOW(), 'INAPPROVED', 3, 2);
 
 -- ========================
 -- 18. review_responses
 -- ========================
-INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (1, 'Cảm ơn bạn đã đánh giá 1', NOW(), 'VISIBLE', 2, 1);
-INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (2, 'Cảm ơn bạn đã đánh giá 2', NOW(), 'VISIBLE', 1, 2);
-INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (3, 'Cảm ơn bạn đã đánh giá 3', NOW(), 'VISIBLE', 3, 3);
-INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (4, 'Cảm ơn bạn đã đánh giá 4', NOW(), 'VISIBLE', 2, 4);
-INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (5, 'Cảm ơn bạn đã đánh giá 5', NOW(), 'VISIBLE', 3, 5);
+INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (1, 'Cảm ơn bạn đã đánh giá cho sản phẩm, nếu có thắc mắc gì về sản phẩm hãy liên hệ trực tiếp với cửa hàng chúng tôi.', NOW(), 'VISIBLE', 2, 1);
+INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (2, 'Cảm ơn bạn đã đánh giá cho sản phẩm, nếu có thắc mắc gì về sản phẩm hãy liên hệ trực tiếp với cửa hàng chúng tôi.', NOW(), 'VISIBLE', 1, 2);
+INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (3, 'Cảm ơn bạn đã đánh giá cho sản phẩm, nếu có thắc mắc gì về sản phẩm hãy liên hệ trực tiếp với cửa hàng chúng tôi.', NOW(), 'ACTIVE', 3, 3);
+INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (4, 'Cảm ơn bạn đã đánh giá cho sản phẩm, nếu có thắc mắc gì về sản phẩm hãy liên hệ trực tiếp với cửa hàng chúng tôi.', NOW(), 'VISIBLE', 2, 4);
+INSERT INTO review_responses (responseid, response_content, response_date, status, adminid, reviewid) VALUES (5, 'Cảm ơn bạn đã đánh giá cho sản phẩm, nếu có thắc mắc gì về sản phẩm hãy liên hệ trực tiếp với cửa hàng chúng tôi.', NOW(), 'ACTIVE', 3, 5);
+
+
+-- ================================================================
+-- PHẦN 2: DỮ LIỆU BỔ SUNG (DÀNH CHO BÁO CÁO & THỐNG KÊ)
+-- ================================================================
+
+-- 1. Thêm tài khoản mới (Khách hàng 6-10)
+INSERT INTO accounts (accountid, account_status, email, password, registration_date, role) VALUES
+(9, 'ACTIVE', 'hoangvanhau@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', DATE_SUB(NOW(), INTERVAL 60 DAY), 'CUSTOMER'),
+(10, 'ACTIVE', 'nguyenthithu@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', DATE_SUB(NOW(), INTERVAL 45 DAY), 'CUSTOMER'),
+(11, 'ACTIVE', 'phamminhtuan@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', DATE_SUB(NOW(), INTERVAL 30 DAY), 'CUSTOMER'),
+(12, 'ACTIVE', 'dothihong@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', DATE_SUB(NOW(), INTERVAL 15 DAY), 'CUSTOMER'),
+(13, 'ACTIVE', 'levanlong@gmail.com', '$2a$10$0ANzrYbqco74VKmQ0PVD1enby0phRXLnW9FVJfsuwzhqKCzJ5BoiS', NOW(), 'CUSTOMER');
+
+-- 2. Thêm thông tin khách hàng mới
+INSERT INTO customers (customerid, date_of_birth, full_name, gender, loyalty_points, phone_number, referral_code, accountid, created_at) VALUES
+(6, '1993-01-15', 'Hoàng Văn Hậu', 'Nam', 50, '0901234567', 'REF006', 9, DATE_SUB(NOW(), INTERVAL 60 DAY)),
+(7, '1997-09-20', 'Nguyễn Thị Thu', 'Nữ', 250, '0912345678', 'REF007', 10, DATE_SUB(NOW(), INTERVAL 45 DAY)),
+(8, '2000-12-12', 'Phạm Minh Tuấn', 'Nam', 0, '0923456789', 'REF008', 11, DATE_SUB(NOW(), INTERVAL 30 DAY)),
+(9, '1995-03-08', 'Đỗ Thị Hồng', 'Nữ', 100, '0934567890', 'REF009', 12, DATE_SUB(NOW(), INTERVAL 15 DAY)),
+(10, '1985-07-27', 'Lê Văn Long', 'Nam', 10, '0945678901', 'REF010', 13, NOW());
+
+-- 3. Thêm địa chỉ cho khách hàng mới
+INSERT INTO addresses (addressid, city, country, district, is_default, postal_code, recipient_name, recipient_phone, street_address, customerid) VALUES
+(6, 'Hải Phòng', 'Việt Nam', 'Ngô Quyền', 1, '180000', 'Hoàng Văn Hậu', '0901234567', '15 Lạch Tray', 6),
+(7, 'Đà Lạt', 'Việt Nam', 'Phường 1', 1, '670000', 'Nguyễn Thị Thu', '0912345678', '22 Bùi Thị Xuân', 7),
+(8, 'Nha Trang', 'Việt Nam', 'Lộc Thọ', 1, '650000', 'Phạm Minh Tuấn', '0923456789', '10 Trần Phú', 8),
+(9, 'Vũng Tàu', 'Việt Nam', 'Phường 3', 1, '790000', 'Đỗ Thị Hồng', '0934567890', '5 Lê Hồng Phong', 9),
+(10, 'Biên Hòa', 'Việt Nam', 'Tân Hiệp', 1, '810000', 'Lê Văn Long', '0945678901', '30 Đồng Khởi', 10);
+
+-- 4. Thêm giỏ hàng trống cho khách mới (Logic hệ thống thường tự tạo)
+INSERT INTO carts (cartid, total_amount, updated_date, customerid) VALUES 
+(6, 0, NOW(), 6),
+(7, 0, NOW(), 7),
+(8, 0, NOW(), 8),
+(9, 0, NOW(), 9),
+(10, 0, NOW(), 10);
+
+-- 5. Thêm 5 Sản phẩm mới (Áo khoác, Đầm dạ hội - Đa dạng danh mục)
+-- Product ID tiếp theo: 21
+INSERT INTO products (productid, average_rating, base_price, brand, created_date, description, discount_price, is_featured, material, name, review_count, status, categoryid, image) VALUES
+(21, 5.0, 1500000.00, 'Việt Shop Luxury', NOW(), 'Đầm dạ hội cao cấp', 1450000.00, 1, 'Lụa', 'Đầm Dạ Hội Luxury DDH001', 10, 'ACTIVE', 9, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316779/GBZ0015-1NN-navy-1_s62ir9.jpg'),
+(22, 4.5, 850000.00, 'Bernini', NOW(), 'Áo khoác gió nam chống nước', 790000.00, 0, 'Polyester', 'Áo Khoác Gió Bernini AKG002', 5, 'ACTIVE', 1, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316794/GJV0038-1DN-navy-1_e4phkh.jpg'),
+(23, 4.0, 320000.00, 'Việt Shop', NOW(), 'Chân váy chữ A công sở', 299000.00, 0, 'Kaki', 'Chân Váy Chữ A CVA005', 12, 'ACTIVE', 9, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316772/DLD0175-1-milk-1_l7xhww.jpg'),
+(24, 4.8, 450000.00, 'Việt Shop Sport', NOW(), 'Giày thể thao nam chạy bộ', 420000.00, 1, 'Vải dệt', 'Giày Sport Nam GSN008', 20, 'ACTIVE', 3, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316783/BPL0044-1-black-1_z6o2ab.jpg'),
+(25, 3.5, 150000.00, 'Basic', NOW(), 'Mũ lưỡi trai unisex', 120000.00, 0, 'Cotton', 'Mũ Lưỡi Trai Basic MLT009', 2, 'ACTIVE', 5, 'https://res.cloudinary.com/duffcwady/image/upload/v1761316768/BBL0025-1-black-1_u9wkjg.jpg');
+
+-- 6. Thêm biến thể (Variants) cho sản phẩm mới (Variant ID tiếp theo: 31)
+INSERT INTO product_variants (variantid, color, images, price_adjustment, size, sku, status, productid) VALUES
+(31, 'Đỏ', '["https://example.com/img1.jpg"]', 0, 'M', 'SKU0021', 'active', 21),
+(32, 'Đỏ', '["https://example.com/img1.jpg"]', 0, 'L', 'SKU0022', 'active', 21),
+(33, 'Đen', '["https://example.com/img2.jpg"]', 0, 'XL', 'SKU0023', 'active', 22),
+(34, 'Xanh Navy', '["https://example.com/img2.jpg"]', 0, 'L', 'SKU0024', 'active', 22),
+(35, 'Đen', '["https://example.com/img3.jpg"]', 0, 'S', 'SKU0025', 'active', 23),
+(36, 'Trắng', '["https://example.com/img4.jpg"]', 0, '41', 'SKU0026', 'active', 24),
+(37, 'Trắng', '["https://example.com/img4.jpg"]', 0, '42', 'SKU0027', 'active', 24),
+(38, 'Đen', '["https://example.com/img5.jpg"]', 0, 'FreeSize', 'SKU0028', 'active', 25);
+
+-- 7. Thêm kho hàng (Inventory) cho sản phẩm mới
+INSERT INTO inventory (inventoryid, quantity, reserved_quantity, updated_date, variantid) VALUES 
+(31, 9, 0, NOW(), 31), (32, 15, 1, NOW(), 32), (33, 50, 5, NOW(), 33), (34, 40, 2, NOW(), 34),
+(35, 7, 0, NOW(), 35), (36, 25, 2, NOW(), 36), (37, 25, 3, NOW(), 37), (38, 100, 0, NOW(), 38);
+
+-- 8. Thêm Đơn hàng (Orders) - Đa dạng trạng thái và thời gian (Order ID tiếp theo: 11)
+-- Đơn hàng tháng trước (DELIVERED)
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES 
+(11, 'Giao giờ hành chính', DATE_SUB(NOW(), INTERVAL 35 DAY), 'DELIVERED', DATE_SUB(NOW(), INTERVAL 35 DAY), 'VNPAY', 'PAID', 30000, 1480000, NULL, 6, 6),
+(12, 'Gọi trước khi giao', DATE_SUB(NOW(), INTERVAL 32 DAY), 'DELIVERED', DATE_SUB(NOW(), INTERVAL 32 DAY), 'COD', 'PAID', 30000, 450000, NULL, 7, 7);
+
+-- Đơn hàng tuần trước (CANCELLED - Lý do thống kê)
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES 
+(13, 'Khách đổi ý', DATE_SUB(NOW(), INTERVAL 7 DAY), 'CANCELLED', NULL, 'COD', 'UNPAID', 0, 790000, NULL, 8, 8);
+
+-- Đơn hàng mới hôm qua/nay (PENDING, CONFIRMED, SHIPPING)
+INSERT INTO orders (orderid, notes, order_date, order_status, payment_date, payment_method, payment_status, shipping_fee, total_amount, coupon_code, customerid, addressid) VALUES 
+(14, 'Gói quà giúp mình', DATE_SUB(NOW(), INTERVAL 2 DAY), 'SHIPPING', DATE_SUB(NOW(), INTERVAL 2 DAY), 'VNPAY', 'PAID', 30000, 299000, 1, 9, 9),
+(15, '', DATE_SUB(NOW(), INTERVAL 1 DAY), 'CONFIRMED', NULL, 'COD', 'PENDING', 30000, 840000, NULL, 10, 10),
+(16, 'Giao nhanh', NOW(), 'PENDING', NULL, 'COD', 'PENDING', 30000, 120000, NULL, 6, 6);
+
+-- 9. Thêm Chi tiết đơn hàng (Order Items) khớp với Orders mới
+INSERT INTO order_items (order_itemid, quantity, sub_total, unit_price, orderid, variantid) VALUES 
+(21, 1, 1450000, 1450000, 11, 31), -- Order 11
+(22, 1, 420000, 420000, 12, 36),  -- Order 12
+(23, 1, 790000, 790000, 13, 33),  -- Order 13 (Cancelled)
+(24, 1, 299000, 299000, 14, 35),  -- Order 14
+(25, 2, 840000, 420000, 15, 37),  -- Order 15
+(26, 1, 120000, 120000, 16, 38);  -- Order 16
+
+-- 10. Thêm Shipping cho các đơn hàng đã xác nhận/giao
+INSERT INTO shipping (shippingid, carrier, estimated_delivery_date, shipping_fee, shipping_status, tracking_number, orderid) VALUES 
+(11, 'Giao Hàng Nhanh', DATE_SUB(NOW(), INTERVAL 33 DAY), 30000, 'Đã giao', 'GHN00011', 11),
+(12, 'Viettel Post', DATE_SUB(NOW(), INTERVAL 30 DAY), 30000, 'Đã giao', 'VTP00001', 12),
+(13, 'Giao Hàng Tiết Kiệm', DATE_ADD(NOW(), INTERVAL 2 DAY), 30000, 'Đang giao', 'GHTK0001', 14);
+
+-- 11. Thêm Reviews (Khen/Chê) để test chức năng đánh giá
+INSERT INTO reviews (reviewid, comment, images, rating, review_date, status, customerid, productid) VALUES 
+(11, 'Đầm đẹp xuất sắc, vải mịn', NULL, 5, NOW(), 'APPROVED', 6, 21),
+(12, 'Áo khoác hơi mỏng so với ảnh', NULL, 3, NOW(), 'APPROVED', 7, 22),
+(13, 'Giày đi êm chân, giao hàng nhanh', NULL, 5, NOW(), 'APPROVED', 7, 24),
+(14, 'Chất lượng tệ, chỉ thừa nhiều', NULL, 2, NOW(), 'APPROVED', 9, 25);
