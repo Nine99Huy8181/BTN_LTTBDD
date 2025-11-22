@@ -206,7 +206,8 @@ Cập nhật base URL trong React Native app của bạn:
 
 ```typescript
 // constants/index.ts
-export const API_BASE_URL = 'https://fashionshop-backend.onrender.com';
+// constants/index.ts
+export const API_BASE_URL = 'https://btnlttbdd-production.up.railway.app';
 ```
 
 ---

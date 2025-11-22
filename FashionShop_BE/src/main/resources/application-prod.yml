@@ -45,20 +45,22 @@ spring:
       mode: never  # Không chạy SQL scripts trong production
       platform: mysql
 
-  # === REDIS (DISABLED - Có thể enable sau nếu cần) ===
-  # Tạm thời comment để không cần Redis khi deploy
-  # data:
-  #   redis:
-  #     host: ${REDIS_HOST:localhost}
-  #     port: ${REDIS_PORT:6379}
-  #     password: ${REDIS_PASSWORD:}
-  #     timeout: 2000ms
-  #     lettuce:
-  #       pool:
-  #         enabled: true
-  #         max-active: 8
-  #         max-idle: 4
-  #         min-idle: 0
+  # === REDIS (For OTP) ===
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD}
+      timeout: 2000ms
+      ssl:
+        enabled: ${REDIS_SSL:true}  # Upstash requires SSL
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 8
+          max-idle: 4
+          min-idle: 0
+
 
   # === EMAIL (GMAIL) ===
   mail:
