@@ -1,5 +1,5 @@
 /*
- * @ (#) f.java     1.0    21-Nov-25
+ * @ (#) EmailService.java     1.0    22-Nov-25
  *
  * Copyright (c) 2025 IUH. All rights reserved.
  */
@@ -7,24 +7,32 @@
 package iuh.fit.fashionshop_be.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Random;
 
 /*
- * @description:
+ * @description: Email service using Resend API
  * @author: Nguyen Quoc Huy
- * @date:21-Nov-25
- * @version: 1.0
+ * @date: 22-Nov-25
+ * @version: 2.0
  */
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
     private final RedisService redisService;
+    private final OkHttpClient httpClient = new OkHttpClient();
+
+    @Value("${resend.api-key}")
+    private String resendApiKey;
+
+    @Value("${resend.from-email:onboarding@resend.dev}")
+    private String fromEmail;
 
     private String generateOtp() {
         return String.format("%06d", new Random().nextInt(999999));
@@ -34,10 +42,8 @@ public class EmailService {
         String otp = generateOtp();
         redisService.saveOtp(toEmail, otp);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(toEmail);
-        message.setSubject("Fashion Store - Mã xác minh đăng ký");
-        message.setText("""
+        // Prepare email body with Resend API
+        String emailBody = String.format("""
             Chào bạn!
             
             Mã xác minh tài khoản của bạn là:
@@ -50,8 +56,35 @@ public class EmailService {
             
             Trân trọng,
             Fashion Store Team
-            """.formatted(otp));
-        mailSender.send(message);
+            """, otp);
+
+        // Create JSON payload for Resend API
+        JSONObject json = new JSONObject();
+        json.put("from", fromEmail);
+        json.put("to", new String[]{toEmail});
+        json.put("subject", "Fashion Store - Mã xác minh đăng ký");
+        json.put("text", emailBody);
+
+        // Send HTTP request to Resend
+        RequestBody body = RequestBody.create(
+            json.toString(),
+            MediaType.get("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+            .url("https://api.resend.com/emails")
+            .addHeader("Authorization", "Bearer " + resendApiKey)
+            .addHeader("Content-Type", "application/json")
+            .post(body)
+            .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Failed to send email: " + response);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error sending OTP email via Resend", e);
+        }
     }
 
     public boolean verifyOtp(String email, String otp) {
