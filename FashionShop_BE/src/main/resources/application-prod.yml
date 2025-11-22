@@ -62,20 +62,23 @@ spring:
           min-idle: 0
 
 
-  # === EMAIL (GMAIL) ===
+  # === EMAIL (GMAIL with SSL) ===
   mail:
     host: smtp.gmail.com
-    port: 587
+    port: 465  # Changed from 587 to 465 (SSL)
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
-    protocol: smtp
+    protocol: smtps  # Changed from smtp to smtps
     properties:
       mail:
         smtp:
           auth: true
-          starttls:
-            enable: true
+          ssl:
+            enable: true  # Enable SSL
             required: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
         debug: false  # Tắt debug trong production
 
 # === JWT ===
