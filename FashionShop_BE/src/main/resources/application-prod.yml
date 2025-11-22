@@ -1,0 +1,114 @@
+# ==============================================================
+# PRODUCTION CONFIGURATION FOR RENDER.COM
+# ==============================================================
+# File này sẽ được sử dụng khi chạy với profile: -Dspring.profiles.active=prod
+# Tất cả sensitive data được lấy từ Environment Variables trên Render
+# ==============================================================
+
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: FashionShop_BE
+
+  # === DATABASE (CLEVER CLOUD MYSQL) ===
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=true&requireSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false  # Tắt SQL logging trong production
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  sql:
+    init:
+      mode: never  # Không chạy SQL scripts trong production
+      platform: mysql
+
+  # === REDIS (DISABLED - Có thể enable sau nếu cần) ===
+  # Tạm thời comment để không cần Redis khi deploy
+  # data:
+  #   redis:
+  #     host: ${REDIS_HOST:localhost}
+  #     port: ${REDIS_PORT:6379}
+  #     password: ${REDIS_PASSWORD:}
+  #     timeout: 2000ms
+  #     lettuce:
+  #       pool:
+  #         enabled: true
+  #         max-active: 8
+  #         max-idle: 4
+  #         min-idle: 0
+
+  # === EMAIL (GMAIL) ===
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: false  # Tắt debug trong production
+
+# === JWT ===
+jwt:
+  secret: ${JWT_SECRET}
+
+# === VNPAY ===
+vnpay:
+  tmnCode: ${VNPAY_TMN_CODE}
+  hashSecret: ${VNPAY_HASH_SECRET}
+  url: ${VNPAY_URL:https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}
+  returnUrl: ${VNPAY_RETURN_URL}
+
+# === GEMINI AI ===
+spring.ai.openai.api-key: ${GEMINI_API_KEY}
+spring.ai.openai.base-url: https://generativelanguage.googleapis.com/v1beta/openai
+spring.ai.openai.chat.options.model: gemini-1.5-flash
+
+# === LOGGING (Production level) ===
+logging:
+  level:
+    root: INFO
+    web: INFO
+    org.springframework: INFO
+    org.hibernate: WARN
+    iuh.fit: INFO  # Package của project
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+
+# === ACTUATOR (Health check cho Render) ===
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized

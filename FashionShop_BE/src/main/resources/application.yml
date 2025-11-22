@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: server.port=${PORT:8080}
   address: 0.0.0.0
 
 # === DATABASE ===
@@ -23,7 +23,7 @@ spring:
       mode: always
       platform: mariadb
 
-  # === REDIS (CHO OTP - SIÊU NHANH) ===
+  # === REDIS (CHO OTP - SIï¿½U NHANH) ===
   data:
     redis:
       host: localhost
