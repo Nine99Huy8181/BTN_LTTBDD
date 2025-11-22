@@ -6,18 +6,17 @@ FROM maven:3.9-eclipse-temurin-21-alpine AS builder
 # Tạo thư mục làm việc
 WORKDIR /app
 
-# Copy Maven wrapper và pom.xml trước để cache dependencies
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
+# Copy pom.xml trước để cache dependencies
+COPY pom.xml ./
 
 # Download dependencies (layer này sẽ được cache nếu pom.xml không thay đổi)
-RUN ./mvnw dependency:go-offline -B
+RUN mvn dependency:go-offline -B
 
 # Copy source code
 COPY src ./src
 
 # Build application (skip tests để build nhanh hơn)
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # ========================================
 # Stage 2: Runtime Stage
