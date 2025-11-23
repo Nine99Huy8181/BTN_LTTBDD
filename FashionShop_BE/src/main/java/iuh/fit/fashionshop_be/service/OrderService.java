@@ -61,7 +61,8 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        // Sử dụng query với JOIN FETCH để eager load orderItems
+        return orderRepository.findAllWithItems();
     }
 
     public Order getOrderById(Long id) {
@@ -70,7 +71,8 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public List<Order> getOrdersByCustomerId(Long customerID) {
-        return orderRepository.findByCustomerCustomerID(customerID);
+        // Sử dụng query với JOIN FETCH để eager load orderItems
+        return orderRepository.findByCustomerCustomerIDWithItems(customerID);
     }
 
     public List<Order> getOrdersByStatus(String orderStatus) {

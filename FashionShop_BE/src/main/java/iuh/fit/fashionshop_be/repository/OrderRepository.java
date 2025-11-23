@@ -26,6 +26,15 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
+    
+    // ✅ Custom query với JOIN FETCH để eager load orderItems
+    @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems WHERE o.customer.customerID = :customerID ORDER BY o.orderDate DESC")
+    List<Order> findByCustomerCustomerIDWithItems(@Param("customerID") Long customerID);
+    
+    @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems ORDER BY o.orderDate DESC")
+    List<Order> findAllWithItems();
+    
+    // Original methods (giữ lại để backward compatible nếu cần)
     List<Order> findByCustomerCustomerID(Long customerID);
     List<Order> findByOrderStatus(String orderStatus);
     List<Order> findByPaymentStatus(String paymentStatus);
