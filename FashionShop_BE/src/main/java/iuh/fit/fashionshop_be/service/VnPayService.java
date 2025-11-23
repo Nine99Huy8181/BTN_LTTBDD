@@ -29,7 +29,6 @@ public class VnPayService {
     public String createPaymentUrl(HttpServletRequest req, long amount, String orderInfo) {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        String orderType = req.getParameter("ordertype");
         String vnp_TxnRef = getRandomNumber(8);
         String vnp_IpAddr = getIpAddress(req);
 
@@ -40,21 +39,10 @@ public class VnPayService {
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-
-        String bank_code = req.getParameter("bankcode");
-        if (bank_code != null && !bank_code.isEmpty()) {
-            vnp_Params.put("vnp_BankCode", bank_code);
-        }
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", orderInfo);
-        vnp_Params.put("vnp_OrderType", orderType != null ? orderType : "other");
-
-        String locate = req.getParameter("language");
-        if (locate != null && !locate.isEmpty()) {
-            vnp_Params.put("vnp_Locale", locate);
-        } else {
-            vnp_Params.put("vnp_Locale", "vn");
-        }
+        vnp_Params.put("vnp_OrderType", "other");
+        vnp_Params.put("vnp_Locale", "vn");
         vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
@@ -69,39 +57,6 @@ public class VnPayService {
         cld.add(Calendar.MINUTE, 15);
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
-
-        // Billing information - simplified for frontend requests
-        vnp_Params.put("vnp_Bill_Mobile", getSafeParameter(req, "txt_billing_mobile"));
-        vnp_Params.put("vnp_Bill_Email", getSafeParameter(req, "txt_billing_email"));
-
-        String fullName = getSafeParameter(req, "txt_billing_fullname");
-        if (fullName != null && !fullName.trim().isEmpty()) {
-            String[] nameParts = fullName.trim().split("\\s+", 2);
-            if (nameParts.length >= 2) {
-                vnp_Params.put("vnp_Bill_FirstName", nameParts[0]);
-                vnp_Params.put("vnp_Bill_LastName", nameParts[nameParts.length - 1]);
-            } else {
-                vnp_Params.put("vnp_Bill_FirstName", fullName);
-                vnp_Params.put("vnp_Bill_LastName", "");
-            }
-        } else {
-            vnp_Params.put("vnp_Bill_FirstName", "");
-            vnp_Params.put("vnp_Bill_LastName", "");
-        }
-
-        vnp_Params.put("vnp_Bill_Address", getSafeParameter(req, "txt_inv_addr1"));
-        vnp_Params.put("vnp_Bill_City", getSafeParameter(req, "txt_bill_city"));
-        vnp_Params.put("vnp_Bill_Country", getSafeParameter(req, "txt_bill_country"));
-        vnp_Params.put("vnp_Bill_State", getSafeParameter(req, "txt_bill_state"));
-
-        // Invoice information
-        vnp_Params.put("vnp_Inv_Phone", getSafeParameter(req, "txt_inv_mobile"));
-        vnp_Params.put("vnp_Inv_Email", getSafeParameter(req, "txt_inv_email"));
-        vnp_Params.put("vnp_Inv_Customer", getSafeParameter(req, "txt_inv_customer"));
-        vnp_Params.put("vnp_Inv_Address", getSafeParameter(req, "txt_inv_addr1"));
-        vnp_Params.put("vnp_Inv_Company", getSafeParameter(req, "txt_inv_company"));
-        vnp_Params.put("vnp_Inv_Taxcode", getSafeParameter(req, "txt_inv_taxcode"));
-        vnp_Params.put("vnp_Inv_Type", getSafeParameter(req, "cbo_inv_type"));
 
         // Build data to hash and querystring
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
@@ -136,20 +91,16 @@ public class VnPayService {
 
         String finalUrl = vnp_PayUrl + "?" + queryUrl;
         System.out.println("🔗 Final VNPay URL: " + finalUrl);
+        System.out.println("📝 Hash Data: " + hashData.toString());
+        System.out.println("🔐 Secure Hash: " + vnp_SecureHash);
 
         return finalUrl;
     }
 
-    // Helper method to safely get parameters
-    private String getSafeParameter(HttpServletRequest req, String paramName) {
-        String value = req.getParameter(paramName);
-        return value != null ? value : "";
-    }
-
-    // Helper method for URL encoding
+    // Helper method for URL encoding - MUST USE UTF-8 for VNPAY
     private String urlEncode(String value) {
         try {
-            return URLEncoder.encode(value, StandardCharsets.US_ASCII.toString());
+            return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
             return value;
         }

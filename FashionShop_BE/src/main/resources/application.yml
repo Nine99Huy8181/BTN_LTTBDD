@@ -1,5 +1,5 @@
 server:
-  port: server.port=${PORT:8080}
+  port: ${PORT:8080}
   address: 0.0.0.0
 
 # === DATABASE ===
@@ -53,7 +53,10 @@ spring:
             enable: true
             required: true
         debug: true  # b?t ?? xem log g?i mail khi dev
-
+# === RESEND (GỬI EMAIL VIA RESEND API) ===
+resend:
+  api-key: re_Jy9gw1bv_6K2wvZ2CpdRckaSQezZxgMt1
+  from-email: onboarding@resend.dev  
 # === JWT ===
 jwt:
   secret: your-very-long-secret-key-at-least-32-characters-long-for-hs256
