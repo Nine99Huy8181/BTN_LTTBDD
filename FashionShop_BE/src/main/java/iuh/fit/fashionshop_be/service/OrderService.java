@@ -59,6 +59,7 @@ public class OrderService {
             "PENDING", "APPROVED", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"
     );
 
+    @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -67,6 +68,7 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
+    @Transactional(readOnly = true)
     public List<Order> getOrdersByCustomerId(Long customerID) {
         return orderRepository.findByCustomerCustomerID(customerID);
     }
