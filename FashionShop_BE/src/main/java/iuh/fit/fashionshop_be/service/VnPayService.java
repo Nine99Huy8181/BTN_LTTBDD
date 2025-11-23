@@ -26,16 +26,12 @@ public class VnPayService {
     @Value("${vnpay.returnUrl}")
     private String vnp_ReturnUrl;
 
-    public String createPaymentUrl(HttpServletRequest req, long amount, String orderInfo) {
-        String vnp_Version = "2.1.0";
-        String vnp_Command = "pay";
-        String vnp_TxnRef = getRandomNumber(8);
-        String vnp_IpAddr = getIpAddress(req);
+    public String createPaymentUrl(HttpServletRequest request, long amount, String orderInfo, String vnp_TxnRef) {
+        String vnp_IpAddr = getIpAddress(request);
 
-        amount = amount * 100;
         Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", vnp_Version);
-        vnp_Params.put("vnp_Command", vnp_Command);
+        vnp_Params.put("vnp_Version", "2.1.0");
+        vnp_Params.put("vnp_Command", "pay");
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
@@ -68,12 +64,12 @@ public class VnPayService {
             String fieldName = itr.next();
             String fieldValue = vnp_Params.get(fieldName);
             if (fieldValue != null && !fieldValue.isEmpty()) {
-                // Build hash data
+                // Build hash data - CRITICAL: Field names are NOT URL encoded per VNPay spec
                 hashData.append(fieldName);
                 hashData.append('=');
                 hashData.append(urlEncode(fieldValue));
 
-                // Build query
+                // Build query - both name and value are encoded
                 query.append(urlEncode(fieldName));
                 query.append('=');
                 query.append(urlEncode(fieldValue));
@@ -208,6 +204,7 @@ public class VnPayService {
             String fieldName = itr.next();
             String fieldValue = fields.get(fieldName);
             if (fieldValue != null && !fieldValue.isEmpty()) {
+                // CRITICAL: Field names are NOT URL encoded per VNPay spec
                 sb.append(fieldName);
                 sb.append("=");
                 sb.append(urlEncode(fieldValue));
