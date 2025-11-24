@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.*;
@@ -81,6 +82,7 @@ public class DashboardService {
     /**
      * Lấy danh sách sản phẩm bán chạy
      */
+    @Transactional(readOnly = true)
     public List<BestSellingProductDTO> getBestSellingProducts(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         List<Object[]> results = orderItemRepository.findBestSellingProducts(pageable);
@@ -117,6 +119,7 @@ public class DashboardService {
     /**
      * Lấy danh sách đơn hàng mới
      */
+    @Transactional(readOnly = true)
     public List<RecentOrderDTO> getRecentOrders(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         List<Order> orders = orderRepository.findRecentOrders(pageable);
