@@ -6,13 +6,13 @@
 
 package iuh.fit.fashionshop_be.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Random;
 
 /*
@@ -24,14 +24,10 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-
     private final RedisService redisService;
-    private final OkHttpClient httpClient = new OkHttpClient();
+    private final JavaMailSender mailSender;  // Thêm injection này
 
-    @Value("${resend.api-key}")
-    private String resendApiKey;
-
-    @Value("${resend.from-email:onboarding@resend.dev}")
+    @Value("${spring.mail.default-from}")  // Lấy from-email từ application.yml
     private String fromEmail;
 
     private String generateOtp() {
@@ -42,48 +38,34 @@ public class EmailService {
         String otp = generateOtp();
         redisService.saveOtp(toEmail, otp);
 
-        // Prepare email body with Resend API
+        // Tạo nội dung email
+        String subject = "Fashion Store - Mã xác minh đăng ký";
         String emailBody = String.format("""
             Chào bạn!
-            
+           
             Mã xác minh tài khoản của bạn là:
-            
+           
             %s
-            
+           
             Mã này sẽ hết hạn sau 5 phút.
-            
+           
             Nếu bạn không yêu cầu, vui lòng bỏ qua email này.
-            
+           
             Trân trọng,
             Fashion Store Team
             """, otp);
 
-        // Create JSON payload for Resend API
-        JSONObject json = new JSONObject();
-        json.put("from", fromEmail);
-        json.put("to", new String[]{toEmail});
-        json.put("subject", "Fashion Store - Mã xác minh đăng ký");
-        json.put("text", emailBody);
-
-        // Send HTTP request to Resend
-        RequestBody body = RequestBody.create(
-            json.toString(),
-            MediaType.get("application/json; charset=utf-8")
-        );
-
-        Request request = new Request.Builder()
-            .url("https://api.resend.com/emails")
-            .addHeader("Authorization", "Bearer " + resendApiKey)
-            .addHeader("Content-Type", "application/json")
-            .post(body)
-            .build();
-
-        try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Failed to send email: " + response);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error sending OTP email via Resend", e);
+        // Gửi email qua JavaMailSender
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(emailBody, false);  // false: text plain, true: HTML nếu cần
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error sending OTP email via Gmail SMTP", e);
         }
     }
 
