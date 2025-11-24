@@ -2,8 +2,6 @@ package iuh.fit.fashionshop_be.controller;
 
 import iuh.fit.fashionshop_be.dto.request.LoginRequest;
 import iuh.fit.fashionshop_be.dto.request.RegisterRequest;
-import iuh.fit.fashionshop_be.dto.request.ResetPasswordRequest;
-import iuh.fit.fashionshop_be.dto.request.VerifyOtpRequest;
 import iuh.fit.fashionshop_be.dto.response.ApiResponse;
 import iuh.fit.fashionshop_be.dto.response.JwtResponse;
 import iuh.fit.fashionshop_be.dto.response.UserResponse;
@@ -14,7 +12,6 @@ import iuh.fit.fashionshop_be.repository.AccountRepository;
 import iuh.fit.fashionshop_be.service.AccountService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import iuh.fit.fashionshop_be.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,18 +40,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final AccountService accountService;
     private final SecretKey key;
-    private final EmailService emailService;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager,
                           AccountService accountService,
-                          @Value("${jwt.secret}") String secretKey, EmailService emailService, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+                          @Value("${jwt.secret}") String secretKey, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.accountService = accountService;
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-        this.emailService = emailService;
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -152,90 +147,6 @@ public class AuthController {
                 .code(1000)
                 .message("User info retrieved")
                 .result(response)
-                .build();
-    }
-
-    @PostMapping("/send-otp")
-    public ApiResponse<String> sendOtp(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
-
-        if (accountRepository.findByEmail(email).isPresent()) {
-            throw new AppException(ErrorCode.USER_EXISTED);
-        }
-
-        emailService.sendOtpEmail(email);
-
-        return ApiResponse.<String>builder()
-                .code(1000)
-                .message("OTP đã được gửi đến email của bạn")
-                .build();
-    }
-
-    @PostMapping("/verify-otp")
-    public ApiResponse<String> verifyOtp(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String otp = body.get("otp");
-
-        if (emailService.verifyOtp(email, otp)) {
-            return ApiResponse.<String>builder()
-                    .code(1000)
-                    .message("Xác minh thành công")
-                    .build();
-        } else {
-            throw new AppException(ErrorCode.INVALID_REQUEST, "Mã OTP không đúng hoặc đã hết hạn");
-        }
-    }
-
-
-    @PostMapping("/forgot-password")
-    public ApiResponse<String> forgotPassword(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
-
-        if (accountRepository.findByEmail(email).isEmpty()) {
-            throw new AppException(ErrorCode.USER_NOT_EXISTED);
-        }
-
-        emailService.sendOtpEmail(email); // dùng chung service gửi OTP đăng ký
-
-        return ApiResponse.<String>builder()
-                .code(1000)
-                .message("Mã OTP đã được gửi đến email của bạn")
-                .build();
-    }
-
-    // 2. Xác minh OTP
-    @PostMapping("/verify-otp-forgot")
-    public ApiResponse<String> verifyOtpForgot(@RequestBody VerifyOtpRequest req) {
-        if (emailService.verifyOtp(req.getEmail(), req.getOtp())) {
-            return ApiResponse.<String>builder()
-                    .code(1000)
-                    .message("Xác minh thành công")
-                    .build();
-        }
-        throw new AppException(ErrorCode.INVALID_OTP);
-    }
-
-    // 3. Đặt lại mật khẩu mới
-    @PostMapping("/reset-password")
-    public ApiResponse<String> resetPassword(@RequestBody ResetPasswordRequest req) {
-        if (!req.getNewPassword().equals(req.getConfirmPassword())) {
-            throw new AppException(ErrorCode.PASSWORD_NOT_MATCHED);
-        }
-
-        Account account = accountRepository.findByEmail(req.getEmail())
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-
-//        // Kiểm tra OTP lần cuối trước khi đổi mk
-//        if (!emailService.verifyOtp(req.getEmail(), req.getOtp())) {
-//            throw new AppException(ErrorCode.INVALID_OTP);
-//        }
-
-        account.setPassword(passwordEncoder.encode(req.getNewPassword()));
-        accountRepository.save(account);
-
-        return ApiResponse.<String>builder()
-                .code(1000)
-                .message("Đặt lại mật khẩu thành công")
                 .build();
     }
 }

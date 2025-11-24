@@ -92,12 +92,6 @@ public class SecurityConfig {
                                 // ==============================================================
                                 // 2. SUPER ADMIN – QUYỀN CAO NHẤT (phải đặt TRƯỚC)
                                 // ==============================================================
-//                        .requestMatchers(
-//                                "/api/accounts",
-//                                "/api/accounts/**",
-//                                "/api/admins/**",
-//                                "/api/review-responses/**"
-//                        ).hasRole("SUPER")
                                 //hung
                                 .requestMatchers(
                                         "/api/accounts/email/**",
@@ -126,30 +120,16 @@ public class SecurityConfig {
                                 // 4. CUSTOMER ONLY – CHỈ CUSTOMER (không cho Admin)
                                 // ==============================================================
                                 .requestMatchers(
-//                                "/api/carts/{id}",
-//                                "/api/carts/customer/{customerId}",
-//                                "/api/cart-items",
-//                                "/api/cart-items/{id}",
-//                                "/api/cart-items/cart/{cartId}",
-//                                "/api/wishlists/{id}",
-//                                "/api/wishlists/customer/{customerId}",
-//                                "/api/wishlist-items",
-//                                "/api/wishlist-items/{id}",
-//                                "/api/wishlist-items/wishlist/{wishlistId}",
-//                                "/api/reviews",
-//                                "/api/reviews/{id}",
-//                                "/api/reviews/product/{productId}"
-                                        "/api/carts/*",
-                                        "/api/carts/customer/*",
-                                        "/api/cart-items/**",
-                                        "/api/cart-items/*",
-                                        "/api/cart-items/cart/*",
-                                        "/api/wishlists/*",
-                                        "/api/wishlists/customer/*",
-                                        "/api/wishlist-items/**",
-                                        "/api/wishlist-items/*",
-                                        "/api/wishlist-items/wishlist/*"
-//                                "/api/reviews/**"
+                                    "/api/carts/*",
+                                    "/api/carts/customer/*",
+                                    "/api/cart-items/**",
+                                    "/api/cart-items/*",
+                                    "/api/cart-items/cart/*",
+                                    "/api/wishlists/*",
+                                    "/api/wishlists/customer/*",
+                                    "/api/wishlist-items/**",
+                                    "/api/wishlist-items/*",
+                                    "/api/wishlist-items/wishlist/*"
                                 ).hasAnyRole("CUSTOMER", "ADMIN")
                                 //hung thêm cho phép admin, sửa lại pattem cho gọn hơn
 
@@ -160,13 +140,13 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/coupons/**").hasRole("ADMIN")
 
                                 .requestMatchers(
-                                        "/api/customers/{id}",
-                                        "/api/customers/account/{accountId}",
-                                        "/api/customers/**",           // Admin quản lý, Customer xem của mình
-                                        "/api/addresses/**",
-                                        "/api/coupons/**",
-                                        "/api/orders/**",              // CẢ hai đều dùng: Customer đặt, Admin duyệt
-                                        "/api/order-items/**"
+                                    "/api/customers/{id}",
+                                    "/api/customers/account/{accountId}",
+                                    "/api/customers/**",           // Admin quản lý, Customer xem của mình
+                                    "/api/addresses/**",
+                                    "/api/coupons/**",
+                                    "/api/orders/**",              // CẢ hai đều dùng: Customer đặt, Admin duyệt
+                                    "/api/order-items/**"
                                 ).authenticated()
 
                                 // ==============================================================
