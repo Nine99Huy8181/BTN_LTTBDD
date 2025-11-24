@@ -4,6 +4,7 @@ import iuh.fit.fashionshop_be.dto.response.ChatResponse;
 import iuh.fit.fashionshop_be.model.Product;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class AiService {
         this.chatClient = chatClientBuilder.build();
     }
 
+    @Transactional(readOnly = true)
     public ChatResponse processUserInput(String input) {
         if (input == null || input.isBlank()) {
             return new ChatResponse("Vui lòng nhập câu hỏi của bạn.", "text", null);
