@@ -54,6 +54,19 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+
                                 // ==============================================================
                                 // 1. PUBLIC ENDPOINTS – AI CŨNG TRUY CẬP ĐƯỢC (không cần login)
                                 // ==============================================================
