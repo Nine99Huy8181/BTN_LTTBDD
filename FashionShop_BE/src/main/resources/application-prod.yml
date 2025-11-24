@@ -1,8 +1,8 @@
 # ==============================================================
-# PRODUCTION CONFIGURATION FOR RENDER.COM
+# PRODUCTION CONFIGURATION FOR RAILWAY
 # ==============================================================
 # File này sẽ được sử dụng khi chạy với profile: -Dspring.profiles.active=prod
-# Tất cả sensitive data được lấy từ Environment Variables trên Render
+# Tất cả sensitive data được lấy từ Environment Variables trên Railway
 # ==============================================================
 
 server:
@@ -61,12 +61,23 @@ spring:
           max-idle: 4
           min-idle: 0
 
-
-  # === RESEND API (Email Service) ===
-  # Resend không bị Railway block như SMTP
-resend:
-  api-key: ${RESEND_API_KEY}
-  from-email: ${RESEND_FROM_EMAIL:onboarding@resend.dev}
+  # === EMAIL (Gmail SMTP) ===
+  # Cấu hình Gmail cho gửi OTP
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: false  # Tắt debug trong production
+    default-encoding: UTF-8
 
 # === JWT ===
 jwt:
@@ -95,7 +106,7 @@ logging:
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
 
-# === ACTUATOR (Health check cho Render) ===
+# === ACTUATOR (Health check cho Railway) ===
 management:
   endpoints:
     web:
