@@ -31,7 +31,6 @@ public enum ErrorCode {
     INVALID_REQUEST(1009, "Invalid request", HttpStatus.BAD_REQUEST),
     DATA_INTEGRITY_VIOLATION(1010, "Data integrity violation", HttpStatus.CONFLICT),
     INVENTORY_INSUFFICIENT(3001, "Insufficient inventory", HttpStatus.BAD_REQUEST),
-    INVALID_OTP(3002, "Otp invalid", HttpStatus.BAD_REQUEST),
     PASSWORD_NOT_MATCHED(3003, "Password not match", HttpStatus.BAD_REQUEST);
 
     private final int code;

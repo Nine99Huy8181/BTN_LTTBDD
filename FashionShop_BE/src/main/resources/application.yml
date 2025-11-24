@@ -22,39 +22,6 @@ spring:
     init:
       mode: always
       platform: mariadb
-
-  # === REDIS (CHO OTP - SI�U NHANH) ===
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password: 12345678
-      database: 0
-      timeout: 2000ms
-      lettuce:
-        pool:
-          enabled: true
-          max-active: 16
-          max-idle: 8
-          min-idle: 0
-
-  # === EMAIL (G?I OTP QUA GMAIL - D? NH?T) ===
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: nguyenquochuy81819@gmail.com
-    password: qzaa wala aesi rtwk
-    protocol: smtp
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-        debug: true  # b?t ?? xem log g?i mail khi dev
-    default-from: nguyenquochuy81819@gmail.com
-# === JWT ===
 jwt:
   secret: your-very-long-secret-key-at-least-32-characters-long-for-hs256
 
