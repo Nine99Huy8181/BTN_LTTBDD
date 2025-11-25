@@ -287,31 +287,9 @@ public class OrderService {
     }
 
     public OrderDTO getOrderDTOById(Long id) {
-        Order order = orderRepository.findById(id)
+        Order order = orderRepository.findOrderWithDetails(id)
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
 
         return orderMapper.toDTO(order);
-    }
-
-    @Transactional(readOnly = true)
-    public List<OrderItemDTO> getOrderItemsByOrderId(Long orderId) {
-        List<OrderItem> orderItems = orderItemRepository.findByOrder_OrderID(orderId);
-
-        if (orderItems.isEmpty()) {
-            throw new RuntimeException("No items found for order ID: " + orderId);
-            // hoặc trả về empty list nếu muốn: return Collections.emptyList();
-        }
-
-        return orderItems.stream()
-                .map(orderItemMapper::toDTO)
-                .toList();
-    }
-
-    // Nếu bạn muốn trả về kèm thông tin đơn hàng luôn (thường dùng hơn)
-    public OrderDTO getOrderDetailWithItems(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
-
-        return orderMapper.toDTO(order); // đã include List<OrderItemDTO> nếu bạn thêm vào OrderDTO
     }
 }
