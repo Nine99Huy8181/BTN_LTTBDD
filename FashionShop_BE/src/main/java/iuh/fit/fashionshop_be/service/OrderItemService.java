@@ -12,10 +12,17 @@ package iuh.fit.fashionshop_be.service;
  * @date:17-Oct-25
  * @version: 1.0
  */
+import iuh.fit.fashionshop_be.dto.OrderDTO;
+import iuh.fit.fashionshop_be.dto.OrderItemDTO;
+import iuh.fit.fashionshop_be.mapper.OrderItemMapper;
+import iuh.fit.fashionshop_be.mapper.OrderMapper;
+import iuh.fit.fashionshop_be.model.Order;
 import iuh.fit.fashionshop_be.model.OrderItem;
 import iuh.fit.fashionshop_be.repository.OrderItemRepository;
+import iuh.fit.fashionshop_be.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +30,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
+    private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
+    private final OrderItemMapper orderItemMapper;
 
     public List<OrderItem> getAllOrderItems() {
         return orderItemRepository.findAll();
@@ -53,6 +63,28 @@ public class OrderItemService {
         item.setUnitPrice(itemDetails.getUnitPrice());
         item.setSubTotal(itemDetails.getSubTotal());
         return orderItemRepository.save(item);
+    }
+
+    @Transactional(readOnly = true)
+    public List<OrderItemDTO> getOrderItemsDTOByOrderId(Long orderId) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_OrderID(orderId);
+
+        if (orderItems.isEmpty()) {
+            throw new RuntimeException("No items found for order ID: " + orderId);
+            // hoặc trả về empty list nếu muốn: return Collections.emptyList();
+        }
+
+        return orderItems.stream()
+                .map(orderItemMapper::toDTO)
+                .toList();
+    }
+
+    // Nếu bạn muốn trả về kèm thông tin đơn hàng luôn (thường dùng hơn)
+    public OrderDTO getOrderDetailWithItems(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+
+        return orderMapper.toDTO(order); // đã include List<OrderItemDTO> nếu bạn thêm vào OrderDTO
     }
 
     public void deleteOrderItem(Long id) {

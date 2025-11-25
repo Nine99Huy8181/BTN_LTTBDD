@@ -15,8 +15,10 @@ package iuh.fit.fashionshop_be.service;
 import iuh.fit.fashionshop_be.config.security.CustomerDetails;
 import iuh.fit.fashionshop_be.dto.OrderCreateRequest;
 import iuh.fit.fashionshop_be.dto.OrderDTO;
+import iuh.fit.fashionshop_be.dto.OrderItemDTO;
 import iuh.fit.fashionshop_be.dto.OrderItemRequest;
 import iuh.fit.fashionshop_be.enums.PaymentStatus;
+import iuh.fit.fashionshop_be.mapper.OrderItemMapper;
 import iuh.fit.fashionshop_be.mapper.OrderMapper;
 import iuh.fit.fashionshop_be.model.Customer;
 import iuh.fit.fashionshop_be.model.Inventory;
@@ -57,6 +59,7 @@ public class OrderService {
 
     private static final Set<String> VALID_STATUSES = Set.of(
             "PENDING", "APPROVED", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED");
+    private final OrderItemMapper orderItemMapper;
 
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
@@ -288,5 +291,27 @@ public class OrderService {
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
 
         return orderMapper.toDTO(order);
+    }
+
+    @Transactional(readOnly = true)
+    public List<OrderItemDTO> getOrderItemsByOrderId(Long orderId) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_OrderID(orderId);
+
+        if (orderItems.isEmpty()) {
+            throw new RuntimeException("No items found for order ID: " + orderId);
+            // hoặc trả về empty list nếu muốn: return Collections.emptyList();
+        }
+
+        return orderItems.stream()
+                .map(orderItemMapper::toDTO)
+                .toList();
+    }
+
+    // Nếu bạn muốn trả về kèm thông tin đơn hàng luôn (thường dùng hơn)
+    public OrderDTO getOrderDetailWithItems(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+
+        return orderMapper.toDTO(order); // đã include List<OrderItemDTO> nếu bạn thêm vào OrderDTO
     }
 }

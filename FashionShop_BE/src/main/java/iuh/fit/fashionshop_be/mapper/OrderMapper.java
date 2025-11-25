@@ -26,6 +26,7 @@ public interface OrderMapper {
     @Mapping(target = "customerName", source = "customer.fullName")
     @Mapping(target = "shippingAddress", source = "shippingAddress.fullAddress") // ← ĐÚNG
     @Mapping(target = "couponCode", source = "coupon.code")
+    @Mapping(target = "orderItems", source = "orderItems")
     OrderDTO toDTO(Order order);
 
 

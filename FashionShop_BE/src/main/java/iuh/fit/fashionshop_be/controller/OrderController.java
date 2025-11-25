@@ -14,7 +14,9 @@ package iuh.fit.fashionshop_be.controller;
  */
 import iuh.fit.fashionshop_be.dto.OrderCreateRequest;
 import iuh.fit.fashionshop_be.dto.OrderDTO;
+import iuh.fit.fashionshop_be.dto.OrderItemDTO;
 import iuh.fit.fashionshop_be.model.Order;
+import iuh.fit.fashionshop_be.service.OrderItemService;
 import iuh.fit.fashionshop_be.service.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +34,11 @@ import java.util.Map;
 public class OrderController {
 
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, OrderItemService orderItemService) {
         this.orderService = orderService;
+        this.orderItemService = orderItemService;
     }
 
     @GetMapping("/orders")
@@ -116,5 +120,18 @@ public class OrderController {
     public ResponseEntity<OrderDTO> getOrderDTOById(@PathVariable Long id) {
         OrderDTO order = orderService.getOrderDTOById(id);
         return ResponseEntity.ok(order);
+    }
+
+    @GetMapping("/orders/{orderId}/items")
+    public ResponseEntity<List<OrderItemDTO>> getOrderItems(@PathVariable Long orderId) {
+        List<OrderItemDTO> items = orderItemService.getOrderItemsDTOByOrderId(orderId);
+        return ResponseEntity.ok(items);
+    }
+
+    // Cách 2: Lấy luôn toàn bộ chi tiết đơn hàng (khuyến khích dùng cái này cho frontend)
+    @GetMapping("/orders-dto/{orderId}/detail")
+    public ResponseEntity<OrderDTO> getOrderDetailWithItems(@PathVariable Long orderId) {
+        OrderDTO orderDTO = orderItemService.getOrderDetailWithItems(orderId);
+        return ResponseEntity.ok(orderDTO);
     }
 }

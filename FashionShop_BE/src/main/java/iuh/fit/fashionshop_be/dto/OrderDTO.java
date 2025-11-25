@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /*
  * @description:
@@ -41,4 +42,6 @@ public class OrderDTO {
     private Long addressID;
     private String shippingAddress; // ← từ getFullAddress()
     private String couponCode;
+
+    private List<OrderItemDTO> orderItems;
 }

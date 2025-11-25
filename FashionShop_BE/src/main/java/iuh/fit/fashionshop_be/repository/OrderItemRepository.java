@@ -14,6 +14,7 @@ package iuh.fit.fashionshop_be.repository;
  */
 import iuh.fit.fashionshop_be.model.OrderItem;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -38,4 +39,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
             "GROUP BY oi.variant.product.id, oi.variant.product.name, oi.variant.product.image " +
             "ORDER BY totalSold DESC")
     List<Object[]> findBestSellingProducts(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"variant.product"})
+    List<OrderItem> findByOrder_OrderID(Long orderId);
 }
