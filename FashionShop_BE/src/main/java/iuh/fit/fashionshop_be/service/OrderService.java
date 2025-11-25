@@ -56,8 +56,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     private static final Set<String> VALID_STATUSES = Set.of(
-            "PENDING", "APPROVED", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"
-    );
+            "PENDING", "APPROVED", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED");
 
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
@@ -86,8 +85,8 @@ public class OrderService {
     @Transactional
     public Order createOrderFromRequest(OrderCreateRequest req, String userEmail) {
         // Resolve account by email -> then find customer by accountID
-    // Find customer by matching account email via repository
-    Customer customer = customerRepository.findAll().stream()
+        // Find customer by matching account email via repository
+        Customer customer = customerRepository.findAll().stream()
                 .filter(c -> c.getAccount() != null && c.getAccount().getEmail().equals(userEmail))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Customer not found for account"));
@@ -116,14 +115,16 @@ public class OrderService {
 
             Inventory inv = inventoryRepository.findByVariantVariantID(variant.getVariantID());
             if (inv == null || inv.getQuantity() == null || inv.getQuantity() < it.getQuantity()) {
-                // Throw AppException with INVENTORY_INSUFFICIENT so client receives 400 and message
+                // Throw AppException with INVENTORY_INSUFFICIENT so client receives 400 and
+                // message
                 throw new AppException(ErrorCode.INVENTORY_INSUFFICIENT,
                         "Insufficient inventory for variant: " + variant.getVariantID());
             }
 
-            float unitPrice = (variant.getProduct().getDiscountPrice() != null && variant.getProduct().getDiscountPrice() > 0)
-                    ? variant.getProduct().getDiscountPrice()
-                    : variant.getProduct().getBasePrice();
+            float unitPrice = (variant.getProduct().getDiscountPrice() != null
+                    && variant.getProduct().getDiscountPrice() > 0)
+                            ? variant.getProduct().getDiscountPrice()
+                            : variant.getProduct().getBasePrice();
 
             int qty = it.getQuantity() != null ? it.getQuantity() : 0;
             float sub = unitPrice * qty;
@@ -137,7 +138,8 @@ public class OrderService {
 
             createdItems.add(orderItem);
 
-            // update inventory: decrement quantity, increment reserved could be used instead
+            // update inventory: decrement quantity, increment reserved could be used
+            // instead
             inv.setQuantity(inv.getQuantity() - qty);
             inventoryRepository.save(inv);
 
@@ -153,12 +155,11 @@ public class OrderService {
             orderItemRepository.save(oi);
         }
 
-// Trong createOrderFromRequest(), sau khi lưu order
+        // Trong createOrderFromRequest(), sau khi lưu order
         notificationService.sendToAllAdmins(
                 "Đơn hàng mới cần duyệt",
                 "Khách hàng " + customer.getFullName() + " vừa đặt đơn #" + saved.getOrderID(),
-                "app://admin/order/" + saved.getOrderID()
-        );
+                "app://admin/order/" + saved.getOrderID());
         return saved;
     }
 
@@ -176,6 +177,7 @@ public class OrderService {
         order.setNotes(orderDetails.getNotes());
         return orderRepository.save(order);
     }
+
     public Order cancelOrder(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
@@ -187,6 +189,7 @@ public class OrderService {
         order.setOrderStatus("CANCELED");
         return orderRepository.save(order);
     }
+
     public void updatePaymentStatus(Long id, PaymentStatus status) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
@@ -194,6 +197,7 @@ public class OrderService {
         order.setPaymentStatus(String.valueOf(status)); // Truyền trực tiếp enum
         orderRepository.save(order);
     }
+
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }
@@ -263,8 +267,7 @@ public class OrderService {
         }
 
         notificationService.sendPersonalNotification(
-                customerId, title, message, type, deepLink, null
-        );
+                customerId, title, message, type, deepLink, null);
     }
 
     public Page<OrderDTO> getOrdersPaginated(int page, int size, String status) {

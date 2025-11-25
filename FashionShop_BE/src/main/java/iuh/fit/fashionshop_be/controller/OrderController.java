@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -42,11 +43,17 @@ public class OrderController {
     }
 
     @GetMapping("/orders/{id}")
+    @Transactional(readOnly = true)
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
         Order order = orderService.getOrderById(id);
-        // Force lazy load of orderItems
+        // Force lazy load of orderItems and nested relations
         if (order.getOrderItems() != null) {
-            order.getOrderItems().size();
+            order.getOrderItems().forEach(item -> {
+                // Trigger lazy load for variant and product
+                if (item.getVariant() != null && item.getVariant().getProduct() != null) {
+                    item.getVariant().getProduct().getProductID();
+                }
+            });
         }
         return ResponseEntity.ok(order);
     }
@@ -96,10 +103,10 @@ public class OrderController {
 
     @GetMapping("/page-orders")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER')")
-    public ResponseEntity<Page<OrderDTO>> getAllOrders(
+    public ResponseEntity<Page<OrderDTO>> getAllOrdersPaginated(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
-            @RequestParam(required = false) String status) { // <-- THÊM CÁI NÀY
+            @RequestParam(required = false) String status) {
 
         Page<OrderDTO> orderPage = orderService.getOrdersPaginated(page, size, status);
         return ResponseEntity.ok(orderPage);
@@ -108,7 +115,6 @@ public class OrderController {
     @GetMapping("/orders-dto/{id}")
     public ResponseEntity<OrderDTO> getOrderDTOById(@PathVariable Long id) {
         OrderDTO order = orderService.getOrderDTOById(id);
-
         return ResponseEntity.ok(order);
     }
 }
