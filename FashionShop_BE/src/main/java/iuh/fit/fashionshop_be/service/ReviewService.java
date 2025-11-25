@@ -22,7 +22,7 @@ import iuh.fit.fashionshop_be.repository.ProductRepository;
 import iuh.fit.fashionshop_be.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,7 +54,7 @@ public class ReviewService {
         return convertToDTO(r);
     }
 
-    //hung
+    // hung
     private ReviewDTO convertToDTO(Review review) {
         ReviewDTO dto = ReviewDTO.builder()
                 .reviewID(review.getReviewID())
@@ -111,16 +111,21 @@ public class ReviewService {
         return reviewRepository.findByStatus(status);
     }
 
-    // New API: create review using authenticated username (from token) and ReviewDTO from body
+    // New API: create review using authenticated username (from token) and
+    // ReviewDTO from body
+    @Transactional(readOnly = true)
     public Review createReview(ReviewDTO dto, String username) {
-        if (dto == null) throw new IllegalArgumentException("ReviewDTO is required");
-        if (username == null || username.isEmpty()) throw new IllegalArgumentException("Username is required");
+        if (dto == null)
+            throw new IllegalArgumentException("ReviewDTO is required");
+        if (username == null || username.isEmpty())
+            throw new IllegalArgumentException("Username is required");
 
         // 1. find account by username/email
         Account account = accountRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("Account not found for username: " + username));
 
-        // 2. find customer(s) by account id - assume one customer per account; take first
+        // 2. find customer(s) by account id - assume one customer per account; take
+        // first
         List<Customer> customers = customerRepository.findByAccountAccountID(account.getAccountID());
         if (customers == null || customers.isEmpty()) {
             throw new RuntimeException("No customer associated with account: " + username);
@@ -132,13 +137,16 @@ public class ReviewService {
                 .orElseThrow(() -> new RuntimeException("Product not found: " + dto.getProductID()));
 
         // 4. CHECK: Customer must have a DELIVERED order containing this product
+
         boolean canReview = canReviewProduct(customer.getCustomerID(), product.getProductID());
-        System.out.println("[DEBUG] Customer " + customer.getCustomerID() + " reviewing Product " + product.getProductID() + ", canReview=" + canReview);
-        
+        System.out.println("[DEBUG] Customer " + customer.getCustomerID() + " reviewing Product "
+                + product.getProductID() + ", canReview=" + canReview);
+
         // TODO: Enable this check in production. For now, we allow review for testing.
         // Uncomment line below to enforce DELIVERED status requirement
         // if (!canReview) {
-        //     throw new RuntimeException("Cannot review this product. Order must be DELIVERED.");
+        // throw new RuntimeException("Cannot review this product. Order must be
+        // DELIVERED.");
         // }
 
         // 5. build review
@@ -152,7 +160,8 @@ public class ReviewService {
         review.setStatus("ACTIVE");
 
         // 6. save
-        System.out.println("[DEBUG] Saving review for customer " + customer.getCustomerID() + " on product " + product.getProductID());
+        System.out.println("[DEBUG] Saving review for customer " + customer.getCustomerID() + " on product "
+                + product.getProductID());
         return reviewRepository.save(review);
     }
 
@@ -179,19 +188,24 @@ public class ReviewService {
 
     /**
      * Check if a customer can review a product (order must be DELIVERED)
+     * 
      * @param customerId Customer ID
-     * @param productId Product ID
-     * @return true if customer has at least one DELIVERED order containing this product
+     * @param productId  Product ID
+     * @return true if customer has at least one DELIVERED order containing this
+     *         product
      */
+    @Transactional(readOnly = true)
     public boolean canReviewProduct(Long customerId, Long productId) {
         // Find DELIVERED orders for this customer
         List<Order> allOrders = orderRepository.findByCustomerCustomerID(customerId);
-        System.out.println("[DEBUG canReviewProduct] Customer " + customerId + " has " + allOrders.size() + " total orders");
-        
+        System.out.println(
+                "[DEBUG canReviewProduct] Customer " + customerId + " has " + allOrders.size() + " total orders");
+
         List<Order> deliveredOrders = allOrders.stream()
                 .filter(order -> {
                     boolean isDelivered = "DELIVERED".equalsIgnoreCase(order.getOrderStatus());
-                    System.out.println("[DEBUG] Order " + order.getOrderID() + " status: " + order.getOrderStatus() + " (isDelivered=" + isDelivered + ")");
+                    System.out.println("[DEBUG] Order " + order.getOrderID() + " status: " + order.getOrderStatus()
+                            + " (isDelivered=" + isDelivered + ")");
                     return isDelivered;
                 })
                 .toList();
